@@ -1,26 +1,26 @@
 #Plugin
 
 ## Set up
-<pre>
+<code>
   <!-- HEAD SECTION -->
   <script src="quiznator.js"></script>
   
   <!-- BOOTSTRAP FILES -->
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css"/>
-</pre>
+</code>
 
 ## Usage
 
 ###Without jQuery
-<pre>
+<code>
   <div class="quiz-container" data-quizId="{My quiz id}"></div>
-</pre>
+</code>
 
 ###With jQuery
-<pre>
+<code>
   <div class="my-custom-element"></div>
-</pre>
+</code>
 
 And call the quiz-plugin
 
