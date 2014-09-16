@@ -7,6 +7,8 @@ describe('Template module', function(){
 			items: []
 		}
 
+		test_quiz.items = JSON.stringify(test_quiz.items);
+
 		var rendered_quiz = TEMPLATE.render_quiz(test_quiz);
 
 		expect(rendered_quiz).toContain('My awesome quiz');
@@ -23,6 +25,8 @@ describe('Template module', function(){
 				}
 			]
 		}
+		
+		test_quiz.items = JSON.stringify(test_quiz.items);
 
 		var rendered_quiz = TEMPLATE.render_quiz(test_quiz);
 
@@ -46,6 +50,8 @@ describe('Template module', function(){
 				}
 			]
 		}
+
+		test_quiz.items = JSON.stringify(test_quiz.items);
 
 		var rendered_quiz = TEMPLATE.render_quiz(test_quiz);
 
