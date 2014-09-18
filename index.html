@@ -4,29 +4,31 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Plugin</title>
 
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="css/quiz.css">
+
+        <!-- jQuery -->
         <script src="vendor/jquery.min.js"></script>
+        <script src="vendor/jquery-cookie.js"></script>
+
+        <!-- jStorage -->
+        <script src="vendor/jstorage.min.js"></script>
 
         <!-- Handlebars -->
         <script src="vendor/handlebars.js"></script>
-
-        <!-- Bootstrap -->
-        
-        <script src="vendor/bootstrap/js/bootstrap.min.js"/>"></script>
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
         <!-- Application files -->
         <script src="lib/modules/api_module.js"></script>
         <script src="lib/modules/template_module.js"></script>
         <script src="lib/modules/answer_reader_module.js"></script>
+        <script src="lib/modules/authentication_module.js"></script>
         <script src="lib/modules/view_module.js"></script>
         <script src="lib/quiz.js"></script>
     </head>
-    <body style="padding: 0px 40px 20px 40px;">
-        <div class="page-header">
-            <h1>
-                Quiz plugin
-            </h1>
-        </div>
+    <body style="padding: 40px;">
+        <div class="quiz-container" data-quizId="1"></div>
         <div class="quiz-container" data-quizId="1"></div>
     </body>
 </html>
