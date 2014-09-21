@@ -1,4 +1,13 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@font-face {
+    font-family: 'Roboto';
+    src: url('roboto/Roboto-Regular-webfont.eot');
+    src: url('roboto/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('roboto/Roboto-Regular-webfont.woff') format('woff'),
+         url('roboto/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('roboto/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
 @blue: #0096DD;
 @green: #81BC2E;
@@ -180,7 +189,7 @@ a:hover{
 
 			&:last-child{
 				.peer-review-answer-body{
-					margin-left: 0px;
+					margin-left: 2px;
 					margin-right: 2px;
 				}
 			}
@@ -192,7 +201,7 @@ a:hover{
 				color: rgb(100,100,100);
 				border: 1px solid darken(white, 15%);
 				border-radius: 3px;
-				margin: 15px 15px 0px 15px;
+				margin: 15px 15px 2px 15px;
 
 				.peer-review-user{
 					margin-top: 0px;

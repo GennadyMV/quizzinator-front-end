@@ -7,6 +7,7 @@
         <!-- Font awesome -->
         <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
 
+        <!-- Application style -->
         <link rel="stylesheet" href="css/quiz.css">
 
         <!-- jQuery -->
@@ -16,20 +17,12 @@
         <!-- jStorage -->
         <script src="vendor/jstorage.min.js"></script>
 
-        <!-- Handlebars -->
-        <script src="vendor/handlebars.js"></script>
 
         <!-- Angular -->
         <script src="vendor/angular.min.js"></script>
 
-        <!-- Application files -->
-        <script src="lib/app.js"></script>
-        <script src="lib/services/authentication.js"></script>
-        <script src="lib/services/answer_formatter.js"></script>
-        <script src="lib/services/api.js"></script>
-        <script src="lib/controllers/main_controller.js"></script>
-        <script src="lib/controllers/quiz_controller.js"></script>
-        <script src="lib/directives/quiz.js"></script>
+        <!-- Application script -->
+        <script src="build/quiz.min.js"></script>
     </head>
     <body style="padding: 40px;" ng-app="QuizApp" ng-controller="MainController">
         <div ng-controller="QuizController" ng-init="init(1)" quiz>
