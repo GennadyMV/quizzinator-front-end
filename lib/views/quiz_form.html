@@ -1,0 +1,16 @@
+<div class="quiz-panel-heading">{{quiz.title}}</div>
+<div class="quiz-panel-user-info">
+	<button class="btn-grey btn-sm" style="margin-right: 10px;" ng-click="toggle_username_form()"><i class="fa fa-pencil"></i> Change</button>Logged in as {{username}}
+	<div style="margin-top: 15px;" ng-show="show_username_form">
+		<div class="form-item">
+			<input type="text" placeholder="Username" class="text-field" ng-model="$parent.new_username">
+		</div>
+		<button class="btn-blue" ng-click="change_username()">Save</button>
+	</div>
+</div>
+<div class="quiz-panel-body">
+	<form>
+		<div class="form-item" ng-repeat="item in quiz.items" ng-include="widget_view(item.item_type)"></div>
+		<button class="btn-blue" ng-click="send_answer()"><i class="fa fa-send"></i> Send</button>
+	</form>
+</div>

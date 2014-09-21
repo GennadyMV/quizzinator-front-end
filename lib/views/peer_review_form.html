@@ -1,0 +1,19 @@
+<div class="quiz-panel-heading">Choose an answer to review</div>
+<div class="quiz-panel-body">
+	<div class="form-item">
+		<label>You review</label>
+		<textarea class="text-field" rows="4" ng-model="peer_review_content"></textarea>
+	</div>
+	<button class="btn-blue" ng-click="send_peer_review()"><i class="fa fa-send"></i> Send</button>
+	<div class="peer-review-container">
+		<div class="peer-review-answer" ng-repeat="review in peer_reviews">
+			<div class="peer-review-answer-body" ng-click="choose_review(review)" ng-class="{ 'selected': review.selected }">
+				<h2 class="peer-review-user"><i class="fa fa-user"></i> {{review.user}}</h2>
+				<div class="form-item" ng-repeat="answer in review.answer">
+					<label>{{answer.question}}</label>
+					{{answer.value}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
