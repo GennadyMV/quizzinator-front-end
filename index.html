@@ -30,13 +30,6 @@
         <script src="lib/controllers/main_controller.js"></script>
         <script src="lib/controllers/quiz_controller.js"></script>
         <script src="lib/directives/quiz.js"></script>
-
-        <!--<script src="lib/modules/api_module.js"></script>
-        <script src="lib/modules/template_module.js"></script>
-        <script src="lib/modules/answer_reader_module.js"></script>
-        <script src="lib/modules/authentication_module.js"></script>
-        <script src="lib/modules/view_module.js"></script>
-        <script src="lib/quiz.js"></script>-->
     </head>
     <body style="padding: 40px;" ng-app="QuizApp" ng-controller="MainController">
         <div ng-controller="QuizController" ng-init="init(1)" quiz>
@@ -46,8 +39,5 @@
         <div ng-controller="QuizController" ng-init="init(1)" quiz>
             <div ng-include="view"></div>
         </div>
-
-        <!--<div class="quiz-container" data-quizId="1"></div>
-        <div class="quiz-container" data-quizId="1"></div>-->
     </body>
 </html>
