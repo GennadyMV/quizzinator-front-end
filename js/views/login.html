@@ -1,9 +1,9 @@
 <div class="quiz-panel-heading">Login to answer</div>
 <div class="quiz-panel-body">
-	<form class="log-in-form">
+	<form class="log-in-form" ng-submit="login()">
 		<div class="form-item">
 			<label>TMC-tunnus</label>
-			<input type="text" class="text-field log-in-username" placeholder="Tunnus" required>
+			<input type="text" class="text-field" ng-model="$parent.username" placeholder="Tunnus" required>
 		</div>
 		<button type="submit" class="btn-blue"><i class="fa fa-sign-in"></i> Login</button>
 	</form>

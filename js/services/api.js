@@ -43,7 +43,7 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 			headers: {
 		       "Content-Type": "application/json"
 		    },
-		    data: JSON.stringify({ reviewer: options.reviewer, review: options.review })
+		    data: JSON.stringify({ reviewer: options.reviewer, review: options.review.content })
 		}).success(function(){
 			options.success();
 		}).error(function(){

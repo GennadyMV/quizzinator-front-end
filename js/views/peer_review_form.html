@@ -4,7 +4,7 @@
 		<label>You review</label>
 		<textarea class="text-field" rows="4" ng-model="peer_review_content"></textarea>
 	</div>
-	<button class="btn-blue" ng-click="send_peer_review()"><i class="fa fa-send"></i> Send</button>
+	<button class="btn-blue" ng-click="send_peer_review(peer_review_content)"><i class="fa fa-send"></i> Send</button>
 	<div class="peer-review-container">
 		<div class="peer-review-answer" ng-repeat="review in peer_reviews">
 			<div class="peer-review-answer-body" ng-click="choose_review(review)" ng-class="{ 'selected': review.selected }">

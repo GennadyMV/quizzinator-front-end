@@ -4,7 +4,7 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 	$scope.init = function(quiz_id){
 		$scope.quiz_id = quiz_id;
 
-		if(!Authentication.get_user()){
+		if(!$scope.username){
 			$scope.view = 'js/views/login.html';
 		}else{
 			API.get_quiz({
@@ -47,7 +47,25 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 				}else{
 					$scope.peer_reviews = peer_reviews;
 					$scope.view = 'js/views/peer_review_form.html';
+					$scope.peer_review_content = '';
 				}
+			},
+			error: function(){
+				alert('fail');
+			}
+		});
+	}
+
+	$scope.login = function(){
+		$scope.$parent.username = $scope.username;
+
+		Authentication.log_user($scope.username);
+
+		API.get_quiz({
+			id: $scope.quiz_id,
+			success: function(quiz){
+				$scope.quiz = quiz;
+				$scope.view = 'js/views/quiz_form.html';
 			},
 			error: function(){
 				alert('fail');
@@ -63,11 +81,40 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 		review.selected = true;
 	}
 
-	$scope.send_review = function(){
-		
+	$scope.send_peer_review = function(peer_review_content){
+		var selected_peer = $.grep($scope.peer_reviews, function(peer){
+			return peer.selected;
+		})[0];
+
+		alert($scope.quiz.id);
+
+		API.send_peer_review({
+			reviewer: $scope.username,
+			quiz: $scope.quiz,
+			review: { id: selected_peer.id, content: peer_review_content },
+			success: function(){
+				alert('ok');
+			},
+			error: function(){
+				alert('fail');
+			}
+		});	
 	}
 
 	$scope.$parent.$watch('username', function(new_val, old_val){
 		$scope.username = $scope.$parent.username;
+
+		if($scope.view == 'js/views/login.html' && $scope.username){
+			API.get_quiz({
+				id: $scope.quiz_id,
+				success: function(quiz){
+					$scope.quiz = quiz;
+					$scope.view = 'js/views/quiz_form.html';
+				},
+				error: function(){
+					alert('fail');
+				}
+			});
+		}
 	});
 }]);
