@@ -26,9 +26,12 @@ describe('QuizController', function(){
   					}));
           }
   			},
-  			send_answer: function(options) {
-  				options.success([]);
-  			}
+  			answer_quiz: function(options) {
+          if(options.id == 3){
+            options.success([{id:1,user:"124",url:null,answer:[{question:"kkk",value:"kokeilu"}],new:false}])
+          } else {
+  				  options.success([]);
+  			}}
   		}
   	})();
 
@@ -80,4 +83,15 @@ describe('QuizController', function(){
       expect(scope.view).toBe('js/views/error.html');
     });
     
+    it('should show proper view when review is empty', function() {
+      scope.init(1);
+      scope.send_answer();
+      expect(scope.view).toBe('js/views/answered.html');
+    });
+
+    it('should show proper view when review is not empty'), function() {
+      scope.init(3);
+      scope.send_answer();
+      expect(scope.view).toBe('js/views/peer_review_form.html');
+    }
 });
