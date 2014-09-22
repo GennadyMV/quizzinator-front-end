@@ -15,12 +15,16 @@ describe('QuizController', function(){
   				options.done()
   			},
   			get_quiz: function(options) {
-  				options.success(AnswerFormatter.input({id:1,
-  					title:"hurr durr?",
-  					items:JSON.stringify([{question:"derpderpderp",item_type:"open_question",$$hashKey:"003"}]),
-  					quizAnswers:[],
-  					reviewable:true
+  				  if(options.id == 2) {
+              options.error();
+            } else {
+              options.success(AnswerFormatter.input({id:1,
+  				    title:"hurr durr?",
+  					  items:JSON.stringify([{question:"derpderpderp",item_type:"open_question",$$hashKey:"003"}]),
+  					  quizAnswers:[],
+  					  reviewable:true
   					}));
+          }
   			},
   			send_answer: function(options) {
   				options.success([]);
@@ -42,10 +46,10 @@ describe('QuizController', function(){
       		Authentication: AuthenticationMock,
       		API: QuizAPiMock
     	});
+      scope.username = 'kalle';
     }));
 
     it('should be initialized correctly with username', function() {
-      scope.username = 'kalle';
     	scope.init(1);
     	expect(scope.quiz.title).toBe('hurr durr?');
     	expect(scope.quiz.items[0].question).toContain("derpderpderp");
@@ -53,13 +57,26 @@ describe('QuizController', function(){
     });
 
     it('should be initialized correctly without username', function() {
+      scope.username = null;
       scope.init(1);
       expect(scope.view).toBe('js/views/login.html');
     });
 
     it('should present the view correctly when given user name', function() {
-      scope.username = 'kalle';
       scope.init(1);
       expect(scope.view).toBe('js/views/quiz_form.html');
     });
+
+    it('should be able to change users', function() {
+      scope.init(1);
+      expect(scope.username).toBe('kalle');
+      scope.new_username = 'Hattumies';
+      scope.change_username();
+      expect(scope.username).toBe('Hattumies');
+    })
+
+    it('should render error message when id is not found', function() {
+      scope.init(2);
+      expect()
+    })
 });
