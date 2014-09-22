@@ -1,4 +1,4 @@
-<div class="quiz-panel-heading">{{quiz.title}}</div>
+<div class="quiz-panel-heading">{{quiz.title}} <span class="text-muted" ng-show="quiz.answered">answered</span></div>
 <div class="quiz-panel-user-info">
 	<button class="btn-grey btn-sm" style="margin-right: 10px;" ng-click="toggle_username_form()"><i class="fa fa-pencil"></i> Change</button>Logged in as {{username}}
 	<div style="margin-top: 15px;" ng-show="show_username_form">

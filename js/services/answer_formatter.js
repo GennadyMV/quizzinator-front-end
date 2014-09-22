@@ -71,6 +71,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 	_public.input = function(quiz){
 		var formatted = {
 			title: quiz.title,
+			answered: quiz.answered,
 			id: quiz.id,
 			items: []
 		}
