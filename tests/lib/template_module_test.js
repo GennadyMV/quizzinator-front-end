@@ -1,6 +1,7 @@
-'use strict'
+/*'use strict'
 
 describe('Template module', function(){
+
 	it('should render title corretly', function(){
 		var test_quiz = {
 			title: 'My awesome quiz',
@@ -158,3 +159,4 @@ describe('Template module', function(){
 		expect(rendered_quiz).toContain('open and multiple');
 	})
 });
+*/

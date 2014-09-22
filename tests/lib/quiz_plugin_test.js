@@ -1,4 +1,4 @@
-'use strict'
+/*'use strict'
 
 describe('Quiz plugin', function(){
 	// Mock dat api
@@ -19,3 +19,4 @@ describe('Quiz plugin', function(){
 		//expect($('<div></div>')).toHaveHTML('<div></div>');	
 	});
 });
+*/

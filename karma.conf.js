@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '../',
+    basePath: '',
 
 
     // frameworks to use
@@ -16,8 +16,11 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'vendor/jquery.min.js',
-        'vendor/handlebars.js',
-        'lib/modules/*.js',
+        'vendor/angular.min.js',
+        'vendor/*.js',
+        'js/app.js',
+        'js/services/*.js',
+        'js/controllers/*.js',
         'tests/lib/*.js'
     ],
 
