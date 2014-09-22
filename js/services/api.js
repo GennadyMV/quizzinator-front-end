@@ -7,6 +7,7 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 		$http({
 			method: 'GET',
 			url: API_URL + '/quiz/' + options.id,
+			params: { username: options.username }
 		}).success(function(quiz){
 			options.success(AnswerFormatter.input(quiz));
 		}).error(function(){

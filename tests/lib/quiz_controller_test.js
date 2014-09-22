@@ -73,10 +73,11 @@ describe('QuizController', function(){
       scope.new_username = 'Hattumies';
       scope.change_username();
       expect(scope.username).toBe('Hattumies');
-    })
+    });
 
     it('should render error message when id is not found', function() {
       scope.init(2);
-      expect()
-    })
+      expect(scope.view).toBe('js/views/error.html');
+    });
+    
 });
