@@ -60,7 +60,6 @@ var TEMPLATE = (function(){
 				<button type="submit" class="btn-blue"><i class="fa fa-sign-in"></i> Login</button>\n\
 			</form>\n\
 		</div>',
-<<<<<<< HEAD
 		peer_review:
 		'<div class="quiz-panel-heading">Choose an answer to review</div>\n\
 		<div class="quiz-panel-body">\n\
@@ -83,7 +82,6 @@ var TEMPLATE = (function(){
 						</div>\n\
 					</div>\n\
 				{{/each}}\n\
-=======
 		peer_review: 
 		'<div class="peer-review">\n\
 			<div class="peer-review-candidate">\n\
@@ -91,7 +89,6 @@ var TEMPLATE = (function(){
 			</div>\n\
 			<div class="peer-review-candidate">\n\
 				<button>tämä on parempi!</button>\n\
->>>>>>> 70d2b406d6256c65611cd97902a277949193251a
 			</div>\n\
 		</div>'
 	}

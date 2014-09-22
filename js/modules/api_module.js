@@ -4,7 +4,6 @@ var API = (function(){
 	var API_URL = 'http://localhost:8080';
 
 	_public.get_quiz = function(options){
-<<<<<<< HEAD
 		$.get(API_URL + '/quiz/' + options.id)
 		.done(function(quiz){
 			options.done(quiz);
@@ -30,7 +29,6 @@ var API = (function(){
 	_public.send_peer_review = function(options){
 		
 	}
-=======
 			$.get(API_URL + '/quiz/' + options.id)
 			.done(function(data){
 				options.done(data);
@@ -55,7 +53,6 @@ var API = (function(){
 				options.fail();
 			});
 	};
->>>>>>> 70d2b406d6256c65611cd97902a277949193251a
 	
 	return _public;
 })();

@@ -65,9 +65,7 @@ var VIEW = (function(TEMPLATE, API, ANSWER_READER, AUTHENTICATION){
     }
 
     var quiz_form_display = function(quiz_object, options){
-<<<<<<< HEAD
         $(quiz_object).attr('data-quizId', options.quiz_id).html(TEMPLATE.render_loading());
-=======
         $(quiz_object).html(TEMPLATE.render_quiz(options.quiz));
         $(quiz_object).find('.change-username').bind('click', function(){
             $(quiz_object).find('.new-username-form').toggle();
@@ -110,7 +108,6 @@ var VIEW = (function(TEMPLATE, API, ANSWER_READER, AUTHENTICATION){
 		var quiz_id = ( options && options.quizId ) ? options.quizId : $(quiz_object).attr('data-quizId');
 
 		$(quiz_object).attr('data-quizId', quiz_id).html(TEMPLATE.render_loading());
->>>>>>> 70d2b406d6256c65611cd97902a277949193251a
 
         API.get_quiz({
             id: options.quiz_id,
