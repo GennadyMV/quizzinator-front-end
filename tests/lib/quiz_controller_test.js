@@ -1,4 +1,4 @@
-describe('CreateQuizController', function(){
+describe('QuizController', function(){
   	var ctrl, scope, AnswerFormatter;
 
   	beforeEach(function(){
@@ -21,29 +21,19 @@ describe('CreateQuizController', function(){
   					quizAnswers:[],
   					reviewable:true
   					}));
-  			}
+  			},
   			send_answer: function(options) {
-  				options.success({
-  					quiz: {
-  						title:"hurr durr?",
-  						items:JSON.stringify([{question:"derpderpderp",item_type:"open_question",$$hashKey:"003"}]),
-  						quizAnswers:[],
-  						reviewable:true
-  					}
-  					user: AuthenticationMock.get_user();
-  				})
+  				options.success([]);
   			}
   		}
   	})();
 
   	var AuthenticationMock = (function(){
   		return {
-  			add_to_storage: function(){},
-      		fetch_from_storage: function(){},
       		log_user: function(){},
       		get_user: function(){return 'Hattumies'}
   		}
-  	})()
+  	})();
 
   	beforeEach(inject(function($controller, $rootScope) {
     	scope = $rootScope.$new();
@@ -54,13 +44,22 @@ describe('CreateQuizController', function(){
     	});
     }));
 
-    it('should be initialized correctly', function() {
+    it('should be initialized correctly with username', function() {
+      scope.username = 'kalle';
     	scope.init(1);
     	expect(scope.quiz.title).toBe('hurr durr?');
     	expect(scope.quiz.items[0].question).toContain("derpderpderp");
   		expect(scope.quiz.items.length).toBe(1);
-    })
+    });
 
-    it('should add a question correctly')
-    
-})
+    it('should be initialized correctly without username', function() {
+      scope.init(1);
+      expect(scope.view).toBe('js/views/login.html');
+    });
+
+    it('should present the view correctly when given user name', function() {
+      scope.username = 'kalle';
+      scope.init(1);
+      expect(scope.view).toBe('js/views/quiz_form.html');
+    });
+});
