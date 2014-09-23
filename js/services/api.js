@@ -23,10 +23,10 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 			headers: {
 		       "Content-Type": "application/json"
 		    },
-			data: JSON.stringify({ answer: JSON.stringify(AnswerFormatter.output(options.quiz)), user: options.user, ip: "192.168.0.0" })
+			data: angular.toJson({ answer: angular.toJson(AnswerFormatter.output(options.quiz)), user: options.user, ip: "192.168.0.0" })
 		}).success(function(peer_reviews){
 			peer_reviews.forEach(function(review){
-				review.answer = JSON.parse(review.answer);
+				review.answer = angular.fromJson(review.answer);
 				review.selected = false;
 			});
 
@@ -44,7 +44,7 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 			headers: {
 		       "Content-Type": "application/json"
 		    },
-		    data: JSON.stringify({ reviewer: options.reviewer, review: options.review.content })
+		    data: angular.toJson({ reviewer: options.reviewer, review: options.review.content })
 		}).success(function(){
 			options.success();
 		}).error(function(){

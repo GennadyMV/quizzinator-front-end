@@ -76,7 +76,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			items: []
 		}
 
-		var items = JSON.parse(quiz.items);
+		var items = angular.fromJson(quiz.items);
 		items.forEach(function(item){
 			if(typeof input_formatters[item.item_type] === 'function'){
 				formatted.items.push(input_formatters[item.item_type](item));

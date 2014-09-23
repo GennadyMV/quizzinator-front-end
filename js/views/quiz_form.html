@@ -1,5 +1,12 @@
-<div class="quiz-panel-heading">{{quiz.title}} <span class="text-muted" ng-show="quiz.answered">answered</span></div>
-<div class="quiz-panel-user-info">
+<div class="quiz-panel-heading">
+	{{quiz.title}} <span class="text-muted" ng-show="quiz.answered">answered</span>
+	<button class="pull-right toggle-quiz" ng-click="toggle_quiz()">
+		<i class="fa fa-minus" ng-show="$parent.show_quiz"></i>
+		<i class="fa fa-plus" ng-hide="$parent.show_quiz"></i>
+	</button>
+</div>
+
+<div class="quiz-panel-user-info" ng-show="$parent.show_quiz">
 	<button class="btn-grey btn-sm" style="margin-right: 10px;" ng-click="toggle_username_form()"><i class="fa fa-pencil"></i> Change</button>Logged in as {{username}}
 	<div style="margin-top: 15px;" ng-show="show_username_form">
 		<div class="form-item">
@@ -8,7 +15,8 @@
 		<button class="btn-blue" ng-click="change_username()">Save</button>
 	</div>
 </div>
-<div class="quiz-panel-body">
+
+<div class="quiz-panel-body" ng-show="$parent.show_quiz">
 	<form>
 		<div class="form-item" ng-repeat="item in quiz.items" ng-include="widget_view(item.item_type)"></div>
 		<button class="btn-blue" ng-click="send_answer()"><i class="fa fa-send"></i> Send</button>

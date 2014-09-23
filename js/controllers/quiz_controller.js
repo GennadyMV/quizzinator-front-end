@@ -1,5 +1,6 @@
 QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', function($scope, Authentication, API){
 	$scope.username = $scope.$parent.username;
+	$scope.show_quiz = true;
 
 	$scope.init = function(quiz_id){
 		$scope.quiz_id = quiz_id;
@@ -48,6 +49,7 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 					$scope.view = 'js/views/answered.html';
 				}else{
 					$scope.peer_reviews = peer_reviews;
+					$scope.peer_reviews[0].selected = true;
 					$scope.view = 'js/views/peer_review_form.html';
 					$scope.peer_review_content = '';
 				}
@@ -70,9 +72,15 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 				$scope.view = 'js/views/quiz_form.html';
 			},
 			error: function(){
-				alert('fail');
+				$scope.view = 'js/views/error.html';
 			}
 		});
+	}
+
+	$scope.logout = function(){
+		Authentication.log_out_user();
+
+		$scope.$parent.username = null;
 	}
 
 	$scope.choose_review = function(review){
@@ -101,6 +109,10 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 		});	
 	}
 
+	$scope.toggle_quiz = function(){
+		$scope.show_quiz = !$scope.show_quiz;
+	}
+
 	$scope.$parent.$watch('username', function(new_val, old_val){
 		$scope.username = $scope.$parent.username;
 
@@ -115,6 +127,10 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 					$scope.view = 'js/views/error.html';
 				}
 			});
+		}
+
+		if($scope.view != 'js/views/login.html' && $scope.username == null){
+			$scope.view = 'js/views/login.html';
 		}
 	});
 }]);

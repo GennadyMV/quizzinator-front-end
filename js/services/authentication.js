@@ -18,5 +18,10 @@ QuizApp.service('Authentication', function(){
 		return fetch_from_storage('quiz_username');
 	}
 
+	_public.log_out_user = function(){
+		$.removeCookie('quiz_username');
+		$.jStorage.deleteKey('quiz_username');
+	}
+
 	return _public;
 });
