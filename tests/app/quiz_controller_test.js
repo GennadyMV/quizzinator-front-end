@@ -53,7 +53,7 @@ describe('QuizController', function(){
     }));
 
     it('should be initialized correctly with username', function() {
-    	scope.init(1);
+    	scope.init({ 'id': 1 });
     	expect(scope.quiz.title).toBe('hurr durr?');
     	expect(scope.quiz.items[0].question).toContain("derpderpderp");
   		expect(scope.quiz.items.length).toBe(1);
@@ -61,17 +61,17 @@ describe('QuizController', function(){
 
     it('should be initialized correctly without username', function() {
       scope.username = null;
-      scope.init(1);
-      expect(scope.view).toBe('js/views/login.html');
+      scope.init({ 'id': 1 });
+      expect(scope.view).toContain('login.html');
     });
 
     it('should present the view correctly when given user name', function() {
-      scope.init(1);
-      expect(scope.view).toBe('js/views/quiz_form.html');
+      scope.init({ 'id': 1 });
+      expect(scope.view).toContain('quiz_form.html');
     });
 
     it('should be able to change users', function() {
-      scope.init(1);
+      scope.init({ 'id': 1 });
       expect(scope.username).toBe('kalle');
       scope.new_username = 'Hattumies';
       scope.change_username();
@@ -79,19 +79,19 @@ describe('QuizController', function(){
     });
 
     it('should render error message when id is not found', function() {
-      scope.init(2);
-      expect(scope.view).toBe('js/views/error.html');
+      scope.init({ 'id': 2 });
+      expect(scope.view).toContain('error.html');
     });
     
     it('should show proper view when review is empty', function() {
-      scope.init(1);
+      scope.init({ 'id': 1 });
       scope.send_answer();
-      expect(scope.view).toBe('js/views/answered.html');
+      expect(scope.view).toContain('answered.html');
     });
 
     it('should show proper view when review is not empty'), function() {
-      scope.init(3);
+      scope.init({ 'id': 3 });
       scope.send_answer();
-      expect(scope.view).toBe('js/views/peer_review_form.html');
+      expect(scope.view).toContain('peer_review_form.html');
     }
 });

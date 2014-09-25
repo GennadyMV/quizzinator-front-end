@@ -13,12 +13,12 @@
         <!-- Application script -->
         <script src="build/quiz.min.js"></script>
     </head>
-    <body style="padding: 40px;" ng-app="QuizApp" ng-controller="MainController">
-        <div ng-controller="QuizController" ng-init="init(1)" quiz>
+    <body style="padding: 40px;" ng-app="QuizApp" ng-controller="MainController" ng-init="init({ 'templates': 'build/templates' })">
+        <div ng-controller="QuizController" ng-init="init({ 'id': 1 })" quiz>
             <div ng-include="view"></div>
         </div>
 
-        <div ng-controller="QuizController" ng-init="init(1)" quiz>
+        <div ng-controller="QuizController" ng-init="init({ 'id': 1 })" quiz>
             <div ng-include="view"></div>
         </div>
     </body>
