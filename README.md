@@ -2,16 +2,9 @@
 
 ## Käyttö
 
-Esimerkki:
+HEAD-tagiin:
 
-<pre>
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Plugin</title>
-
+<code>
         <!-- Font awesome -->
         <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
 
@@ -20,16 +13,4 @@ Esimerkki:
 
         <!-- Application script -->
         <script src="build/quiz.min.js"></script>
-    </head>
-    <body style="padding: 40px;" ng-app="QuizApp" ng-controller="MainController">
-        <div ng-controller="QuizController" ng-init="init(1)" quiz>
-            <div ng-include="view"></div>
-        </div>
-
-        <div ng-controller="QuizController" ng-init="init(1)" quiz>
-            <div ng-include="view"></div>
-        </div>
-    </body>
-</html>
-
-</pre>
+</code>
