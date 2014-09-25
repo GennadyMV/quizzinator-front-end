@@ -15,13 +15,21 @@
 ###BODY-tagi
 
 ```
-<body ng-app="QuizApp" ng-controller="MainController">
+<body ng-app="QuizApp" ng-controller="MainController" ng-init="init({ 'templates': 'build/templates' })">
 ```
 
-###Pluginin upotus
+init-funktion parametrit:
+
+*templates*: polku template-tiedostoihin, oletuksena polku build/templates.
+
+###Kyselyn upotus
 
 ```
-<div ng-controller="QuizController" ng-init="init(1)" quiz>
+<div ng-controller="QuizController" ng-init="init({ 'id': 1 })" quiz>
         <div ng-include="view"></div>
 </div>
 ```
+
+init-funktion parametrit:
+
+*id*: upotettavan kyselyn id.
