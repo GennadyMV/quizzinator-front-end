@@ -20,7 +20,7 @@
 
 init-funktion parametrit:
 
-*templates*: polku template-tiedostoihin, oletuksena polku build/templates.
+* *templates*: polku template-tiedostoihin, oletuksena polku build/templates.
 
 ###Kyselyn upotus
 
@@ -32,4 +32,4 @@ init-funktion parametrit:
 
 init-funktion parametrit:
 
-*id*: upotettavan kyselyn id.
+* *id*: upotettavan kyselyn id.
