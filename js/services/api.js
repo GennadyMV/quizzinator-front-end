@@ -1,6 +1,7 @@
 QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormatter){
 	var _public = {};
 
+	//var API_URL = 'http://t-aale.users.cs.helsinki.fi';
 	var API_URL = 'http://localhost:8080';
 
 	_public.get_quiz = function(options){
@@ -25,6 +26,8 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 		    },
 			data: angular.toJson({ answer: angular.toJson(AnswerFormatter.output(options.quiz)), user: options.user })
 		}).success(function(peer_reviews){
+			if(!peer_reviews) options.success([]);
+
 			peer_reviews.forEach(function(review){
 				review.answer = angular.fromJson(review.answer);
 				review.selected = false;

@@ -88,6 +88,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 	_public.output = function(quiz){
 		var answers = [];
+		if (!quiz) return [];
 
 		quiz.items.forEach(function(item){
 			if(typeof output_formatters[item.item_type] === 'function'){
