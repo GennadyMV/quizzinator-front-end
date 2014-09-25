@@ -131,8 +131,8 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 			});
 		}
 
-		if($scope.view != 'js/views/login.html' && $scope.username == null){
-			$scope.view = 'js/views/login.html';
+		if($scope.view != get_path('login.html') && $scope.username == null){
+			$scope.view = get_path('login.html');
 		}
 	});
 
