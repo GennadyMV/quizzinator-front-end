@@ -2,6 +2,9 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 	$scope.username = $scope.$parent.username;
 	$scope.show_quiz = true;
 
+	/*
+	*	id: id of the quiz, f.e. { id: 1 }.
+	*/
 	$scope.init = function(options){
 		options = angular.fromJson(options);
 
@@ -24,6 +27,9 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 		}
 	}
 
+	/*
+	*	type: type of the widget, f.e 'open_question'.
+	*/
 	$scope.widget_view = function(type){
 		return get_path('widgets/' + type + '.html');
 	}
@@ -85,6 +91,9 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 		$scope.$parent.username = null;
 	}
 
+	/*
+	*	review: review object to choose.
+	*/
 	$scope.choose_review = function(review){
 		$scope.peer_reviews.forEach(function(r){
 			r.selected = false;
@@ -93,6 +102,9 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 		review.selected = true;
 	}
 
+	/*
+	*	perr_review_content: content of the review
+	*/
 	$scope.send_peer_review = function(peer_review_content){
 		var selected_peer = $.grep($scope.peer_reviews, function(peer){
 			return peer.selected;
@@ -131,11 +143,15 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 			});
 		}
 
-		if($scope.view != 'js/views/login.html' && $scope.username == null){
-			$scope.view = 'js/views/login.html';
+		if($scope.view != get_path('login.html') && $scope.username == null){
+			$scope.view = get_path('login.html');
 		}
 	});
 
+
+	/*
+	*	template: file name of the template.
+	*/
 	function get_path(template){
 		return $scope.$parent.templates_path + '/' + template;
 	}
