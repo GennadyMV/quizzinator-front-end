@@ -23,7 +23,7 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 			headers: {
 		       "Content-Type": "application/json"
 		    },
-			data: angular.toJson({ answer: angular.toJson(AnswerFormatter.output(options.quiz)), user: options.user, ip: "192.168.0.0" })
+			data: angular.toJson({ answer: angular.toJson(AnswerFormatter.output(options.quiz)), user: options.user })
 		}).success(function(peer_reviews){
 			peer_reviews.forEach(function(review){
 				review.answer = angular.fromJson(review.answer);
