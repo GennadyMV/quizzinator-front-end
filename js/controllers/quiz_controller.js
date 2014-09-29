@@ -1,4 +1,4 @@
-QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', function($scope, Authentication, API){
+QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API', function($scope, $sce, Authentication, API){
 	$scope.username = $scope.$parent.username;
 	$scope.show_quiz = true;
 
@@ -45,6 +45,7 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 		$scope.$parent.username = $scope.new_username;
 
 		$scope.new_username = '';
+		$scope.quiz.answered = false;
 		$scope.show_username_form = false;
 	}
 
@@ -61,6 +62,8 @@ QuizApp.controller('QuizController', ['$scope', 'Authentication', 'API', functio
 					$scope.view = get_path('peer_review_form.html');
 					$scope.peer_review_content = '';
 				}
+
+				$scope.quiz.answered = true;
 			},
 			error: function(){
 				$scope.view = get_path('error.html');

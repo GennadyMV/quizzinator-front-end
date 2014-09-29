@@ -11,7 +11,10 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 	var input_formatters = {
 		open_question: function(item){
-			return basic_input_formatter(item, 'open_question');
+			var format = basic_input_formatter(item, 'open_question');
+			format['max_length'] = item.max_length;
+
+			return format;
 		},
 		multiple_choice_question: function(item){
 			var format = basic_input_formatter(item, 'multiple_choice_question');
@@ -34,6 +37,39 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			var format = basic_input_formatter(item, 'text_container');
 			format['content'] = $sce.trustAsHtml(item.content);
 			delete format['value'];
+
+			return format;
+		},
+		code_sample: function(item){
+			var format = basic_input_formatter(item, 'code_sample');
+			format['code'] = item.code;
+			delete format['value'];
+
+			return format;
+		},
+		scale_question: function(item){
+			var format = basic_input_formatter(item, 'scale_question');
+			
+			delete format['value'];
+			delete format['question'];
+
+			format['title'] = item.title;
+			format['questions'] = [];
+			format['min'] = item.min;
+			format['max'] = item.max;
+			format['scale'] = [];
+
+			for(var i = item.min.value; i <= item.max.value; i++){
+				format['scale'].push(i);
+			}
+
+			questions = item.questions.split('\n');
+			questions.forEach(function(question){
+				format['questions'].push({
+					question: question,
+					value: null
+				});
+			});
 
 			return format;
 		}
@@ -88,6 +124,8 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 	_public.output = function(quiz){
 		var answers = [];
+		
+		if (!quiz) return [];
 
 		quiz.items.forEach(function(item){
 			if(typeof output_formatters[item.item_type] === 'function'){

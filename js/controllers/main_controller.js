@@ -2,6 +2,9 @@ QuizApp.controller('MainController', ['$scope', 'Authentication', function($scop
 	$scope.username = Authentication.get_user();
 	$scope.templates_path = 'build/templates';
 
+
+	$scope.koodi = "saddasd";
+
 	$scope.init = function(options){
 		options = angular.fromJson(options);
 

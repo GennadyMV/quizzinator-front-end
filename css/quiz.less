@@ -77,6 +77,53 @@ a:hover{
 		color: rgb(160,160,160);
 	}
 
+	.text-left{
+		text-align: left;
+	}
+
+	.text-right{
+		text-aling: right;
+	}
+
+	.text-center{
+		text-align: center;
+	}
+
+	.scale-header{
+		padding: 10px;
+	}
+
+	.scale-question-list{
+		overflow: hidden;
+		border-bottom: 1px solid darken(white, 10%);
+		padding: 10px;
+
+		&:last-child{
+			border-bottom: 0px none;
+		}
+	}
+
+	.scale-reminder{
+		overflow: hidden;
+		margin-bottom: 20px;
+	}
+
+	.scale-grid{
+		overflow: hidden;
+
+		.grid-item{
+			float: left;
+		}
+	}
+
+	@media screen and (max-width: 800px){
+		.scale-grid{
+			.grid-item{
+				width: 100% !important;
+			}
+		}
+	}
+
 	&.quiz-panel{
 		box-shadow: 0px 0px 2px darken(white, 10%);
 		color: rgb(100,100,100);
@@ -99,7 +146,7 @@ a:hover{
 		}
 
 		.quiz-panel-user-info{
-			border-bottom: 1px solid darken(white, 15%);
+			border-top: 1px solid darken(white, 15%);
 			padding: 15px;
 		}
 

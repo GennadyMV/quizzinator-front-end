@@ -23,15 +23,23 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['js/app.js', 'js/services/*.js', 'js/directives/*.js', 'js/controllers/*.js', 'css/quiz.less'],
-      tasks: ['uglify', 'less']
+      tasks: ['uglify', 'less', 'cssmin']
+    },
+    cssmin: {
+    combine: {
+      files: {
+        'build/quiz.min.css': ['build/quiz.min.css', 'css/*.css']
+      }
     }
+  }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify','less', 'watch']);
+  grunt.registerTask('default', ['uglify', 'less', 'cssmin', 'watch']);
 
 };
