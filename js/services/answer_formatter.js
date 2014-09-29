@@ -84,7 +84,24 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 	var output_formatters = {
 		open_question: function(item){
-			return basic_output_formatter(item);
+			var format = basic_output_formatter(item);
+			
+			if(item['max_length']){
+				format['value'] = format['value'].substring(0, item['max_length']);
+			}
+
+ 			return format;
+		},
+		scale_question: function(item){
+			var format = basic_output_formatter(item);
+
+			format['question'] = item['title'];
+			format['value'] = item['questions'];
+
+			console.log(format)
+
+			return format;
+
 		},
 		multiple_choice_question: function(item){
 			return basic_output_formatter(item);
@@ -128,6 +145,8 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		if (!quiz) return [];
 
 		quiz.items.forEach(function(item){
+			console.log(item.item_type);
+			
 			if(typeof output_formatters[item.item_type] === 'function'){
 				answers.push(output_formatters[item.item_type](item));
 			}
