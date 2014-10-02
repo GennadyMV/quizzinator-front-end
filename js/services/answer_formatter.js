@@ -5,25 +5,25 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		return {
 			question: item.question,
 			value: '',
-			item_type: type
+			item_type: item.item_type
 		}
 	}
 
 	var input_formatters = {
 		open_question: function(item){
-			var format = basic_input_formatter(item, 'open_question');
+			var format = basic_input_formatter(item);
 			format['max_length'] = item.max_length;
 
 			return format;
 		},
 		multiple_choice_question: function(item){
-			var format = basic_input_formatter(item, 'multiple_choice_question');
+			var format = basic_input_formatter(item);
 			format['options'] = item.options;
 
 			return format;
 		},
 		checkbox_question: function(item){
-			var format = basic_input_formatter(item, 'checkbox_question');
+			var format = basic_input_formatter(item);
 			format['checkboxes'] = $.map(item.checkboxes, function(checkbox){
 				return {
 					title: checkbox.title,
@@ -34,21 +34,21 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			return format;
 		},
 		text_container: function(item){
-			var format = basic_input_formatter(item, 'text_container');
+			var format = basic_input_formatter(item);
 			format['content'] = $sce.trustAsHtml(item.content);
 			delete format['value'];
 
 			return format;
 		},
 		code_sample: function(item){
-			var format = basic_input_formatter(item, 'code_sample');
+			var format = basic_input_formatter(item);
 			format['code'] = item.code;
 			delete format['value'];
 
 			return format;
 		},
 		scale_question: function(item){
-			var format = basic_input_formatter(item, 'scale_question');
+			var format = basic_input_formatter(item);
 			
 			delete format['value'];
 			delete format['question'];
@@ -78,7 +78,8 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 	function basic_output_formatter(item){
 		return {
 			question: item.question,
-			value: item.value
+			value: item.value,
+			item_type: item.item_type
 		}
 	}
 
@@ -126,6 +127,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			title: quiz.title,
 			answered: quiz.answered,
 			id: quiz.id,
+			is_open: quiz.isOpen,
 			items: []
 		}
 

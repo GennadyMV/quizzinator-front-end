@@ -9,10 +9,7 @@
 		<div class="peer-review-answer" ng-repeat="review in peer_reviews">
 			<div class="peer-review-answer-body" ng-click="choose_review(review)" ng-class="{ 'selected': review.selected }">
 				<h2 class="peer-review-user"><i class="fa fa-user"></i> {{review.user}}</h2>
-				<div class="form-item" ng-repeat="answer in review.answer">
-					<label>{{answer.question}}</label>
-					{{answer.value}}
-				</div>
+				<div class="form-item" ng-repeat="answer in review.answer" ng-include="answer_view(answer.item_type)"></div>
 			</div>
 		</div>
 	</div>

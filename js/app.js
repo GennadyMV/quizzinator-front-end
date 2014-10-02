@@ -1,1 +1,1 @@
-var QuizApp = angular.module('QuizApp', ['ngAnimate']);
+var QuizApp = angular.module('QuizApp', ['ngAnimate', 'templates']);

@@ -66,11 +66,21 @@ a:hover{
 	font-family: 'Roboto', sans-serif;
 	font-size: 0.9em;
 	
+	.list-unstyled{
+		margin: 0px;
+		padding: 0px;
+		list-style-type: none;
+	}
+
 	.alert-error{
 		background-color: lighten(@red, 45%);
 		color: @red;
 		padding: 15px;
 		border-radius: 3px;
+	}
+
+	input[type='radio']{
+		box-shadow: none;
 	}
 
 	.text-muted{
@@ -137,7 +147,16 @@ a:hover{
 			font-size: 1.2em;
 			border-bottom: 1px solid darken(white, 15%);
 
+			&:hover{
+				.background-gradient(lighten(white, 5%), darken(white, 3%));
+			}
+
+			&:active{
+				.background-gradient(darken(white, 5%), darken(white, 13%));
+			}
+
 			.toggle-quiz{
+				cursor: pointer;
 				background-color: transparent;
 				border: 0px none;
 				font-size: 1.2em;

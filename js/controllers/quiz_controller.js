@@ -1,6 +1,5 @@
 QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API', function($scope, $sce, Authentication, API){
 	$scope.username = $scope.$parent.username;
-	$scope.show_quiz = true;
 
 	/*
 	*	id: id of the quiz, f.e. { id: 1 }.
@@ -32,6 +31,13 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 	*/
 	$scope.widget_view = function(type){
 		return get_path('widgets/' + type + '.html');
+	}
+
+	/*
+	* type: type of answer, f.e 'open-question'.
+	*/
+	$scope.answer_view = function(type){
+		return get_path('answers/' + type + '.html');
 	}
 
 	$scope.toggle_username_form = function(){
@@ -106,7 +112,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 	}
 
 	/*
-	*	perr_review_content: content of the review
+	*	peer_review_content: content of the review
 	*/
 	$scope.send_peer_review = function(peer_review_content){
 		var selected_peer = $.grep($scope.peer_reviews, function(peer){
@@ -127,7 +133,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 	}
 
 	$scope.toggle_quiz = function(){
-		$scope.show_quiz = !$scope.show_quiz;
+		$scope.quiz.is_open = !$scope.quiz.is_open;
 	}
 
 	$scope.$parent.$watch('username', function(new_val, old_val){
