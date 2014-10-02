@@ -15,12 +15,8 @@
 ###BODY-tagi
 
 ```
-<body ng-app="QuizApp" ng-controller="MainController" ng-init="init({ 'templates': 'build/templates' })">
+<body ng-app="QuizApp" ng-controller="MainController">
 ```
-
-init-funktion parametrit:
-
-* *templates*: polku template-tiedostoihin, oletuksena polku build/templates.
 
 ###Kyselyn upotus
 
