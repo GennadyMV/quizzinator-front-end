@@ -68,8 +68,8 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 					$scope.view = get_path('peer_review_form.html');
 					$scope.peer_review_content = '';
 				}
-                                console.log("userhash: " + answer_response.userhash);
-
+                                
+                                $scope.userhash = answer_response.userhash;
 				$scope.quiz.answered = true;
 			},
 			error: function(){

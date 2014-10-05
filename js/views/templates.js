@@ -4,7 +4,8 @@ angular.module("../js/views/answered.html", []).run(["$templateCache", function(
   $templateCache.put("../js/views/answered.html",
     "<div class=\"quiz-panel-heading\">Done!</div>\n" +
     "<div class=\"quiz-panel-body\">\n" +
-    "	Thanks for answering this quiz!\n" +
+    "        Thanks for answering this quiz!\n" +
+    "        You can check your review later with this hash: {{userhash}}\n" +
     "	<p style=\"margin: 15px 0px 0px 0px\">\n" +
     "		<button class=\"btn-blue\" ng-click=\"logout()\">\n" +
     "			<i class=\"fa fa-sign-out\"></i> Log out\n" +

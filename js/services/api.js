@@ -26,7 +26,7 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 		    },
 			data: angular.toJson({ answer: angular.toJson(AnswerFormatter.output(options.quiz)), user: options.user })
 		}).success(function(answer_response){
-			if(!answer_response) options.success([]);
+			if(!answer_response.answers) options.success([]);
 
 			answer_response.answers.forEach(function(review){
 				review.answer = angular.fromJson(review.answer);
