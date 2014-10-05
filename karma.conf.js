@@ -18,6 +18,7 @@ module.exports = function(config) {
         'vendor/dependencies/jquery.min.js',
         'vendor/dependencies/angular.min.js',
         'vendor/dependencies/*.js',
+        'js/views/templates.js',
         'vendor/*.js',
         'js/app.js',
         'js/services/*.js',

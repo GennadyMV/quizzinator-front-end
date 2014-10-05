@@ -1,7 +1,7 @@
 describe('QuizController', function(){
   	var ctrl, scope, AnswerFormatter;
 
-  	beforeEach(function(){
+  beforeEach(function(){
 		module('QuizApp');
 
 		inject(function(_AnswerFormatter_){
@@ -18,17 +18,25 @@ describe('QuizController', function(){
   				  if(options.id == 2) {
               options.error();
             } else {
-              options.success(AnswerFormatter.input({id:1,
+              options.success(AnswerFormatter.input({id: options.id,
   				    title:"hurr durr?",
-  					  items:JSON.stringify([{question:"derpderpderp",item_type:"open_question",$$hashKey:"003"}]),
+  					  items:angular.toJson([{question:"derpderpderp",item_type:"open_question"}]),
   					  quizAnswers:[],
   					  reviewable:true
   					}));
           }
   			},
   			answer_quiz: function(options) {
-          if(options.id == 3){
-            options.success([{id:1,user:"124",url:null,answer:[{question:"kkk",value:"kokeilu"}],new:false}])
+          if(options.quiz.id == 3){
+            options.success([
+              {
+                id: 1,
+                user: 'kalle',
+                ip: '',
+                url: null,
+                answer: [{"question":"what's up?","value":"jees!","item_type":"open_question"}]
+              }
+            ]);
           } else {
   				  options.success([]);
   			}}
@@ -89,9 +97,9 @@ describe('QuizController', function(){
       expect(scope.view).toContain('answered.html');
     });
 
-    it('should show proper view when review is not empty'), function() {
+    it('should show proper view when review is not empty', function() {
       scope.init({ 'id': 3 });
       scope.send_answer();
       expect(scope.view).toContain('peer_review_form.html');
-    }
+    });
 });
