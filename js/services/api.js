@@ -25,15 +25,15 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 		       "Content-Type": "application/json"
 		    },
 			data: angular.toJson({ answer: angular.toJson(AnswerFormatter.output(options.quiz)), user: options.user })
-		}).success(function(peer_reviews){
-			if(!peer_reviews) options.success([]);
+		}).success(function(answer_response){
+			if(!answer_response) options.success([]);
 
-			peer_reviews.forEach(function(review){
+			answer_response.answers.forEach(function(review){
 				review.answer = angular.fromJson(review.answer);
 				review.selected = false;
 			});
 
-			options.success(peer_reviews);
+			options.success(answer_response);
 		}).error(function(){
 			options.error();
 		});

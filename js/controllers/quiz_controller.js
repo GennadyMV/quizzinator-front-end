@@ -59,15 +59,16 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 		API.answer_quiz({
 			quiz: $scope.quiz,
 			user: Authentication.get_user(),
-			success: function(peer_reviews){
-				if(!peer_reviews || peer_reviews.length == 0){
+			success: function(answer_response){
+				if(!answer_response || !answer_response.answers || answer_response.answers.length == 0){
 					$scope.view = get_path('answered.html');
 				}else{
-					$scope.peer_reviews = peer_reviews;
+					$scope.peer_reviews = answer_response.answers;
 					$scope.peer_reviews[0].selected = true;
 					$scope.view = get_path('peer_review_form.html');
 					$scope.peer_review_content = '';
 				}
+                                console.log("userhash: " + answer_response.userhash);
 
 				$scope.quiz.answered = true;
 			},
