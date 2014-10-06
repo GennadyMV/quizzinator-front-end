@@ -52,5 +52,6 @@ module.exports = function(grunt) {
   // Default task(s).
   grunt.registerTask('template-cache', ['html2js']);
   grunt.registerTask('default', ['uglify', 'less', 'cssmin', 'html2js', 'watch']);
+  grunt.registerTask('build', ['uglify', 'less', 'cssmin', 'html2js']);
 
 };

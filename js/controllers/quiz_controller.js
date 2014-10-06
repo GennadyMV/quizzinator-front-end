@@ -60,7 +60,9 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 			quiz: $scope.quiz,
 			user: Authentication.get_user(),
 			success: function(answer_response){
-				if(!answer_response || !answer_response.answers || answer_response.answers.length == 0){
+                                console.log(answer_response);
+                                $scope.userhash = answer_response.userhash;
+				if(!answer_response.answers || answer_response.answers.length == 0){
 					$scope.view = get_path('answered.html');
 				}else{
 					$scope.peer_reviews = answer_response.answers;
@@ -69,7 +71,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 					$scope.peer_review_content = '';
 				}
                                 
-                                $scope.userhash = answer_response.userhash;
+                                console.log($scope.userhash);
 				$scope.quiz.answered = true;
 			},
 			error: function(){
