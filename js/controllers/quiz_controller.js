@@ -71,11 +71,8 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 					$scope.peer_review_content = '';
 				}
                                 
-<<<<<<< HEAD
                 $scope.userhash = answer_response.userhash;
-=======
                                 console.log($scope.userhash);
->>>>>>> 37311a28cbf189b97ff95feb3c68f67fa25f8e92
 				$scope.quiz.answered = true;
 			},
 			error: function(){
