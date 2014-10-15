@@ -46,7 +46,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 
 	$scope.change_username = function(){
 		Authentication.log_user($scope.new_username);
-		
+
 		$scope.username = $scope.new_username;
 		$scope.$parent.username = $scope.new_username;
 
@@ -60,23 +60,13 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 			quiz: $scope.quiz,
 			user: Authentication.get_user(),
 			success: function(answer_response){
-                                console.log(answer_response);
-                                $scope.userhash = answer_response.userhash;
-				if(!answer_response.answers || answer_response.answers.length == 0){
-					$scope.view = get_path('answered.html');
-				}else{
-					$scope.peer_reviews = answer_response.answers;
-					$scope.peer_reviews[0].selected = true;
-					$scope.view = get_path('peer_review_form.html');
-					$scope.peer_review_content = '';
-				}
-                                
-<<<<<<< HEAD
-                $scope.userhash = answer_response.userhash;
-=======
-                                console.log($scope.userhash);
->>>>>>> 37311a28cbf189b97ff95feb3c68f67fa25f8e92
+        $scope.userhash = answer_response.userhash;
+
+				$scope.$parent.new_peer_review = { title: $scope.quiz.title, id: $scope.quiz_id, peer_reviews: answer_response.answers, userhash: answer_response.userhash };
+
 				$scope.quiz.answered = true;
+
+				$scope.view = get_path('answered.html');
 			},
 			error: function(){
 				$scope.view = get_path('error.html');
@@ -105,38 +95,6 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 		Authentication.log_out_user();
 
 		$scope.$parent.username = null;
-	}
-
-	/*
-	*	review: review object to choose.
-	*/
-	$scope.choose_review = function(review){
-		$scope.peer_reviews.forEach(function(r){
-			r.selected = false;
-		});
-
-		review.selected = true;
-	}
-
-	/*
-	*	peer_review_content: content of the review
-	*/
-	$scope.send_peer_review = function(peer_review_content){
-		var selected_peer = $.grep($scope.peer_reviews, function(peer){
-			return peer.selected;
-		})[0];
-
-		API.send_peer_review({
-			reviewer: $scope.username,
-			quiz: $scope.quiz,
-			review: { id: selected_peer.id, content: peer_review_content },
-			success: function(){
-				$scope.view = get_path('answered.html');
-			},
-			error: function(){
-				$scope.view = get_path('error.html');
-			}
-		});	
 	}
 
 	$scope.toggle_quiz = function(){

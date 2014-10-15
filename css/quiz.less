@@ -65,7 +65,7 @@ a:hover{
 .quiz-container{
 	font-family: 'Roboto', sans-serif;
 	font-size: 0.9em;
-	
+
 	.list-unstyled{
 		margin: 0px;
 		padding: 0px;
@@ -112,6 +112,38 @@ a:hover{
 			border-bottom: 0px none;
 		}
 	}
+
+  .slider-table{
+    width: 100%;
+    max-width: 800px;
+
+    .slider-question{
+      vertical-align: top;
+      width: 40%;
+      font-weight: bold;
+    }
+
+    .slider-slider{
+      vertical-align: top;
+      width: 60%;
+
+      input[type='range']{
+        width: 100%;
+      }
+
+      .slider-range{
+        overflow: hidden;
+
+        .slider-range-min{
+          float:left;
+        }
+
+        .slider-range-max{
+          float: right;
+        }
+      }
+    }
+  }
 
 	.scale-reminder{
 		overflow: hidden;
@@ -218,9 +250,9 @@ a:hover{
 		}
 
 		.text-field{
-			-webkit-box-sizing: border-box; 
-    	 	-moz-box-sizing: border-box;    
-     		box-sizing: border-box; 
+			-webkit-box-sizing: border-box;
+    	 	-moz-box-sizing: border-box;
+     		box-sizing: border-box;
 			border-radius: 3px;
 			padding: 8px 10px;
 			box-shadow: inset 0px 2px 2px darken(white, 10%);
@@ -235,10 +267,10 @@ a:hover{
 				border: 1px solid darken(white, 28%);
 			}
 		}
-		
+
 		.peer-review{
 			overflow: hidden;
-			
+
 			.peer-review-candidate{
 				width: 50%;
 				float: left;

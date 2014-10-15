@@ -23,19 +23,17 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 			dataType: 'json',
 			headers: {
 		       "Content-Type": "application/json"
-		    },
+		  },
 			data: angular.toJson({ answer: angular.toJson(AnswerFormatter.output(options.quiz)), user: options.user })
 		}).success(function(answer_response){
 			if(!answer_response) options.success([]);
-                        
-			if(answer_response.answers) {
 
-                            answer_response.answers.forEach(function(review){
-                                    review.answer = angular.fromJson(review.answer);
-                                    review.selected = false;
-                            });
-                        
-                        }
+			if(answer_response.answers) {
+          answer_response.answers.forEach(function(review){
+            review.answer = angular.fromJson(review.answer);
+            review.selected = false;
+          });
+      }
 
 			options.success(answer_response);
 		}).error(function(){
@@ -46,18 +44,18 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 	_public.send_peer_review = function(options){
 		$http({
 			method: 'POST',
-			url: API_URL + '/quiz/' + options.quiz.id + '/answer/' + options.review.id + '/review', 
+			url: API_URL + '/quiz/' + options.quiz + '/answer/' + options.review.id + '/review',
 			dataType: 'json',
 			headers: {
 		       "Content-Type": "application/json"
-		    },
-		    data: angular.toJson({ reviewer: options.reviewer, review: options.review.content })
+		  },
+		  data: angular.toJson({ reviewer: options.reviewer, review: options.review.content })
 		}).success(function(){
 			options.success();
 		}).error(function(){
 			options.error();
 		});
 	}
-	
+
 	return _public;
 }]);

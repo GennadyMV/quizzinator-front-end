@@ -28,15 +28,18 @@ describe('QuizController', function(){
   			},
   			answer_quiz: function(options) {
           if(options.quiz.id == 3){
-            options.success([
+            options.success(
               {
-                id: 1,
-                user: 'kalle',
-                ip: '',
-                url: null,
-                answer: [{"question":"what's up?","value":"jees!","item_type":"open_question"}]
-              }
-            ]);
+                answers: [
+                  {
+                    id: 1,
+                    user: 'kalle',
+                    ip: '',
+                    url: null,
+                    answer: [{"question":"what's up?","value":"jees!","item_type":"open_question"}]
+                  }
+                ]
+              });
           } else {
   				  options.success([]);
   			}}
@@ -90,7 +93,7 @@ describe('QuizController', function(){
       scope.init({ 'id': 2 });
       expect(scope.view).toContain('error.html');
     });
-    
+
     it('should show proper view when review is empty', function() {
       scope.init({ 'id': 1 });
       scope.send_answer();

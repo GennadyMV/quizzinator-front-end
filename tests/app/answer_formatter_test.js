@@ -9,9 +9,15 @@ describe('AnswerFormatter', function(){
 		});
 	});
 
+	it('should manipulate open question correctly', function(){
+		var ouput = AnswerFormatter.output(
+			
+		)
+	});
+
 	it('should manipulate open question answer if max length is set', function(){
 		var output = AnswerFormatter.output(
-			{ 
+			{
 				items: [
 					{
 						question: 'Waddup?',
@@ -28,7 +34,7 @@ describe('AnswerFormatter', function(){
 
 	it('should not manipulate open question answer length if max length not set', function(){
 		var output = AnswerFormatter.output(
-			{ 
+			{
 				items: [
 					{
 						question: 'Waddup?',

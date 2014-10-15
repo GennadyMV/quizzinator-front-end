@@ -1,4 +1,4 @@
-angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/open_question.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/text_container.html']);
+angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/open_question.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
 
 angular.module("../js/views/answered.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answered.html",
@@ -36,30 +36,41 @@ angular.module("../js/views/login.html", []).run(["$templateCache", function($te
     "</div>");
 }]);
 
+angular.module("../js/views/peer_review_done.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../js/views/peer_review_done.html",
+    "<div class=\"quiz-panel-heading\">Done!</div>\n" +
+    "<div class=\"quiz-panel-body\">\n" +
+    "    Thanks for the peer reviews!\n" +
+    "</div>\n" +
+    "");
+}]);
+
 angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/peer_review_form.html",
-    "<div class=\"quiz-panel-heading\">Choose an answer to review</div>\n" +
+    "<div class=\"quiz-panel-heading\">\"{{title}}\" peer reviews</div>\n" +
     "<div class=\"quiz-panel-body\">\n" +
+    "	<p class=\"text-muted text-center\">Round {{current_round}}/{{rounds}}</p>\n" +
     "	<form name=\"peer_review_{{$parent.quiz.id}}\">\n" +
     "		<div class=\"form-item\">\n" +
     "			<label>You review</label>\n" +
-    "			<textarea class=\"text-field\" rows=\"4\" ng-model=\"peer_review_content\" ng-required=\"true\"></textarea>\n" +
+    "			<textarea class=\"text-field\" rows=\"4\" ng-model=\"$parent.peer_review_content\" ng-required=\"true\"></textarea>\n" +
     "		</div>\n" +
-    "		<button class=\"btn-blue\" ng-disabled=\"peer_review_{{$parent.quiz.id}}.$invalid\" ng-click=\"send_peer_review(peer_review_content)\"><i class=\"fa fa-send\"></i> Send</button>\n" +
-    "		\n" +
+    "		<button class=\"btn-blue\" ng-disabled=\"peer_review_{{$parent.quiz.id}}.$invalid\" ng-click=\"send_peer_review()\"><i class=\"fa fa-send\"></i> Send</button>\n" +
+    "\n" +
     "		<p class=\"text-muted\" style=\"margin-bottom: 0px\" ng-show=\"peer_review_{{$parent.quiz.id}}.$invalid\">\n" +
     "			Please, write your review before sending\n" +
     "		</p>\n" +
     "	</form>\n" +
     "	<div class=\"peer-review-container\">\n" +
-    "		<div class=\"peer-review-answer\" ng-repeat=\"review in peer_reviews\">\n" +
+    "		<div class=\"peer-review-answer\" ng-repeat=\"review in current_peer_reviews\">\n" +
     "			<div class=\"peer-review-answer-body\" ng-click=\"choose_review(review)\" ng-class=\"{ 'selected': review.selected }\">\n" +
-    "				<h2 class=\"peer-review-user\"><i class=\"fa fa-user\"></i> {{review.user}}</h2>\n" +
+    "				<h2 class=\"peer-review-user\"><i class=\"fa fa-user\"></i> {{review.user || 'Anonymous'}}</h2>\n" +
     "				<div class=\"form-item\" ng-repeat=\"answer in review.answer\" ng-include=\"answer_view(answer.item_type)\"></div>\n" +
     "			</div>\n" +
     "		</div>\n" +
     "	</div>\n" +
-    "</div>");
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function($templateCache) {
@@ -110,7 +121,8 @@ angular.module("../js/views/answers/multiple_choice_question.html", []).run(["$t
 angular.module("../js/views/answers/open_question.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answers/open_question.html",
     "<label>{{answer.question}}</label>\n" +
-    "{{answer.value}}");
+    "{{answer.value}}\n" +
+    "");
 }]);
 
 angular.module("../js/views/answers/scale_question.html", []).run(["$templateCache", function($templateCache) {
@@ -119,6 +131,13 @@ angular.module("../js/views/answers/scale_question.html", []).run(["$templateCac
     "<span ng-repeat=\"question in answer.value\">\n" +
     "	{{question.question}} <span class=\"text-muted\">{{question.value}}</span><span ng-show=\"$index != answer.value.length - 1\">, </span>\n" +
     "</span>\n" +
+    "");
+}]);
+
+angular.module("../js/views/answers/slider_question.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../js/views/answers/slider_question.html",
+    "<label>{{answer.question}}</label>\n" +
+    "{{answer.value}}\n" +
     "");
 }]);
 
@@ -174,6 +193,31 @@ angular.module("../js/views/widgets/scale_question.html", []).run(["$templateCac
     "	<div class=\"grid-item\" ng-repeat=\"iterator in item.scale\" style=\"width: {{65 / item.scale.length}}%\"><label><input type=\"radio\" ng-model=\"question.value\" value=\"{{iterator}}\" ng-required=\"true\"> {{iterator}}</label></div>\n" +
     "	<div class=\"grid-item\" style=\"width: 10%\"></div>\n" +
     "</div>\n" +
+    "");
+}]);
+
+angular.module("../js/views/widgets/slider_question.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../js/views/widgets/slider_question.html",
+    "<table class=\"slider-table\">\n" +
+    "  <tr>\n" +
+    "    <td class=\"slider-question\">\n" +
+    "      {{item.question}}\n" +
+    "    </td>\n" +
+    "\n" +
+    "    <td class=\"slider-slider\">\n" +
+    "      <input type=\"range\" max=\"{{item.max.value}}\" min=\"{{item.min.value}}\" ng-model=\"item.value\" slider>\n" +
+    "\n" +
+    "      <div class=\"slider-range\">\n" +
+    "        <div class=\"slider-range-min text-muted\">\n" +
+    "          {{item.min.title}}\n" +
+    "        </div>\n" +
+    "        <div class=\"slider-range-max text-muted\">\n" +
+    "          {{item.max.title}}\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "    </td>\n" +
+    "  </tr>\n" +
+    "<table>\n" +
     "");
 }]);
 
