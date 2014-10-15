@@ -105,4 +105,17 @@ describe('QuizController', function(){
       scope.send_answer();
       expect(scope.view).toContain('peer_review_form.html');
     });
+
+    it('shloud be open if it has not been set to be closed', function() {
+      scope.init({'id': 1});
+      scope.toggle_quiz();
+      expect(scope.quiz.is_open).toBe(true);
+    })
+
+    it('should show correctly when quiz is set to be closed', function() {
+      scope.init({'id': 1});
+      scope.toggle_quiz();
+      scope.toggle_quiz();
+      expect(scope.quiz.is_open).toBe(false);
+    })
 });
