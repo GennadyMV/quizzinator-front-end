@@ -11,7 +11,6 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', function($scope, AP
     options = angular.fromJson(options);
 
     $scope.id = options.id;
-    console.log($scope.id);
   }
 
   /*

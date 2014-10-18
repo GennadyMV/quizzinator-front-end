@@ -11,7 +11,8 @@ angular.module("../js/views/answered.html", []).run(["$templateCache", function(
     "			<i class=\"fa fa-sign-out\"></i> Log out\n" +
     "		</button>\n" +
     "	</p>\n" +
-    "</div>");
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("../js/views/error.html", []).run(["$templateCache", function($templateCache) {

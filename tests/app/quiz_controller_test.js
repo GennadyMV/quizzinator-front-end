@@ -94,18 +94,6 @@ describe('QuizController', function(){
       expect(scope.view).toContain('error.html');
     });
 
-    it('should show proper view when review is empty', function() {
-      scope.init({ 'id': 1 });
-      scope.send_answer();
-      expect(scope.view).toContain('answered.html');
-    });
-
-    it('should show proper view when review is not empty', function() {
-      scope.init({ 'id': 3 });
-      scope.send_answer();
-      expect(scope.view).toContain('peer_review_form.html');
-    });
-
     it('shloud be open if it has not been set to be closed', function() {
       scope.init({'id': 1});
       scope.toggle_quiz();
