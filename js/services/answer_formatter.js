@@ -1,5 +1,6 @@
 QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 	var _public = {};
+        var _apiurl;
 
 	var basic_input_formatter = function(item, type){
 		return {
@@ -81,7 +82,15 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			format['max'] = item.max;
 
 			return format;
-		}
+		},
+                image: function(item){
+			var format = basic_input_formatter(item);
+			format['imageUrl'] = _apiurl + "/images/" + item.imageId;
+			delete format['value'];
+			delete format['question'];
+
+			return format;
+                }
 	}
 
 	function basic_output_formatter(item){
@@ -131,7 +140,9 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		}
 	}
 
-	_public.input = function(quiz){
+	_public.input = function(quiz, apiurl){
+                _apiurl = apiurl;
+            
 		var formatted = {
 			title: quiz.title,
 			answered: quiz.answered,
@@ -142,6 +153,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 		var items = angular.fromJson(quiz.items);
 		items.forEach(function(item){
+			//console.log("in: " + item.item_type);
 			if(typeof input_formatters[item.item_type] === 'function'){
 				formatted.items.push(input_formatters[item.item_type](item));
 			}
@@ -156,7 +168,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		if (!quiz) return [];
 
 		quiz.items.forEach(function(item){
-			console.log(item.item_type);
+			console.log("out: " + item.item_type);
 
 			if(typeof output_formatters[item.item_type] === 'function'){
 				answers.push(output_formatters[item.item_type](item));
