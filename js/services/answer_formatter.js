@@ -47,6 +47,12 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 			return format;
 		},
+		image: function(item){
+			return {
+				item_type: 'image',
+				src: item.src
+			};
+		},
 		scale_question: function(item){
 			var format = basic_input_formatter(item);
 
