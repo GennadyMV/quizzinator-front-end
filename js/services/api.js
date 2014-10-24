@@ -10,7 +10,7 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 			url: API_URL + '/quiz/' + options.id,
 			params: { username: options.username }
 		}).success(function(quiz){
-			options.success(AnswerFormatter.input(quiz));
+			options.success(AnswerFormatter.input(quiz, API_URL));
 		}).error(function(){
 			options.error();
 		});

@@ -158,7 +158,7 @@ angular.module("../js/views/widgets/code_sample.html", []).run(["$templateCache"
 
 angular.module("../js/views/widgets/image.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/image.html",
-    "<img src=\"{{item.src}}\">\n" +
+    "<img ng-src=\"{{item.imageUrl}}\" alt=\"preview\" />\n" +
     "");
 }]);
 
