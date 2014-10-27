@@ -7,11 +7,13 @@
 </div>
 
 <div class="quiz-panel-body" ng-show="$parent.quiz.is_open">
-	<form name="quiz_form_{{$parent.quiz.id}}">
+	<form name="quiz_form_{{$parent.quiz.id}}" ng-hide="quiz.answering_expired">
 		<div class="form-item" ng-repeat="item in quiz.items" ng-include="widget_view(item.item_type)"></div>
 		<button class="btn-blue" ng-click="send_answer()" ng-disabled="quiz_form_{{$parent.quiz.id}}.$invalid"><i class="fa fa-send"></i> Send</button>
 		<p class="text-muted" style="margin-bottom: 0px;" ng-show="quiz_form_{{$parent.quiz.id}}.$invalid">Please, fill in all the fields before sending the quiz</p>
 	</form>
+
+	<div class="alert alert-info" ng-show="quiz.answering_expired">The deadline for answering this quiz has passed</div>
 </div>
 
 <div class="quiz-panel-user-info" ng-show="$parent.quiz.is_open">

@@ -1,9 +1,6 @@
 QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API', function($scope, $sce, Authentication, API){
 	$scope.username = $scope.$parent.username;
 
-	/*
-	*	id: id of the quiz, f.e. { id: 1 }.
-	*/
 	$scope.init = function(options){
 		options = angular.fromJson(options);
 
@@ -18,6 +15,8 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 				success: function(quiz){
 					$scope.quiz = quiz;
 					$scope.view = get_path('quiz_form.html');
+
+					$scope.$parent.quiz_info[quiz.id.toString()] = { title: quiz.title, answered: quiz.answered, answering_expired: quiz.answering_expired, reviewing_expired: quiz.reviewing_expired };
 				},
 				error: function(){
 					$scope.view = get_path('error.html');
@@ -26,16 +25,10 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 		}
 	}
 
-	/*
-	*	type: type of the widget, f.e 'open_question'.
-	*/
 	$scope.widget_view = function(type){
 		return get_path('widgets/' + type + '.html');
 	}
 
-	/*
-	* type: type of answer, f.e 'open-question'.
-	*/
 	$scope.answer_view = function(type){
 		return get_path('answers/' + type + '.html');
 	}
@@ -52,6 +45,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 
 		$scope.new_username = '';
 		$scope.quiz.answered = false;
+		$scope.$parent.quiz_info[$scope.quiz.id.toString()].answered = false;
 		$scope.show_username_form = false;
 	}
 
@@ -62,9 +56,9 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 			success: function(answer_response){
         $scope.userhash = answer_response.userhash;
 
-				$scope.$parent.new_peer_review = { title: $scope.quiz.title, id: $scope.quiz_id, peer_reviews: answer_response.answers, userhash: answer_response.userhash };
-
 				$scope.quiz.answered = true;
+
+				$scope.$parent.quiz_info[$scope.quiz.id.toString()].answered = true;
 
 				$scope.view = get_path('answered.html');
 			},
@@ -122,10 +116,6 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 		}
 	});
 
-
-	/*
-	*	template: file name of the template.
-	*/
 	function get_path(template){
 		return $scope.$parent.templates_path + '/' + template;
 	}

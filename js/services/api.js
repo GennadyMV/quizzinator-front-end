@@ -26,14 +26,24 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 		  },
 			data: angular.toJson({ answer: angular.toJson(AnswerFormatter.output(options.quiz)), user: options.user })
 		}).success(function(answer_response){
+			options.success(answer_response);
+		}).error(function(){
+			options.error();
+		});
+	}
+
+	_public.get_peer_reviews = function(options){
+		$http({
+			method: 'GET',
+			url: API_URL + '/quiz/' + options.quiz + '/review_answers',
+			params: { username: options.username }
+		}).success(function(answer_response){
 			if(!answer_response) options.success([]);
 
-			if(answer_response.answers) {
-          answer_response.answers.forEach(function(review){
-            review.answer = angular.fromJson(review.answer);
-            review.selected = false;
-          });
-      }
+			answer_response.forEach(function(review){
+				review.answer = angular.fromJson(review.answer);
+				review.selected = false;
+			});
 
 			options.success(answer_response);
 		}).error(function(){

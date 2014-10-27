@@ -1,4 +1,4 @@
-angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/image.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/open_question.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
+angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/sketchpad.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/image.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/open_question.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/sketchpad.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
 
 angular.module("../js/views/answered.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answered.html",
@@ -85,11 +85,13 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "</div>\n" +
     "\n" +
     "<div class=\"quiz-panel-body\" ng-show=\"$parent.quiz.is_open\">\n" +
-    "	<form name=\"quiz_form_{{$parent.quiz.id}}\">\n" +
+    "	<form name=\"quiz_form_{{$parent.quiz.id}}\" ng-hide=\"quiz.answering_expired\">\n" +
     "		<div class=\"form-item\" ng-repeat=\"item in quiz.items\" ng-include=\"widget_view(item.item_type)\"></div>\n" +
     "		<button class=\"btn-blue\" ng-click=\"send_answer()\" ng-disabled=\"quiz_form_{{$parent.quiz.id}}.$invalid\"><i class=\"fa fa-send\"></i> Send</button>\n" +
     "		<p class=\"text-muted\" style=\"margin-bottom: 0px;\" ng-show=\"quiz_form_{{$parent.quiz.id}}.$invalid\">Please, fill in all the fields before sending the quiz</p>\n" +
     "	</form>\n" +
+    "\n" +
+    "	<div class=\"alert alert-info\" ng-show=\"quiz.answering_expired\">The deadline for answering this quiz has passed</div>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"quiz-panel-user-info\" ng-show=\"$parent.quiz.is_open\">\n" +
@@ -102,7 +104,8 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "			<button class=\"btn-blue\" ng-click=\"change_username()\" ng-disabled=\"change_username_{{$parent.quiz_id}}.$invalid\">Save</button>\n" +
     "		</form>\n" +
     "	</div>\n" +
-    "</div>");
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("../js/views/answers/checkbox_question.html", []).run(["$templateCache", function($templateCache) {
@@ -132,6 +135,14 @@ angular.module("../js/views/answers/scale_question.html", []).run(["$templateCac
     "<span ng-repeat=\"question in answer.value\">\n" +
     "	{{question.question}} <span class=\"text-muted\">{{question.value}}</span><span ng-show=\"$index != answer.value.length - 1\">, </span>\n" +
     "</span>\n" +
+    "");
+}]);
+
+angular.module("../js/views/answers/sketchpad.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../js/views/answers/sketchpad.html",
+    "<label>{{answer.question}}</label>\n" +
+    "ok!\n" +
+    "<div id=\"viewer-{{$index}}\" ng-model=\"answer.value\" viewer></div>\n" +
     "");
 }]);
 
@@ -200,6 +211,13 @@ angular.module("../js/views/widgets/scale_question.html", []).run(["$templateCac
     "	<div class=\"grid-item\" ng-repeat=\"iterator in item.scale\" style=\"width: {{65 / item.scale.length}}%\"><label><input type=\"radio\" ng-model=\"question.value\" value=\"{{iterator}}\" ng-required=\"true\"> {{iterator}}</label></div>\n" +
     "	<div class=\"grid-item\" style=\"width: 10%\"></div>\n" +
     "</div>\n" +
+    "");
+}]);
+
+angular.module("../js/views/widgets/sketchpad.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../js/views/widgets/sketchpad.html",
+    "<label>{{item.title}}</label>\n" +
+    "<div id=\"editor-{{$index}}\" ng-model=\"item.value\" sketchpad></div>\n" +
     "");
 }]);
 
