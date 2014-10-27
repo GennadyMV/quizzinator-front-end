@@ -95,6 +95,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 		$scope.quiz.is_open = !$scope.quiz.is_open;
 	}
 
+
 	$scope.$parent.$watch('username', function(new_val, old_val){
 		$scope.username = $scope.$parent.username;
 

@@ -157,6 +157,11 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			format['question'] = item.title;
 			console.log(format);
 			return format;
+		},
+		peer_review: function(item){
+			var format = basic_output_formatter(item);
+			format['count'] = item.count;
+			return format;
 		}
 	}
 
