@@ -41,15 +41,14 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
     });
   }
 
-  $scope.$parent.$watch(function(scope){
-    if(scope.quiz_info[$scope.id.toString()] && !scope.quiz_info[$scope.id.toString()].answered){
-      $scope.hidden = true;
-    }
+  $scope.$parent.$watchCollection('quiz_info', function(new_val, old_val){
+    console.log(new_val[$scope.id.toString()]);
 
-    if(scope.quiz_info[$scope.id.toString()] && ( scope.quiz_info[$scope.id.toString()].answered || ( !scope.quiz_info[$scope.id.toString()].answered && scope.quiz_info[$scope.id.toString()].answering_expired ) )){
-
+    if(new_val[$scope.id.toString()] && ( new_val[$scope.id.toString()].answered || ( !new_val[$scope.id.toString()].answered && new_val[$scope.id.toString()].answering_expired ) )){
+      console.log('näytä')
       if($scope.hidden){
         $scope.hidden = false;
+
         API.get_peer_reviews({
           quiz: $scope.id,
           username: Authentication.get_user(),
@@ -59,7 +58,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
             if($scope.peer_reviews.length == 0){
               $scope.hidden = true;
             }else{
-              $scope.title = scope.quiz_info[$scope.id.toString()].title;
+              $scope.title = new_val[$scope.id.toString()].title;
 
               $scope.peer_reviews[0].selected = true;
 

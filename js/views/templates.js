@@ -141,8 +141,7 @@ angular.module("../js/views/answers/scale_question.html", []).run(["$templateCac
 angular.module("../js/views/answers/sketchpad.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answers/sketchpad.html",
     "<label>{{answer.question}}</label>\n" +
-    "ok!\n" +
-    "<div id=\"viewer-{{$index}}\" ng-model=\"answer.value\" viewer></div>\n" +
+    "<div ng-model=\"answer.value\" viewer></div>\n" +
     "");
 }]);
 
@@ -217,7 +216,7 @@ angular.module("../js/views/widgets/scale_question.html", []).run(["$templateCac
 angular.module("../js/views/widgets/sketchpad.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/sketchpad.html",
     "<label>{{item.title}}</label>\n" +
-    "<div id=\"editor-{{$index}}\" ng-model=\"item.value\" sketchpad></div>\n" +
+    "<div ng-model=\"item.value\" sketchpad></div>\n" +
     "");
 }]);
 

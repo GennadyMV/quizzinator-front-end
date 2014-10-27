@@ -4,9 +4,9 @@ QuizApp.directive('sketchpad', function(){
       sketch: '=ngModel'
     },
     link: function(scope, elem, attrs){
-      var sketchpad = Raphael.sketchpad($(elem).attr('id'), {
-    		width: 400,
-    		height: 400,
+      var sketchpad = Raphael.sketchpad(Raphael($(elem)[0], 450, 450), {
+    		width: 450,
+    		height: 450,
     		editing: true
     	});
 
