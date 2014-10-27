@@ -1,7 +1,6 @@
-<div ng-controller="PeerReviewViewerController">
+<div ng-controller="PeerReviewViewerController" ng-init="init(item)">
 <label>Peer reviews</label>
 	<div>
-		<button ng-click="get_peer_reviews()">DERP!</div>
 		<div class="peer-review-container">
 			<div class="peer-review-answer" ng-repeat="review in current_peer_reviews">
 
