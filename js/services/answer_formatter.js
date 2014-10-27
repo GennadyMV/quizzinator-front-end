@@ -89,14 +89,22 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 			return format;
 		},
-                image: function(item){
+    image: function(item){
 			var format = basic_input_formatter(item);
 			format['imageUrl'] = _apiurl + "/images/" + item.imageId;
 			delete format['value'];
 			delete format['question'];
 
 			return format;
-                }
+    },
+		sketchpad: function(item){
+			var format = basic_input_formatter(item);
+			delete format['question'];
+
+			format['title'] = item.title
+
+			return format;
+		}
 	}
 
 	function basic_output_formatter(item){
@@ -143,6 +151,12 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		},
 		slider_question: function(item){
 			return basic_output_formatter(item);
+		},
+		sketchpad: function(item){
+			var format = basic_output_formatter(item);
+			format['question'] = item.title;
+			console.log(format);
+			return format;
 		}
 	}
 
@@ -154,6 +168,8 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			answered: quiz.answered,
 			id: quiz.id,
 			is_open: quiz.isOpen,
+			answering_expired: quiz.answeringExpired,
+			reviewing_expired: quiz.reviewingExpired,
 			items: []
 		}
 
@@ -174,8 +190,6 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		if (!quiz) return [];
 
 		quiz.items.forEach(function(item){
-			console.log("out: " + item.item_type);
-
 			if(typeof output_formatters[item.item_type] === 'function'){
 				answers.push(output_formatters[item.item_type](item));
 			}

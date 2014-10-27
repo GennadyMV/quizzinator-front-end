@@ -72,12 +72,20 @@ a:hover{
 		list-style-type: none;
 	}
 
-	.alert-error{
-		background-color: lighten(@red, 45%);
-		color: @red;
-		padding: 15px;
-		border-radius: 3px;
-	}
+  .alert{
+    padding: 15px;
+    border-radius: 3px;
+
+    &.alert-error{
+      background-color: lighten(@red, 45%);
+      color: @red;
+    }
+
+    &.alert-info{
+      background-color: lighten(@blue, 45%);
+      color: @blue;
+    }
+  }
 
 	input[type='radio']{
 		box-shadow: none;
