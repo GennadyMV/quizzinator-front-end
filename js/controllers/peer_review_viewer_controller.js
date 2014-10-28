@@ -30,7 +30,7 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', function($sco
 
 	get_peer_reviews = function() {
 		API.get_peer_reviews({
-			id: $scope.quiz_id,
+			id: $scope.parent.quiz_id,
 			success: function(reviews) {
 				$scope.peer_reviews = reviews;
 			}
