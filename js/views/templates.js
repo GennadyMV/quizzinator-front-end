@@ -1,4 +1,4 @@
-angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/sketchpad.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/image.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/open_question.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/sketchpad.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
+angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/sketchpad.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/image.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/open_question.html', '../js/views/widgets/peer_review_viewer.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/sketchpad.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
 
 angular.module("../js/views/answered.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answered.html",
@@ -187,6 +187,20 @@ angular.module("../js/views/widgets/open_question.html", []).run(["$templateCach
     "<p class=\"text-muted\" ng-show=\"item.max_length && item.value.length > 0\">{{item.max_length - item.value.length}} characters remaining</p>\n" +
     "<textarea rows=\"5\" class=\"text-field open-question-value\" ng-model=\"item.value\" maxlength=\"{{item.max_length}}\" ng-required=\"true\"></textarea>\n" +
     "");
+}]);
+
+angular.module("../js/views/widgets/peer_review_viewer.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../js/views/widgets/peer_review_viewer.html",
+    "<div ng-controller=\"PeerReviewViewerController\" ng-init=\"init(item)\">\n" +
+    "<label>Peer reviews</label>\n" +
+    "	<div>\n" +
+    "		<div class=\"peer-review-container\">\n" +
+    "			<div class=\"peer-review-answer\" ng-repeat=\"review in current_peer_reviews\">\n" +
+    "\n" +
+    "			</div>\n" +
+    "		</div>\n" +
+    "	</div>\n" +
+    "</div>");
 }]);
 
 angular.module("../js/views/widgets/scale_question.html", []).run(["$templateCache", function($templateCache) {

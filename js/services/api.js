@@ -67,16 +67,5 @@ QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormat
 		});
 	}
 
-	_public.get_peer_reviews = function(options) {
-		$http({
-			method: 'GET',
-			url: API_URL + '/quiz/' + options.id + '/review_answers'
-		}).success(function(){
-			options.success();
-		}).error(function(){
-			options.error();
-		});
-	}
-
 	return _public;
 }]);
