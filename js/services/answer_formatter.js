@@ -89,20 +89,27 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 			return format;
 		},
-    image: function(item){
+    	image: function(item){
 			var format = basic_input_formatter(item);
 			format['imageUrl'] = _apiurl + "/images/" + item.imageId;
 			delete format['value'];
 			delete format['question'];
 
 			return format;
-    },
+    	},
 		sketchpad: function(item){
 			var format = basic_input_formatter(item);
 			delete format['question'];
 
 			format['title'] = item.title
 
+			return format;
+		},
+		peer_reviews: function(item){
+			var format = basic_output_formatter(item);
+			format['count'] = item.count;
+			delete format['question'];
+			delete format['value'];
 			return format;
 		}
 	}
@@ -155,12 +162,6 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		sketchpad: function(item){
 			var format = basic_output_formatter(item);
 			format['question'] = item.title;
-			console.log(format);
-			return format;
-		},
-		peer_review: function(item){
-			var format = basic_output_formatter(item);
-			format['count'] = item.count;
 			return format;
 		}
 	}

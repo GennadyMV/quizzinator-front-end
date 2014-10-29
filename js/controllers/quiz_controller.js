@@ -50,11 +50,13 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 	}
 
 	$scope.send_answer = function(){
+		if($scope.quiz.answering_expired){ return; }
+
 		API.answer_quiz({
 			quiz: $scope.quiz,
 			user: Authentication.get_user(),
 			success: function(answer_response){
-        $scope.userhash = answer_response.userhash;
+				$scope.userhash = answer_response.userhash;
 
 				$scope.quiz.answered = true;
 
@@ -86,6 +88,10 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 	}
 
 	$scope.logout = function(){
+		for(quiz in $scope.$parent.quiz_info){
+			$scope.$parent.quiz_info[quiz].answered = false;
+		}
+
 		Authentication.log_out_user();
 
 		$scope.$parent.username = null;
