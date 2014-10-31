@@ -1,5 +1,10 @@
-QuizApp.controller('MainController', ['$scope', 'Authentication', function($scope, Authentication){
+QuizApp.controller('MainController', ['$rootScope', '$scope', 'Authentication', function($rootScope, $scope, Authentication){
 	$scope.username = Authentication.get_user();
 	$scope.quiz_info = {};
 	$scope.templates_path = '../js/views';
+
+	$scope.init = function(options){
+		options = angular.fromJson(options);
+		$rootScope.api = options.api;
+	}
 }]);

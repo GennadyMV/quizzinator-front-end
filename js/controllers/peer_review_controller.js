@@ -45,7 +45,9 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
   }
 
   $scope.$parent.$watch('quiz_info', function(new_val, old_val){
-    if(new_val[$scope.id.toString()] && !new_val[$scope.id.toString()].reviewing_expired && ( new_val[$scope.id.toString()].answered || ( !new_val[$scope.id.toString()].answered && new_val[$scope.id.toString()].answering_expired ) )){
+    var quiz = new_val[$scope.id.toString()];
+
+    if(quiz && !quiz.reviewing_expired && ( quiz.answered || ( quiz.answered && quiz.answering_expired ) )){
       if($scope.hidden && $scope.peer_reviews.length == 0){
         $scope.hidden = false;
 
@@ -53,7 +55,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
           quiz: $scope.id,
           username: Authentication.get_user(),
           success: function(peer_reviews){
-            init_peer_reviews(peer_reviews, new_val[$scope.id.toString()].title);
+            init_peer_reviews(peer_reviews, quiz.title);
           },
           error: function(){}
         });
@@ -73,7 +75,6 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
   }
 
   $scope.answer_view = function(type){
-    console.log(get_path('answers/' + type + '.html'))
     return get_path('answers/' + type + '.html');
   }
 

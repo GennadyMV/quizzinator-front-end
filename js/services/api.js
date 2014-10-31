@@ -1,8 +1,7 @@
-QuizApp.service('API', ['$http', 'AnswerFormatter', function($http, AnswerFormatter){
+QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($rootScope, $http, AnswerFormatter){
 	var _public = {};
 
-	//var API_URL = 'http://t-aale.users.cs.helsinki.fi';
-	var API_URL = 'http://localhost:8080';
+	var API_URL = $rootScope.api;
 
 	_public.get_quiz = function(options){
 		$http({
