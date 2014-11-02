@@ -12,7 +12,7 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', function($sco
 
 	$scope.list_peer_reviews_forward = function() {
 		for(i=0;i < $scope.count;i++) {
-			if($scope.current_index < $scope.peer_reviews) {
+			if($scope.current_index < $scope.peer_reviews.length) {
 			$scope.current_peer_reviews[i] = $scope.peer_reviews[$scope.current_index];
 			$scope.curent_index++;
 			}
@@ -30,9 +30,11 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', function($sco
 
 	get_peer_reviews = function() {
 		API.get_peer_reviews({
-			id: $scope.parent.quiz_id,
+			quiz: $scope.$parent.quiz_id,
 			success: function(reviews) {
+				console.log(reviews);
 				$scope.peer_reviews = reviews;
+				console.log($scope.)
 			}
 		})
 	}
