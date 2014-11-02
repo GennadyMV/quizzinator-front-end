@@ -201,7 +201,8 @@ angular.module("../js/views/widgets/peer_reviews.html", []).run(["$templateCache
     "	<div>\n" +
     "		<div class=\"peer-review-container\">\n" +
     "			<div class=\"peer-review-answer\" ng-repeat=\"review in current_peer_reviews\">\n" +
-    "\n" +
+    "				<div class=\"form-item\" ng-repeat=\"answer in review.answer\" ng-include=\"answer_view(answer.item_type)\">\n" +
+    "				</div>\n" +
     "			</div>\n" +
     "		</div>\n" +
     "	</div>\n" +

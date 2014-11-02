@@ -1,4 +1,4 @@
-QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', function($scope, API){
+QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authentication', function($scope, API, Authentication){
 	$scope.count;
 	$scope.peer_reviews = [];
 	$scope.current_peer_reviews = [];
@@ -7,6 +7,7 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', function($sco
 	$scope.init = function(item) {
 		$scope.count = item.count;
 		$scope.current_index = 0;
+		console.log('quizin id: ' + $scope.$parent.quiz.id)
 		get_peer_reviews();
 	}
 
@@ -28,13 +29,21 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', function($sco
 		}
 	}
 
+	$scope.answer_view = function(item_type) {
+		console.log(item_type);
+		return get_path('answers' + item_type + '.html');
+	}
+
 	get_peer_reviews = function() {
 		API.get_peer_reviews({
 			quiz: $scope.$parent.quiz_id,
+			username: Authentication.get_user(), 
 			success: function(reviews) {
-				console.log(reviews);
-				$scope.peer_reviews = reviews;
-				console.log($scope.)
+				$scope.peer_reviews = angular.fromJson(reviews);
+				console.log($scope.peer_reviews);
+				console.log($scope.peer_reviews[0].answer);
+				$scope.list_peer_reviews_forward();
+				console.log($scope.current_peer_reviews.length);
 			}
 		})
 	}

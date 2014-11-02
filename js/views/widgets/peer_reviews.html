@@ -3,7 +3,8 @@
 	<div>
 		<div class="peer-review-container">
 			<div class="peer-review-answer" ng-repeat="review in current_peer_reviews">
-
+				<div class="form-item" ng-repeat="answer in review.answer" ng-include="answer_view(answer.item_type)">
+				</div>
 			</div>
 		</div>
 	</div>
