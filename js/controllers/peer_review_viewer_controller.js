@@ -30,9 +30,14 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 	}
 
 	$scope.answer_view = function(item_type) {
-		console.log(item_type);
+		//console.log(item_type);
 		return get_path('answers' + item_type + '.html');
 	}
+
+	function get_path(template){
+		console.log($scope.templates_path + '/' + template);
+    	return $scope.templates_path + '/' + template;
+    }
 
 	get_peer_reviews = function() {
 		API.get_peer_reviews({

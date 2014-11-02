@@ -197,11 +197,11 @@ angular.module("../js/views/widgets/open_question.html", []).run(["$templateCach
 angular.module("../js/views/widgets/peer_reviews.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/peer_reviews.html",
     "<div ng-controller=\"PeerReviewViewerController\" ng-init=\"init(item)\">\n" +
-    "<label>Peer reviews</label>\n" +
+    "<label>Peer reviews derp</label>\n" +
     "	<div>\n" +
     "		<div class=\"peer-review-container\">\n" +
-    "			<div class=\"peer-review-answer\" ng-repeat=\"review in current_peer_reviews\">\n" +
-    "				<div class=\"form-item\" ng-repeat=\"answer in review.answer\" ng-include=\"answer_view(answer.item_type)\">\n" +
+    "			<div class=\"peer-review-answer\" ng-repeat=\"review in current_peer_reviews track by $index\">\n" +
+    "				<div class=\"form-item\" ng-repeat=\"answer in review.answer track by $index\" ng-include=\"answer_view(answer.item_type)\">\n" +
     "				</div>\n" +
     "			</div>\n" +
     "		</div>\n" +
