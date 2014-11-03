@@ -76,7 +76,7 @@ angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", f
 
 angular.module("../js/views/peer_review_viewer_form.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/peer_review_viewer_form.html",
-    "");
+    "<div>hei!</div>");
 }]);
 
 angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function($templateCache) {

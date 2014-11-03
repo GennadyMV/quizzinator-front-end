@@ -14,8 +14,8 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 	$scope.list_peer_reviews_forward = function() {
 		for(i=0;i < $scope.count;i++) {
 			if($scope.current_index < $scope.peer_reviews.length) {
-			$scope.current_peer_reviews[i] = $scope.peer_reviews[$scope.current_index];
-			$scope.curent_index++;
+                            $scope.current_peer_reviews[i] = $scope.peer_reviews[$scope.current_index];
+                            $scope.curent_index++;
 			}
 		}
 	}
@@ -23,21 +23,19 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 	$scope.list_peer_reviews_backwards = function() {
 		for(i=0;i < $scope.count;i++) {
 			if($scope.current_index >= 0) {
-			$scope.current_peer_reviews[i] = $scope.peer_reviews[$scope.current_index];
-			$scope.curent_index--;
+                            $scope.current_peer_reviews[i] = $scope.peer_reviews[$scope.current_index];
+                            $scope.curent_index--;
 			}
 		}
 	}
 
 	$scope.answer_view = function(item_type) {
-		//console.log(item_type);
-		return get_path('answers' + item_type + '.html');
+		return get_path('answers/' + item_type + '.html');
 	}
 
 	function get_path(template){
-		console.log($scope.templates_path + '/' + template);
-    	return $scope.templates_path + '/' + template;
-    }
+                return $scope.templates_path + '/' + template;
+        }
 
 	get_peer_reviews = function() {
 		API.get_peer_reviews({
