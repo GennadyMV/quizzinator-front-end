@@ -1,10 +1,11 @@
 <div ng-controller="PeerReviewViewerController" ng-init="init(item)">
-<label>Peer reviews derp</label>
+<label>Peer reviews</label>
 	<div>
 		<div class="peer-review-container">
-			<div class="peer-review-answer" ng-repeat="review in current_peer_reviews track by $index">
-				<div class="form-item" ng-repeat="answer in review.answer track by $index" ng-include="answer_view(answer.item_type)">
+			<div class="peer-review-answer" ng-repeat="review in peer_reviews">
+				<div class="form-item" ng-repeat="answer in review.answer" ng-include="answer_view(answer.item_type)">
 				</div>
+				<button class="btn-blue" ng-click="get_peer_reviews()"><i class="fa fa-send"></i> More peer reviews</button>
 			</div>
 		</div>
 	</div>

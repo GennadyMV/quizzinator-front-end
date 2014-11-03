@@ -34,8 +34,8 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 	_public.get_peer_reviews = function(options){
 		$http({
 			method: 'GET',
-			url: API_URL + '/quiz/' + options.quiz + '/review_answers',
-			params: { username: options.username }
+			url: API_URL + '/quiz/' + options.quiz + '/reviews',
+			params: { username: options.username, reviewCount: options.review_count}
 		}).success(function(answer_response){
 			if(!answer_response) options.success([]);
 
