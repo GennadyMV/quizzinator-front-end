@@ -76,7 +76,7 @@ angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", f
 
 angular.module("../js/views/peer_review_viewer_form.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/peer_review_viewer_form.html",
-    "<div>hei!</div>");
+    "<div>test</div>");
 }]);
 
 angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function($templateCache) {
@@ -197,12 +197,13 @@ angular.module("../js/views/widgets/open_question.html", []).run(["$templateCach
 angular.module("../js/views/widgets/peer_reviews.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/peer_reviews.html",
     "<div ng-controller=\"PeerReviewViewerController\" ng-init=\"init(item)\">\n" +
-    "<label>Peer reviews derp</label>\n" +
+    "<label>Peer reviews</label>\n" +
     "	<div>\n" +
     "		<div class=\"peer-review-container\">\n" +
-    "			<div class=\"peer-review-answer\" ng-repeat=\"review in current_peer_reviews track by $index\">\n" +
-    "				<div class=\"form-item\" ng-repeat=\"answer in review.answer track by $index\" ng-include=\"answer_view(answer.item_type)\">\n" +
+    "			<div class=\"peer-review-answer\" ng-repeat=\"review in peer_reviews\">\n" +
+    "				<div class=\"form-item\" ng-repeat=\"answer in review.answer\" ng-include=\"answer_view(answer.item_type)\">\n" +
     "				</div>\n" +
+    "				<button class=\"btn-blue\" ng-click=\"get_peer_reviews()\"><i class=\"fa fa-send\"></i> More peer reviews</button>\n" +
     "			</div>\n" +
     "		</div>\n" +
     "	</div>\n" +

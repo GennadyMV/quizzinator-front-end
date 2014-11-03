@@ -26,4 +26,11 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 			}
 		})
 	}
+
+	$scope.rate = function(review, rating) {
+		API.rate_peer_review({
+			//quiz: $scope.$parent.quiz_id, answer: review.answer.id
+
+		})
+	}
 }]);
