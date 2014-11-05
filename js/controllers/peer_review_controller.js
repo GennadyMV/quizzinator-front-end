@@ -51,7 +51,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
       if($scope.hidden && $scope.peer_reviews.length == 0){
         $scope.hidden = false;
 
-        API.get_peer_reviews({
+        API.get_review_answers({
           quiz: $scope.id,
           username: Authentication.get_user(),
           success: function(peer_reviews){

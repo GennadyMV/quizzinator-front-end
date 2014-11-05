@@ -31,7 +31,7 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		});
 	}
 
-	_public.get_peer_reviews = function(options){
+	_public.get_review_answers = function(options){
 		$http({
 			method: 'GET',
 			url: API_URL + '/quiz/' + options.quiz + '/review_answers',
@@ -48,6 +48,16 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		}).error(function(){
 			options.error();
 		});
+	}
+
+	_public.get_peer_reviews_by_quiz = function(options){
+		$http({
+			method: 'GET',
+			url: API_URL + '/quiz/' + options.quiz + '/reviews',
+			params: {username: options.username, reviewCount: options.review_count}
+		}).success(function(peer_reviews){
+			options.success(peer_reviews);
+		})
 	}
 
 	_public.rate_peer_review = function(options){
