@@ -13,15 +13,7 @@
 @green: #81BC2E;
 @red: #C1423D;
 
-a, a:visited{
-	color: @blue;
-	text-decoration: underline;
-}
 
-a:hover{
-	color: @blue;
-	text-decoration: none;
-}
 
 .background-gradient(@start, @stop) {
 	background: mix(@start, @stop, 50%);
@@ -65,6 +57,24 @@ a:hover{
 .quiz-container{
 	font-family: 'Roboto', sans-serif;
 	font-size: 0.9em;
+
+  a, a:visited{
+    color: @blue;
+    text-decoration: underline;
+  }
+
+  .green{
+    color: @green;
+  }
+
+  .red{
+    color: @red;
+  }
+
+  a:hover{
+    color: @blue;
+    text-decoration: none;
+  }
 
 	.list-unstyled{
 		margin: 0px;
@@ -212,6 +222,29 @@ a:hover{
 		.quiz-panel-body{
 			padding: 15px;
 		}
+
+    .peer-review-widget{
+      overflow-y: scroll;
+      max-height: 400px;
+      margin-top: 15px;
+      padding: 2px;
+
+      .peer-review-widget-review{
+        border: 1px solid darken(white, 15%);
+        padding: 15px;
+        border-radius: 3px;
+        margin-bottom: 15px;
+        box-shadow: 0px 0px 2px darken(white, 10%);
+
+        &:last-child{
+          margin-bottom: 0px;
+        }
+
+        .peer-review-widget-votes{
+          margin-top: 15px;
+        }
+      }
+    }
 
 		.form-item{
 			margin-bottom: 15px;
