@@ -1,6 +1,7 @@
 describe('QuizController', function(){
   	var ctrl, scope, AnswerFormatter;
 
+
   beforeEach(function(){
 		module('QuizApp');
 

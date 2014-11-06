@@ -19,8 +19,8 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 				$scope.peer_reviews = angular.fromJson(reviews);
 				console.log($scope.peer_reviews);
 				console.log($scope.peer_reviews.length);
-				/*set_not_rated();
-				console.log($scope.peer_reviews[0].not_rated);*/
+				set_not_rated();
+				console.log($scope.peer_reviews[0].not_rated);
 			}
 		})
 	}
@@ -32,8 +32,8 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 			review: review.id,
 			user: review.reviewer,
 			rating: rating,
-			success: function(reviews) {
-
+			success: function() {
+				review.not_rated = false;
 			}
 
 		})
