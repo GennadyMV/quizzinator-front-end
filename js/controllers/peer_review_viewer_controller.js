@@ -14,15 +14,9 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 			username: Authentication.get_user(),
 			review_count: $scope.count,
 			success: function(reviews) {
-				console.log('reviews: ' + angular.fromJson(reviews));
-				console.log('length: ' + reviews.length)
 				$scope.peer_reviews = angular.fromJson(reviews);
-				console.log($scope.peer_reviews);
-				console.log($scope.peer_reviews.length);
-				/*set_not_rated();
-				console.log($scope.peer_reviews[0].not_rated);*/
 			}
-		})
+		});
 	}
 
 	$scope.rate = function(review, rating) {
@@ -33,16 +27,9 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 			user: review.reviewer,
 			rating: rating,
 			success: function(reviews) {
-
+				review.rated = true;
 			}
-
-		})
+		});
 	}
 
-
-	set_not_rated = function() {
-		for(i=0;i<$scope.peer_reviews.length;i++) {
-			$scope.peer_reviews[i].not_rated = true;
-		}
-	}
 }]);
