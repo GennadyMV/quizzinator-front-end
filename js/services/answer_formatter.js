@@ -170,7 +170,9 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 	_public.input = function(quiz, apiurl){
         _apiurl = apiurl;
 
-
+    if(!quiz.myLatestAnswer){
+    	quiz.myLatestAnswer = 1;
+    }
 
 		var formatted = {
 			title: quiz.title,

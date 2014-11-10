@@ -78,11 +78,13 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 	};
 
 	$scope.clear_answer = function(){
-		console.log($scope.quiz.items);
-		
 		$scope.quiz.items = $.extend([], _original_quiz_items);
+<<<<<<< HEAD
 		console.log($scope.quiz.items);
 	};
+=======
+	}
+>>>>>>> 3568141569aa882975fd4dcaf98140882ee2b9e4
 
 
 	$scope.send_answer = function(){
