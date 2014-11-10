@@ -194,14 +194,11 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		var answers = [];
 
 		if (!quiz) return [];
-		console.log(quiz.items.length);
-		console.log('ITEMIT FORMATTERISSA: ' + angular.toJson(quiz.items));
 		for(var i = 0; i < quiz.items.length; i++){
 			var item = quiz.items[i];
 			item.index = i;
 
 			if(_ignorable_output_types.indexOf(item.item_type) < 0){
-				console.log('LÄPI')
 				answers.push(item);
 			}
 		}
