@@ -173,11 +173,12 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			is_open: quiz.isOpen,
 			answering_expired: quiz.answeringExpired,
 			reviewing_expired: quiz.reviewingExpired,
+			my_latest_answer: quiz.myLatestAnswer,
 			items: []
 		}
 
 		var items = angular.fromJson(quiz.items);
-		
+
 		items.forEach(function(item){
 			if(typeof input_formatters[item.item_type] === 'function'){
 				formatted.items.push(input_formatters[item.item_type](item));
