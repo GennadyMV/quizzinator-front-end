@@ -113,6 +113,12 @@ QuizApp.service('AnswerFormatter', ['$sce', '$rootScope', function($sce, $rootSc
 			delete format['question'];
 			delete format['value'];
 			return format;
+		},
+		my_peer_reviews: function(item){
+			var format = basic_input_formatter(item);
+			delete format['question'];
+			delete format['value'];
+			return format;
 		}
 	};
 

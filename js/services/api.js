@@ -60,6 +60,15 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		});
 	};
 
+	_public.get_peer_reviews_by_user = function(options){
+		$http({
+			method: 'GET',
+			url: API_URL + '/reviews/' + options.user_hash
+		}).success(function(peer_reviews){
+			options.success(peer_reviews);
+		})
+	}
+
 	_public.rate_peer_review = function(options){
 		$http({
 			method: 'POST',

@@ -1,4 +1,4 @@
-angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/sketchpad.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/image.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/open_question.html', '../js/views/widgets/peer_reviews.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/sketchpad.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
+angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/sketchpad.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/image.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/my_peer_reviews.html', '../js/views/widgets/open_question.html', '../js/views/widgets/peer_reviews.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/sketchpad.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
 
 angular.module("../js/views/answered.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answered.html",
@@ -187,6 +187,19 @@ angular.module("../js/views/widgets/multiple_choice_question.html", []).run(["$t
     "        </label>\n" +
     "</div>\n" +
     "");
+}]);
+
+angular.module("../js/views/widgets/my_peer_reviews.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../js/views/widgets/my_peer_reviews.html",
+    "<div ng-controller=\"PeerReviewController\">\n" +
+    "	<h4 class=\"quiz-item-title\">\n" +
+    "		<i class=\"fa fa-arrows\"></i> My peer reviews\n" +
+    "	</h4>\n" +
+    "\n" +
+    "	<div class=\"form-group\">\n" +
+    "		\n" +
+    "	</div>\n" +
+    "</div>");
 }]);
 
 angular.module("../js/views/widgets/open_question.html", []).run(["$templateCache", function($templateCache) {
