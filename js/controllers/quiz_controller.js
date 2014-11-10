@@ -21,7 +21,6 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 					$scope.view = get_path('quiz_form.html');
 
 					$scope.$parent.quiz_info[quiz.id.toString()] = { title: quiz.title, answered: quiz.answered, answering_expired: quiz.answering_expired, reviewing_expired: quiz.reviewing_expired };
-						
 					if(quiz.my_latest_answer){
 						_original_quiz_items = $.extend([], $scope.quiz.items);
 						quiz.my_latest_answer.forEach(function(answer){
@@ -73,10 +72,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 	}
 
 	$scope.clear_answer = function(){
-		console.log($scope.quiz.items);
-		
 		$scope.quiz.items = $.extend([], _original_quiz_items);
-		console.log($scope.quiz.items);
 	}
 
 
