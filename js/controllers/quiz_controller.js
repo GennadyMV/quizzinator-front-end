@@ -20,6 +20,10 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 					$scope.view = get_path('quiz_form.html');
 
 					$scope.$parent.quiz_info[quiz.id.toString()] = { title: quiz.title, answered: quiz.answered, answering_expired: quiz.answering_expired, reviewing_expired: quiz.reviewing_expired };
+					if(!quiz.my_latest_answer){
+					quiz.my_latest_answer.forEach(function(answer){
+						$scope.quiz.items[answer.index] = answer;
+					}});
 				},
 				error: function(){
 					$scope.view = get_path('error.html');
