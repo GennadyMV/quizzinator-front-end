@@ -4,13 +4,17 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 	var _ignorable_output_types = ['code_sample', 'image', 'peer_reviews', 'text_container'];
 
-	var basic_input_formatter = function(item, type){
+	var basic_input_formatter = function(item){
 		return {
 			question: item.question,
 			value: '',
-			item_type: item.item_type
-		}
-	}
+			item_type: item.item_type,
+                        event_handler: function(action, child, value){
+                            var obj = {action: action, item: item.item_type + '_' + item.index, child: child, value: value};
+                            console.log('action: ' + obj.action + ', item: ' + obj.item + ', child: ' + obj.child + ', val: ' + obj.value );
+                        }
+		};
+	};
 
 	var input_formatters = {
 		open_question: function(item){
@@ -31,7 +35,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 				return {
 					title: checkbox.title,
 					value: false
-				}
+				};
 			});
 
 			return format;
@@ -86,19 +90,19 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 			return format;
 		},
-  	image: function(item){
-			var format = basic_input_formatter(item);
-			format['imageUrl'] = _apiurl + "/images/" + item.imageId;
-			delete format['value'];
-			delete format['question'];
+                image: function(item){
+                        var format = basic_input_formatter(item);
+                        format['imageUrl'] = _apiurl + "/images/" + item.imageId;
+                        delete format['value'];
+                        delete format['question'];
 
-			return format;
-  	},
+                        return format;
+                },
 		sketchpad: function(item){
 			var format = basic_input_formatter(item);
 			delete format['question'];
 
-			format['title'] = item.title
+			format['title'] = item.title;
 
 			return format;
 		},
@@ -109,7 +113,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			delete format['value'];
 			return format;
 		}
-	}
+	};
 
 	/*function basic_output_formatter(item){
 		return {
@@ -164,7 +168,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 	}*/
 
 	_public.input = function(quiz, apiurl){
-    _apiurl = apiurl;
+        _apiurl = apiurl;
 
 		var formatted = {
 			title: quiz.title,
@@ -173,19 +177,26 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			is_open: quiz.isOpen,
 			answering_expired: quiz.answeringExpired,
 			reviewing_expired: quiz.reviewingExpired,
-			items: []
-		}
+			items: [],
+                        event_handler: function (action, state){
+                            console.log('quiz ' + quiz.id + ' ' + action + ', ' + state);
+                        }
+		};
 
 		var items = angular.fromJson(quiz.items);
 		
+                var i = 0;
 		items.forEach(function(item){
 			if(typeof input_formatters[item.item_type] === 'function'){
-				formatted.items.push(input_formatters[item.item_type](item));
+                                item.index = i;
+                                item = input_formatters[item.item_type](item);
+				formatted.items.push(item);
+                                i++;
 			}
 		});
 
 		return formatted;
-	}
+	};
 
 	_public.output = function(quiz){
 		var answers = [];
@@ -208,7 +219,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		});*/
 
 		return answers;
-	}
+	};
 
 	return _public;
 }]);

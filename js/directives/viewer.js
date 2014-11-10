@@ -24,7 +24,7 @@ QuizApp.directive('viewer', function(){
 
       var elements = angular.fromJson(angular.fromJson(scope.sketch));
 
-      console.log(elements)
+      //console.log(elements)
 
       elements.forEach(function(el){
         if(typeof creators[el.type] === 'function'){

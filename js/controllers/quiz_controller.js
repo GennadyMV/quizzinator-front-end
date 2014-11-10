@@ -19,7 +19,12 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 					$scope.quiz = quiz;
 					$scope.view = get_path('quiz_form.html');
 
-					$scope.$parent.quiz_info[quiz.id.toString()] = { title: quiz.title, answered: quiz.answered, answering_expired: quiz.answering_expired, reviewing_expired: quiz.reviewing_expired };
+					$scope.$parent.quiz_info[quiz.id.toString()] = {
+                                                    title: quiz.title,
+                                                    answered: quiz.answered,
+                                                    answering_expired: quiz.answering_expired,
+                                                    reviewing_expired: quiz.reviewing_expired
+                                        };
 				},
 				error: function(){
 					$scope.view = get_path('error.html');
@@ -121,7 +126,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 			// Send buffer to back-end
 		}
 
-		console.log(_click_buffer);
+		//console.log(_click_buffer);
 		_click_buffer = [];
 	}, 6000);
 
