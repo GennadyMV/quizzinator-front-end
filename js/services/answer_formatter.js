@@ -2,6 +2,8 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 	var _public = {};
   var _apiurl;
 
+	var _ignorable_output_types = ['code_sample', 'image', 'peer_reviews', 'text_container'];
+
 	var basic_input_formatter = function(item, type){
 		return {
 			question: item.question,
@@ -48,12 +50,6 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 			return format;
 		},
-		image: function(item){
-			return {
-				item_type: 'image',
-				src: item.src
-			};
-		},
 		scale_question: function(item){
 			var format = basic_input_formatter(item);
 
@@ -71,6 +67,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			}
 
 			questions = item.questions.split('\n');
+
 			questions.forEach(function(question){
 				format['questions'].push({
 					question: question,
@@ -89,14 +86,14 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 			return format;
 		},
-    	image: function(item){
+  	image: function(item){
 			var format = basic_input_formatter(item);
 			format['imageUrl'] = _apiurl + "/images/" + item.imageId;
 			delete format['value'];
 			delete format['question'];
 
 			return format;
-    	},
+  	},
 		sketchpad: function(item){
 			var format = basic_input_formatter(item);
 			delete format['question'];
@@ -106,7 +103,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			return format;
 		},
 		peer_reviews: function(item){
-			var format = basic_output_formatter(item);
+			var format = basic_input_formatter(item);
 			format['count'] = item.count;
 			delete format['question'];
 			delete format['value'];
@@ -114,7 +111,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		}
 	}
 
-	function basic_output_formatter(item){
+	/*function basic_output_formatter(item){
 		return {
 			question: item.question,
 			value: item.value,
@@ -164,7 +161,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			format['question'] = item.title;
 			return format;
 		}
-	}
+	}*/
 
 	_public.input = function(quiz, apiurl){
     _apiurl = apiurl;
@@ -180,8 +177,8 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		}
 
 		var items = angular.fromJson(quiz.items);
+		
 		items.forEach(function(item){
-			//console.log("in: " + item.item_type);
 			if(typeof input_formatters[item.item_type] === 'function'){
 				formatted.items.push(input_formatters[item.item_type](item));
 			}
@@ -195,11 +192,20 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 
 		if (!quiz) return [];
 
-		quiz.items.forEach(function(item){
+		for(var i = 0; i < quiz.items.length; i++){
+			var item = quiz.items[i];
+			item.index = i;
+
+			if(_ignorable_output_types.indexOf(item.item_type) < 0){
+				answers.push(item);
+			}
+		}
+
+		/*quiz.items.forEach(function(item){
 			if(typeof output_formatters[item.item_type] === 'function'){
 				answers.push(output_formatters[item.item_type](item));
 			}
-		});
+		});*/
 
 		return answers;
 	}

@@ -153,7 +153,6 @@ jQuery.browser = browser;
 		};
 
     self.elements = function(){
-      console.log('OK!!');
       var elements = [];
 
       self.paper().forEach(function(el){
@@ -177,16 +176,12 @@ jQuery.browser = browser;
           element = { 'fill': 'white', 'fill-opacity': 0, 'stroke': el.attrs['stroke'], 'stroke-width': el.attrs['stroke-width'], 'x': bounds.x, 'y': bounds.y, 'width': bounds.width, 'height': bounds.height, 'type': 'rectangle' };
         }
 
-        console.log(element)
-
         if(element){
           elements.push(element);
         }
       });
 
-      console.log(elements);
-
-      return JSON.stringify(elements);
+      return elements;
     }
 
 		// Convert an SVG path into a string, so that it's smaller when JSONified.

@@ -62,7 +62,8 @@ QuizApp.directive('sketchpad', function(){
 
       sketchpad.change(function() {
     		scope.$apply(function(){
-          scope.sketch = angular.toJson(sketchpad.elements());
+          var elements = sketchpad.elements();
+          scope.sketch = angular.toJson(elements);
         });
     	});
     }

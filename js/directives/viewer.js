@@ -9,7 +9,8 @@ QuizApp.directive('viewer', function(){
       creators = {
         text: function(el){
           var t = viewer.text(el.x, el.y, el.text);
-          t.attr({ 'font-size': el['font-size'], 'font-family': 'Arial, Helvetica, sans-serif', 'fill': el['fill'] });
+          t.attr({ 'font-size': el['font-size'], 'font-family': 'Arial, Helvetica, sans-serif', 'fill': el['fill'], 'text-anchor': 'start' });
+          t.translate(0, t.getBBox().height/2);
         },
         path: function(el){
           var p = viewer.path(el['path']);

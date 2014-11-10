@@ -131,7 +131,7 @@ angular.module("../js/views/answers/open_question.html", []).run(["$templateCach
 
 angular.module("../js/views/answers/scale_question.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answers/scale_question.html",
-    "<label>{{answer.question}}</label>\n" +
+    "<label>{{answer.title}}</label>\n" +
     "<span ng-repeat=\"question in answer.value\">\n" +
     "	{{question.question}} <span class=\"text-muted\">{{question.value}}</span><span ng-show=\"$index != answer.value.length - 1\">, </span>\n" +
     "</span>\n" +
