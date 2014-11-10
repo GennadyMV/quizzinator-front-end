@@ -1,4 +1,7 @@
-QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API', function($scope, $sce, Authentication, API){
+QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentication', 'API', function($scope, $sce, $interval, Authentication, API){
+
+	var _click_buffer = [];
+
 	$scope.username = $scope.$parent.username;
 
 	$scope.init = function(options){
@@ -23,6 +26,18 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 				}
 			});
 		}
+	}
+
+	$scope.register_click = function($event){
+		var username = Authentication.get_user();
+
+		_click_buffer.push({
+			username: username,
+			quiz_id: $scope.quiz_id,
+			timestamp: new Date(),
+			x: $event.clientX,
+			y: $event.clientY
+		});
 	}
 
 	$scope.widget_view = function(type){
@@ -101,6 +116,18 @@ QuizApp.controller('QuizController', ['$scope', '$sce', 'Authentication', 'API',
 		$scope.quiz.is_open = !$scope.quiz.is_open;
 	}
 
+	$interval(function(){
+		if(_click_buffer.length > 0){
+			// Send buffer to back-end
+		}
+
+		console.log(_click_buffer);
+		_click_buffer = [];
+	}, 6000);
+
+	$(window).unload(function(){
+		// Send rest of the buffer before leaving
+	});
 
 	$scope.$parent.$watch('username', function(new_val, old_val){
 		$scope.username = $scope.$parent.username;

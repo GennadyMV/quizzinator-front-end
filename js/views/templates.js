@@ -89,7 +89,7 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "	</button>\n" +
     "</div>\n" +
     "\n" +
-    "<div class=\"quiz-panel-body\" ng-show=\"$parent.quiz.is_open\">\n" +
+    "<div class=\"quiz-panel-body\" ng-show=\"$parent.quiz.is_open\" ng-click=\"register_click($event)\">\n" +
     "	<form name=\"quiz_form_{{$parent.quiz.id}}\" ng-hide=\"quiz.answering_expired\">\n" +
     "		<div class=\"form-item\" ng-repeat=\"item in quiz.items\" ng-include=\"widget_view(item.item_type)\"></div>\n" +
     "		<button class=\"btn-blue\" ng-click=\"send_answer()\" ng-disabled=\"quiz_form_{{$parent.quiz.id}}.$invalid\"><i class=\"fa fa-send\"></i> Send</button>\n" +
@@ -246,7 +246,57 @@ angular.module("../js/views/widgets/scale_question.html", []).run(["$templateCac
 angular.module("../js/views/widgets/sketchpad.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/sketchpad.html",
     "<label>{{item.title}}</label>\n" +
-    "<div ng-model=\"item.value\" sketchpad></div>\n" +
+    "<div class=\"sketchpad-container\">\n" +
+    "  <div class=\"sketchpad-toolbar\">\n" +
+    "    <div class=\"sketchpad-tool sketchpad-undo-stroke\">\n" +
+    "      <button class=\"btn btn-grey\"><i class=\"fa fa-undo\"></i> Undo stroke</button>\n" +
+    "    </div>\n" +
+    "    \n" +
+    "    <div class=\"sketchpad-tool choose-stroke-color-to-sketchpad\">\n" +
+    "      <label class=\"label-block\">Choose color</label>\n" +
+    "      <div class=\"palette-container\">\n" +
+    "        <div class=\"palette-color chosen\" style=\"background-color: #000000\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #787878\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #CB2402\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #61AE24\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #00A1CB\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #F18D05\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #E54028\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #D70060\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #113F8C\"></div>\n" +
+    "        <div class=\"palette-color\" style=\"background-color: #ffffff; border: 1px solid rgb(220,220,220); width: 18px; height: 18px;\"></div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"sketchpad-tool choose-stroke-width-to-sketchpad\">\n" +
+    "      <label class=\"label-block\">Choose with</label>\n" +
+    "      <div class=\"stroke-width-container\">\n" +
+    "        <div class=\"stroke-width-delimeter stroke-width-thin\" data-width=\"1\">Thin</div>\n" +
+    "        <div class=\"stroke-width-delimeter chosen stroke-width-normal\" data-width=\"5\">Normal</div>\n" +
+    "        <div class=\"stroke-width-delimeter stroke-width-thick\" data-width=\"9\">Thick</div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"sketchpad-tool add-text-to-sketchpad\">\n" +
+    "      <label class=\"label-block\">Add text</label>\n" +
+    "      <textarea class=\"text-field\" placeholder=\"My text\"></textarea>\n" +
+    "      <button class=\"btn btn-grey\" style=\"margin-top: 5px\"><i class=\"fa fa-pencil\"></i> Add</button>\n" +
+    "      <div class=\"text-muted\" style=\"margin-top: 10px\">\n" +
+    "        Move the text by dragging and remove it by double clicking the left mouse button.\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"sketchpad-tool add-rectangle-to-sketchpad\">\n" +
+    "      <label class=\"label-block\">Add rectangle</label>\n" +
+    "      <button class=\"btn btn-grey\"><i class=\"fa fa-square-o\"></i> Add</button>\n" +
+    "      <div class=\"text-muted\" style=\"margin-top: 10px\">\n" +
+    "        Move the rectangle by dragging the middle, resize by dragging bottom-right corner and remove it by double clicking the left mouse button.\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
+    "\n" +
+    "  <div class=\"sketchpad-paper\" ng-model=\"item.value\" sketchpad></div>\n" +
+    "</div>\n" +
     "");
 }]);
 

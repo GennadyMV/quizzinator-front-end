@@ -1,37 +1,3 @@
-/*
- * Raphael SketchPad
- * Version 0.5.1
- * Copyright (c) 2011 Ian Li (http://ianli.com)
- * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
- *
- * Requires:
- * jQuery	http://jquery.com
- * Raphael	http://raphaeljs.com
- * JSON		http://www.json.org/js.html
- *
- * Reference:
- * http://ianli.com/sketchpad/ for Usage
- *
- * Versions:
- * 0.5.1 - Fixed extraneous lines when first line is drawn.
- *         Thanks to http://github.com/peterkeating for the fix!
- * 0.5.0 - Added freeze_history. Fixed bug with undoing erase actions.
- * 0.4.0 - Support undo/redo of strokes, erase, and clear.
- *       - Removed input option. To make editors/viewers, set editing option to true/false, respectively.
- *         To update an input field, listen to change event and update input field with json function.
- *       - Reduce file size V1. Changed stored path info from array into a string in SVG format.
- * 0.3.0 - Added erase, supported initializing data from input field.
- * 0.2.0 - Added iPhone/iPod Touch support, onchange event, animate.
- * 0.1.0 - Started code.
- *
- * TODO:
- * - Speed up performance.
- *   - Don't store strokes in two places. _strokes and ActionHistory.current_strokes()
- *	 - Don't rebuild strokes from history with ActionHistory.current_strokes()
- * - Reduce file size.
- *   X V1. Changed stored path info from array into a string in SVG format.
- */
-
 var matched, browser;
 
 jQuery.uaMatch = function( ua ) {
@@ -119,6 +85,49 @@ jQuery.browser = browser;
 		// The default pen.
 		var _pen = new Pen();
 
+    var _paper_mode = 'stroke';
+
+    var _dragger_attrs = {
+      ox: null,
+      oy: null,
+      ow: null,
+      oh: null
+    };
+
+    var _dragger_functions = {
+      drag_start: function(e){
+        _dragger_attrs.ow = this.attr('width');
+        _dragger_attrs.oh = this.attr('height');
+
+        _paper_mode = 'drag';
+      },
+      drag_move: function(dx, dy, x, y){
+        if(!this.data('resizable')){
+          this.attr({
+            transform: "...T" + (dx - _dragger_attrs.ox) + "," + (dy - _dragger_attrs.oy)
+          });
+
+          _dragger_attrs.ox = dx;
+          _dragger_attrs.oy = dy;
+        }else{
+          this.attr({
+            width: Math.max(_dragger_attrs.ow + dx, 50),
+            height: Math.max(_dragger_attrs.oh + dy, 50)
+          });
+        }
+
+        _fire_change();
+      },
+      drag_up: function(e){
+        _dragger_attrs.ox = 0;
+        _dragger_attrs.oy = 0;
+
+        _dragger_attrs.ow = this.attr('width');
+        _dragger_attrs.oh = this.attr('height');
+
+        _paper_mode = 'stroke';
+      }
+    };
 
 		// Public Methods
 		//-----------------
@@ -142,6 +151,43 @@ jQuery.browser = browser;
 			_pen = value;
 			return self; // function-chaining
 		};
+
+    self.elements = function(){
+      console.log('OK!!');
+      var elements = [];
+
+      self.paper().forEach(function(el){
+        var element = null;
+
+        if(el.attrs.path){
+          var path_str = '';
+
+          el.attrs.path.forEach(function(path){
+            path_str += ( path[0] + '' + path[1] + ',' + path[2] );
+          });
+
+          element = { 'path': path_str, 'stroke-opacity': 1, 'stroke-width': el.attrs['stroke-width'], 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke': el.attrs['stroke'], 'type': 'path' };
+        }else if(el.attrs.font){
+          var bounds = el.getBBox();
+
+          element = { 'font-size': el.attrs['font-size'], 'text': el.attrs['text'], 'font-family': 'Arial, Helvetica, sans-serif', 'fill': el.attrs['fill'], 'x': bounds.x, 'y': bounds.y, 'type': 'text' };
+        }else if(el.attrs.height){
+          var bounds = el.getBBox();
+
+          element = { 'fill': 'white', 'fill-opacity': 0, 'stroke': el.attrs['stroke'], 'stroke-width': el.attrs['stroke-width'], 'x': bounds.x, 'y': bounds.y, 'width': bounds.width, 'height': bounds.height, 'type': 'rectangle' };
+        }
+
+        console.log(element)
+
+        if(element){
+          elements.push(element);
+        }
+      });
+
+      console.log(elements);
+
+      return JSON.stringify(elements);
+    }
 
 		// Convert an SVG path into a string, so that it's smaller when JSONified.
 		// This function is used by json().
@@ -187,6 +233,74 @@ jQuery.browser = browser;
 
 			return self.strokes(JSON.parse(value));
 		};
+
+    self.add_text = function(text, font_size){
+      if(!text){
+        return;
+      }
+
+      var t = self.paper().text(50, 50, text);
+
+      t.attr({ 'font-size': font_size, 'font-family': 'Arial, Helvetica, sans-serif', 'fill': self.pen().color() });
+
+      t.mouseover(function(){
+        self.container().css('cursor', 'move');
+      });
+
+      t.mouseout(function(){
+        self.container().css('cursor', 'crosshair');
+      });
+
+      t.dblclick(function(){
+        if(confirm('Are you sure you want to remove this text?')){
+          this.remove();
+
+          _fire_change();
+        }
+      });
+
+      _fire_change();
+
+      t.drag(_dragger_functions.drag_move, _dragger_functions.drag_start, _dragger_functions.drag_up);
+    }
+
+    self.add_rectangle = function(stroke_width){
+      var r = self.paper().rect(50,50, 150, 75);
+
+      r.mousemove(function(event){
+        var bnds = event.target.getBoundingClientRect();
+        var w = r.attrs.width;
+        var h = r.attrs.height;
+        var fx = (event.clientX - bnds.left)/bnds.width * w
+        var fy = (event.clientY - bnds.top)/bnds.height * h
+
+        if((w-fx) <= 30 && (h-fy) <= 30){
+          r.data('resizable', true);
+          self.container().css('cursor', 'nwse-resize')
+        }else{
+          r.data('resizable', false);
+          self.container().css('cursor', 'move');
+        }
+      });
+
+      r.mouseout(function(){
+        self.container().css('cursor', 'crosshair');
+      });
+
+      r.attr({ 'fill': 'white', 'fill-opacity': 0, 'stroke': self.pen().color(), 'stroke-width': stroke_width });
+
+      r.dblclick(function(){
+        if(confirm('Are you sure you want to remove this rectangle?')){
+          this.remove();
+
+          _fire_change();
+        }
+      });
+
+      _fire_change();
+
+      r.drag(_dragger_functions.drag_move, _dragger_functions.drag_start, _dragger_functions.drag_up);
+    }
 
 		self.strokes = function(value) {
 			if (value === undefined) {
@@ -422,6 +536,10 @@ jQuery.browser = browser;
 		};
 
 		function _mousedown(e) {
+      if(_paper_mode != 'stroke'){
+        return;
+      }
+
 			_disable_user_select();
 
 			_pen.start(e, self);
