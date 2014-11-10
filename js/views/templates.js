@@ -88,6 +88,7 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "	<form name=\"quiz_form_{{$parent.quiz.id}}\" ng-hide=\"quiz.answering_expired\">\n" +
     "		<div class=\"form-item\" ng-repeat=\"item in quiz.items\" ng-include=\"widget_view(item.item_type)\"></div>\n" +
     "		<button class=\"btn-blue\" ng-click=\"send_answer()\" ng-disabled=\"quiz_form_{{$parent.quiz.id}}.$invalid\"><i class=\"fa fa-send\"></i> Send</button>\n" +
+    "		<button class=\"btn-blue pull-right\" ng-click=\"clear_answer()\"><i class=\" fa fa-eraser\"></i> Clean answers</button>\n" +
     "		<p class=\"text-muted\" style=\"margin-bottom: 0px;\" ng-show=\"quiz_form_{{$parent.quiz.id}}.$invalid\">Please, fill in all the fields before sending the quiz</p>\n" +
     "	</form>\n" +
     "\n" +
@@ -111,9 +112,10 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
 angular.module("../js/views/answers/checkbox_question.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answers/checkbox_question.html",
     "<label>{{answer.question}}</label>\n" +
-    "<span ng-repeat=\"check in answer.value\">\n" +
-    "	{{check}}<span ng-show=\"$index != answer.value.length - 1\">, </span>\n" +
-    "</span>");
+    "<span ng-repeat=\"checkbox in answer.checkboxes | filter: value\">\n" +
+    "	{{checkbox.title}}<span ng-show=\"$index != answer.checkboxes.length - 1\">, </span>\n" +
+    "</span>\n" +
+    "");
 }]);
 
 angular.module("../js/views/answers/multiple_choice_question.html", []).run(["$templateCache", function($templateCache) {
@@ -132,8 +134,8 @@ angular.module("../js/views/answers/open_question.html", []).run(["$templateCach
 angular.module("../js/views/answers/scale_question.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answers/scale_question.html",
     "<label>{{answer.title}}</label>\n" +
-    "<span ng-repeat=\"question in answer.value\">\n" +
-    "	{{question.question}} <span class=\"text-muted\">{{question.value}}</span><span ng-show=\"$index != answer.value.length - 1\">, </span>\n" +
+    "<span ng-repeat=\"question in answer.questions\">\n" +
+    "	{{question.question}} <span class=\"text-muted\">{{question.value}}</span><span ng-show=\"$index != answer.questions.length - 1\">, </span>\n" +
     "</span>\n" +
     "");
 }]);

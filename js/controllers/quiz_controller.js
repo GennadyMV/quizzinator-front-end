@@ -1,6 +1,7 @@
 QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentication', 'API', function($scope, $sce, $interval, Authentication, API){
 
 	var _click_buffer = [];
+	var _original_quiz_items = [];
 
 	$scope.username = $scope.$parent.username;
 
@@ -25,13 +26,20 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
                                                     answering_expired: quiz.answering_expired,
                                                     reviewing_expired: quiz.reviewing_expired
                                         };
+                                        
+					if(quiz.my_latest_answer){
+						_original_quiz_items = $.extend([], $scope.quiz.items);
+						quiz.my_latest_answer.forEach(function(answer){
+							$scope.quiz.items[answer.index] = answer;
+						});
+					}
 				},
 				error: function(){
 					$scope.view = get_path('error.html');
 				}
 			});
 		}
-	}
+	};
 
 	$scope.register_click = function($event){
 		var username = Authentication.get_user();
@@ -43,19 +51,19 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 			x: $event.clientX,
 			y: $event.clientY
 		});
-	}
+	};
 
 	$scope.widget_view = function(type){
 		return get_path('widgets/' + type + '.html');
-	}
+	};
 
 	$scope.answer_view = function(type){
 		return get_path('answers/' + type + '.html');
-	}
+	};
 
 	$scope.toggle_username_form = function(){
 		$scope.show_username_form = !$scope.show_username_form;
-	}
+	};
 
 	$scope.change_username = function(){
 		Authentication.log_user($scope.new_username);
@@ -67,7 +75,15 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 		$scope.quiz.answered = false;
 		$scope.$parent.quiz_info[$scope.quiz.id.toString()].answered = false;
 		$scope.show_username_form = false;
-	}
+	};
+
+	$scope.clear_answer = function(){
+		console.log($scope.quiz.items);
+		
+		$scope.quiz.items = $.extend([], _original_quiz_items);
+		console.log($scope.quiz.items);
+	};
+
 
 	$scope.send_answer = function(){
 		if($scope.quiz.answering_expired){ return; }
@@ -88,7 +104,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 				$scope.view = get_path('error.html');
 			}
 		});
-	}
+	};
 
 	$scope.login = function(){
 		$scope.$parent.username = $scope.username;
@@ -105,7 +121,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 				$scope.view = get_path('error.html');
 			}
 		});
-	}
+	};
 
 	$scope.logout = function(){
 		for(quiz in $scope.$parent.quiz_info){
@@ -115,18 +131,17 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 		Authentication.log_out_user();
 
 		$scope.$parent.username = null;
-	}
+	};
 
 	$scope.toggle_quiz = function(){
 		$scope.quiz.is_open = !$scope.quiz.is_open;
-	}
+	};
 
 	$interval(function(){
 		if(_click_buffer.length > 0){
 			// Send buffer to back-end
 		}
 
-		//console.log(_click_buffer);
 		_click_buffer = [];
 	}, 6000);
 
@@ -137,7 +152,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 	$scope.$parent.$watch('username', function(new_val, old_val){
 		$scope.username = $scope.$parent.username;
 
-		if($scope.view == get_path('login.html') && $scope.username){
+		if($scope.view === get_path('login.html') && $scope.username){
 			API.get_quiz({
 				id: $scope.quiz_id,
 				success: function(quiz){
@@ -150,7 +165,7 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 			});
 		}
 
-		if($scope.view != get_path('login.html') && $scope.username == null){
+		if($scope.view !== get_path('login.html') && $scope.username === null){
 			$scope.view = get_path('login.html');
 		}
 	});
@@ -158,4 +173,5 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 	function get_path(template){
 		return $scope.$parent.templates_path + '/' + template;
 	}
+
 }]);
