@@ -173,7 +173,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			is_open: quiz.isOpen,
 			answering_expired: quiz.answeringExpired,
 			reviewing_expired: quiz.reviewingExpired,
-			my_latest_answer: quiz.myLatestAnswer,
+			my_latest_answer: quiz.myLatestAnswer ? angular.fomJson(quiz.myLatestAnswer) : null,
 			items: []
 		}
 
