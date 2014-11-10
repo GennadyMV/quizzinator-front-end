@@ -5,7 +5,7 @@
     </td>
 
     <td class="slider-slider">
-      <input type="range" max="{{item.max.value}}" min="{{item.min.value}}" ng-model="item.value" slider>
+        <input type="range" max="{{item.max.value}}" min="{{item.min.value}}" ng-model="item.value" ng-change="item.event_handler('change', 0, item.value)" slider>
 
       <div class="slider-range">
         <div class="slider-range-min text-muted">
@@ -17,4 +17,4 @@
       </div>
     </td>
   </tr>
-<table>
+</table>

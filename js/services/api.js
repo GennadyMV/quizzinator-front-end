@@ -29,7 +29,7 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		}).error(function(){
 			options.error();
 		});
-	}
+	};
 
 	_public.get_peer_reviews = function(options){
 		$http({
@@ -48,7 +48,7 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		}).error(function(){
 			options.error();
 		});
-	}
+	};
 
 	_public.get_peer_reviews_by_quiz = function(options){
 		$http({
@@ -57,8 +57,8 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 			params: {username: options.username, reviewCount: options.review_count}
 		}).success(function(peer_reviews){
 			options.success(peer_reviews);
-		})
-	}
+		});
+	};
 
 	_public.rate_peer_review = function(options){
 		$http({
@@ -69,8 +69,8 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 			options.success();
 		}).error(function(){
 			options.error();
-		})
-	}
+		});
+	};
 
 	_public.send_peer_review = function(options){
 		$http({
@@ -86,7 +86,24 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		}).error(function(){
 			options.error();
 		});
-	}
+	};
+        
+        _public.send_clicks = function(options){
+                $http({
+                    method: 'POST',
+                    url: API_URL + '/clicks',
+                    dataType: 'json',
+                    headers: { 'Content-Type':'application/json' },
+                    data: {
+                            user: options.username,
+                            quizId: options.quiz_id,
+                            clicks: options.events
+                    }
+                })
+                .success(options.success)
+                .error(options.error);
+            
+        };
 
 	return _public;
 }]);

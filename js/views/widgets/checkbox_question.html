@@ -1,4 +1,7 @@
 <label class="checkbox-question-question">{{item.question}}</label>
 <div class="checkbox" ng-repeat="checkbox in item.checkboxes">
-	<label><input type="checkbox" value="{{checkbox.title}}" ng-model="checkbox.value">{{checkbox.title}}</label>
+	<label>
+                <input type="checkbox" value="{{checkbox.title}}" ng-model="checkbox.value" ng-change="item.event_handler('change', checkbox.title, checkbox.value)">
+            {{checkbox.title}}
+        </label>
 </div>

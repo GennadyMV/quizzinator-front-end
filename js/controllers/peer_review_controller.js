@@ -100,6 +100,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
       $scope.current_round = 1;
 
       $scope.current_peer_reviews = $scope.peer_reviews.slice(0,2);
+      console.log($scope.current_peer_reviews);
     }
   }
 }]);

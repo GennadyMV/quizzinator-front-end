@@ -15,8 +15,6 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 			review_count: $scope.count,
 			success: function(reviews) {
 				$scope.peer_reviews = angular.fromJson(reviews);
-				console.log($scope.peer_reviews);
-				console.log($scope.peer_reviews.length);
 			}
 		});
 	}
@@ -30,6 +28,7 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 			rating: rating,
 			success: function(reviews) {
 				review.rated = true;
+				review.totalRating += rating;
 			}
 		});
 	}
