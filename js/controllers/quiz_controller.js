@@ -1,8 +1,9 @@
-QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentication', 'API', function($scope, $sce, $interval, Authentication, API){
+QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval', 'Authentication', 'API', function($rootScope, $scope, $sce, $interval, Authentication, API){
 
 	var _click_buffer = [];
 	var _original_quiz_items = [];
 
+        $rootScope._click_buffer = _click_buffer;
 	$scope.username = $scope.$parent.username;
 
 	$scope.init = function(options){
@@ -137,10 +138,14 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 
 	$interval(function(){
 		if(_click_buffer.length > 0){
-			// Send buffer to back-end
+			API.send_clicks({
+                            quiz_id: $scope.quiz.id,
+                            username: $scope.username,
+                            events: _click_buffer,
+                            success: function(){console.log('events successfully sent'); _click_buffer = [];},
+                            error: function(){console.log('event sending error'); _click_buffer = [];}
+                        });
 		}
-
-		_click_buffer = [];
 	}, 6000);
 
 	$(window).unload(function(){

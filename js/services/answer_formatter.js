@@ -1,6 +1,6 @@
-QuizApp.service('AnswerFormatter', ['$sce', function($sce){
+QuizApp.service('AnswerFormatter', ['$sce', '$rootScope', function($sce, $rootScope){
 	var _public = {};
-  var _apiurl;
+        var _apiurl;
 
 	var _ignorable_output_types = ['code_sample', 'image', 'peer_reviews', 'text_container'];
 
@@ -10,8 +10,9 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			value: '',
 			item_type: item.item_type,
                         event_handler: function(action, child, value){
-                            var obj = {action: action, item: item.item_type + '_' + item.index, child: child, value: value};
-                            console.log('action: ' + obj.action + ', item: ' + obj.item + ', child: ' + obj.child + ', val: ' + obj.value );
+                            var obj = {action: action, element: item.item_type + '_' + item.index, child: child, value: value, clickTime: $.now()};
+                            //console.log('action: ' + obj.action + ', element: ' + obj.element + ', child: ' + obj.child + ', val: ' + obj.value );
+                            $rootScope._click_buffer.push(obj);
                         }
 		};
 	};
@@ -184,7 +185,8 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			my_latest_answer: angular.fromJson(angular.fromJson(quiz.myLatestAnswer).answer),
 			items: [],
                         event_handler: function (action, state){
-                            console.log('quiz ' + quiz.id + ' ' + action + ', ' + state);
+                            var obj = {action: 'click', element: 'quiz', value: state ? 'expanded' : 'collapsed', clickTime: $.now()};
+                            $rootScope._click_buffer.push(obj);
                         }
 		};
 
