@@ -1,6 +1,7 @@
 QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentication', 'API', function($scope, $sce, $interval, Authentication, API){
 
 	var _click_buffer = [];
+	var _original_quiz_items = [];
 
 	$scope.username = $scope.$parent.username;
 
@@ -20,10 +21,13 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 					$scope.view = get_path('quiz_form.html');
 
 					$scope.$parent.quiz_info[quiz.id.toString()] = { title: quiz.title, answered: quiz.answered, answering_expired: quiz.answering_expired, reviewing_expired: quiz.reviewing_expired };
-					if(!quiz.my_latest_answer){
-					quiz.my_latest_answer.forEach(function(answer){
-						$scope.quiz.items[answer.index] = answer;
-					}});
+						
+					if(quiz.my_latest_answer){
+						_original_quiz_items = $.extend([], $scope.quiz.items);
+						quiz.my_latest_answer.forEach(function(answer){
+							$scope.quiz.items[answer.index] = answer;
+						});
+					}
 				},
 				error: function(){
 					$scope.view = get_path('error.html');
@@ -67,6 +71,14 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 		$scope.$parent.quiz_info[$scope.quiz.id.toString()].answered = false;
 		$scope.show_username_form = false;
 	}
+
+	$scope.clear_answer = function(){
+		console.log($scope.quiz.items);
+		
+		$scope.quiz.items = $.extend([], _original_quiz_items);
+		console.log($scope.quiz.items);
+	}
+
 
 	$scope.send_answer = function(){
 		if($scope.quiz.answering_expired){ return; }
@@ -125,7 +137,6 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 			// Send buffer to back-end
 		}
 
-		console.log(_click_buffer);
 		_click_buffer = [];
 	}, 6000);
 
@@ -157,4 +168,5 @@ QuizApp.controller('QuizController', ['$scope', '$sce', '$interval', 'Authentica
 	function get_path(template){
 		return $scope.$parent.templates_path + '/' + template;
 	}
+
 }]);

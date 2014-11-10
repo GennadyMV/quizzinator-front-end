@@ -166,6 +166,8 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 	_public.input = function(quiz, apiurl){
     _apiurl = apiurl;
 
+
+
 		var formatted = {
 			title: quiz.title,
 			answered: quiz.answered,
@@ -173,7 +175,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 			is_open: quiz.isOpen,
 			answering_expired: quiz.answeringExpired,
 			reviewing_expired: quiz.reviewingExpired,
-			my_latest_answer: quiz.myLatestAnswer ? angular.fomJson(quiz.myLatestAnswer) : null,
+			my_latest_answer: angular.fromJson(angular.fromJson(quiz.myLatestAnswer).answer),
 			items: []
 		}
 
@@ -192,12 +194,14 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 		var answers = [];
 
 		if (!quiz) return [];
-
+		console.log(quiz.items.length);
+		console.log('ITEMIT FORMATTERISSA: ' + angular.toJson(quiz.items));
 		for(var i = 0; i < quiz.items.length; i++){
 			var item = quiz.items[i];
 			item.index = i;
 
 			if(_ignorable_output_types.indexOf(item.item_type) < 0){
+				console.log('LÄPI')
 				answers.push(item);
 			}
 		}
@@ -207,7 +211,7 @@ QuizApp.service('AnswerFormatter', ['$sce', function($sce){
 				answers.push(output_formatters[item.item_type](item));
 			}
 		});*/
-
+		console.log(answers);
 		return answers;
 	}
 

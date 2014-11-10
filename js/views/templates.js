@@ -88,6 +88,7 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "	<form name=\"quiz_form_{{$parent.quiz.id}}\" ng-hide=\"quiz.answering_expired\">\n" +
     "		<div class=\"form-item\" ng-repeat=\"item in quiz.items\" ng-include=\"widget_view(item.item_type)\"></div>\n" +
     "		<button class=\"btn-blue\" ng-click=\"send_answer()\" ng-disabled=\"quiz_form_{{$parent.quiz.id}}.$invalid\"><i class=\"fa fa-send\"></i> Send</button>\n" +
+    "		<button class=\"btn-blue pull-right\" ng-click=\"clear_answer()\"><i class=\" fa fa-eraser\"></i> Clean answers</button>\n" +
     "		<p class=\"text-muted\" style=\"margin-bottom: 0px;\" ng-show=\"quiz_form_{{$parent.quiz.id}}.$invalid\">Please, fill in all the fields before sending the quiz</p>\n" +
     "	</form>\n" +
     "\n" +
