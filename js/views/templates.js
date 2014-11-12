@@ -191,13 +191,13 @@ angular.module("../js/views/widgets/multiple_choice_question.html", []).run(["$t
 
 angular.module("../js/views/widgets/my_peer_reviews.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/my_peer_reviews.html",
-    "<div ng-controller=\"PeerReviewController\">\n" +
+    "<div ng-controller=\"ReviewsController\" ng-init=\"init()\">\n" +
     "	<h4 class=\"quiz-item-title\">\n" +
     "		<i class=\"fa fa-arrows\"></i> My peer reviews\n" +
     "	</h4>\n" +
     "\n" +
-    "	<div class=\"form-group\">\n" +
-    "		\n" +
+    "	<div class=\"form-group\" ng-repeat=\"review in reviews\">\n" +
+    "		{review}\n" +
     "	</div>\n" +
     "</div>");
 }]);

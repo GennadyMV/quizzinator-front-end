@@ -1,14 +1,23 @@
-QuizApp.controller('ReviewsController', ['$scope', '$location', '$routeParams', 'QuizAPI', function($scope, $location, $routeParams, QuizAPI){
-	QuizAPI.get_peer_reviews_by_user({
-		user_hash: $routeParams.userHash,
+QuizApp.controller('ReviewsController', ['$scope', '$location', 'Authentication', 'API', function($scope, $location, Authentication, API){
+	$scope.init = function() {
+		console.log('kutsuttu');
+		console.log(Authentication.get_user());
+		$scope.username = Authentication.get_user()
+		API.get_peer_reviews_by_user({
+		username: $scope.username,
 		success: function(quizes){
-			$scope.username = quizes[0].yourAnswer.user;
-			$scope.quizes = quizes;
 			console.log(quizes);
+			json_quizes = angular.fromJson(quizes);
+			$scope.reviews = json_quizes.reviews;
+			console.log('quizes: ' + json_quizes);
+			console.log('reviews: ' + $scope.reviews);
+			console.log('derp');
 		},
 		error: function(){
 		}
 	});
+	}
+
 
 	$scope.upvote_review = function(quiz, answer, review){
 		QuizAPI.rate_peer_review({
@@ -25,7 +34,7 @@ QuizApp.controller('ReviewsController', ['$scope', '$location', '$routeParams', 
 	}
 
 	$scope.downvote_review = function(quiz, answer, review){
-		QuizAPI.vote_review({
+		QuizAPI.rate_peer_review({
 			quiz_id: quiz.quizId,
 			answer_id: answer.id,
 			review_id: review.id,
