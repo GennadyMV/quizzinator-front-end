@@ -177,10 +177,6 @@ QuizApp.service('AnswerFormatter', ['$sce', '$rootScope', function($sce, $rootSc
 	_public.input = function(quiz, apiurl){
         _apiurl = apiurl;
 
-    if(!quiz.myLatestAnswer){
-    	quiz.myLatestAnswer = 1;
-    }
-
 		var formatted = {
 			title: quiz.title,
 			answered: quiz.answered,
@@ -188,7 +184,7 @@ QuizApp.service('AnswerFormatter', ['$sce', '$rootScope', function($sce, $rootSc
 			is_open: quiz.isOpen,
 			answering_expired: quiz.answeringExpired,
 			reviewing_expired: quiz.reviewingExpired,
-			my_latest_answer: angular.fromJson(angular.fromJson(quiz.myLatestAnswer).answer),
+			my_latest_answer: quiz.myLatestAnswer ? angular.fromJson(angular.fromJson(quiz.myLatestAnswer).answer) : null,
 			items: [],
                         event_handler: function (action, state){
                             var obj = {action: 'click', element: 'quiz', value: state ? 'expanded' : 'collapsed', clickTime: $.now()};
