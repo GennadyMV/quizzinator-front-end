@@ -59,8 +59,6 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
           },
           error: function(){}
         });
-
-        console.log($scope.hidden)
       }
     }else{
       $scope.peer_reviews = [];

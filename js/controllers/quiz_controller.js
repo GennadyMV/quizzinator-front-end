@@ -32,7 +32,9 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 					if(quiz.my_latest_answer){
 						_original_quiz_items = $.extend([], $scope.quiz.items);
 						quiz.my_latest_answer.forEach(function(answer){
-							$scope.quiz.items[answer.index] = answer;
+                                                    //event handler must not be overwritten
+                                                    answer.event_handler = $scope.quiz.items[answer.index].event_handler;
+                                                    $scope.quiz.items[answer.index] = answer;
 						});
 					} else {
                                                 var copied = [];
@@ -95,7 +97,7 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 
 
 	$scope.send_answer = function(){
-		if($scope.quiz.answering_expired){ return; }
+		if(!$scope.quiz.can_answer){ return; }
 
 		API.answer_quiz({
 			quiz: $scope.quiz,
@@ -145,21 +147,36 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 	$scope.toggle_quiz = function(){
 		$scope.quiz.is_open = !$scope.quiz.is_open;
 	};
+        
+        function flush_click_buffer() {
+            API.send_clicks({
+                quiz_id: $scope.quiz.id,
+                username: $scope.username,
+                events: _click_buffer,
+                success: function () {
+                    console.log('events successfully sent');
+                    _click_buffer = [];                    
+                    $rootScope._click_buffer = _click_buffer;
+                },
+                error: function () {
+                    console.log('event sending error');
+                    _click_buffer = [];
+                    $rootScope._click_buffer = _click_buffer;
+                }
+            });
+        }
 
 	$interval(function(){
 		if(_click_buffer.length > 0){
-			API.send_clicks({
-                            quiz_id: $scope.quiz.id,
-                            username: $scope.username,
-                            events: _click_buffer,
-                            success: function(){console.log('events successfully sent'); _click_buffer = [];},
-                            error: function(){console.log('event sending error'); _click_buffer = [];}
-                        });
+                    flush_click_buffer();
 		}
 	}, 6000);
 
 	$(window).unload(function(){
 		// Send rest of the buffer before leaving
+                var obj = {action: 'close', element: 'window', clickTime: $.now()};
+                $rootScope._click_buffer.push(obj);
+                flush_click_buffer();
 	});
 
 	$scope.$parent.$watch('username', function(new_val, old_val){
