@@ -1,10 +1,13 @@
-<div class="quiz-panel-heading">"{{title}}" peer reviews</div>
+<div class="quiz-panel-heading">
+    "{{title}}" peer reviews
+    <span class="pull-right quiz-dl">Deadline: <br />{{ review_deadline }}</span>
+</div>
 <div class="quiz-panel-body">
     <div ng-show="has_answered_quiz && !answering_expired">
         <p class="text-muted text-center">Round {{current_round}}/{{rounds}}</p>
         <form name="peer_review_{{$parent.quiz.id}}">
             <div class="form-item">
-                <label>You review</label>
+                <label>Your review</label>
                 <textarea class="text-field" rows="4" ng-model="$parent.peer_review_content" ng-required="true"></textarea>
             </div>
             <button class="btn-blue" ng-disabled="peer_review_{{$parent.quiz.id}}.$invalid" ng-click="send_peer_review()"><i class="fa fa-send"></i> Send</button>

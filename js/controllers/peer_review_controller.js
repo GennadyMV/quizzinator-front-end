@@ -51,6 +51,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
 
     $scope.has_answered_quiz = quiz.answered;
     $scope.answering_expired = quiz.reviewing_expired;
+    $scope.review_deadline = quiz.review_deadline;
     $scope.title = quiz.title;
 
     if(user_can_give_peer_reviews && $scope.peer_reviews.length == 0){

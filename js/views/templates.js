@@ -48,13 +48,16 @@ angular.module("../js/views/peer_review_done.html", []).run(["$templateCache", f
 
 angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/peer_review_form.html",
-    "<div class=\"quiz-panel-heading\">\"{{title}}\" peer reviews</div>\n" +
+    "<div class=\"quiz-panel-heading\">\n" +
+    "    \"{{title}}\" peer reviews\n" +
+    "    <span class=\"pull-right quiz-dl\">Deadline: <br />{{ review_deadline }}</span>\n" +
+    "</div>\n" +
     "<div class=\"quiz-panel-body\">\n" +
     "    <div ng-show=\"has_answered_quiz && !answering_expired\">\n" +
     "        <p class=\"text-muted text-center\">Round {{current_round}}/{{rounds}}</p>\n" +
     "        <form name=\"peer_review_{{$parent.quiz.id}}\">\n" +
     "            <div class=\"form-item\">\n" +
-    "                <label>You review</label>\n" +
+    "                <label>Your review</label>\n" +
     "                <textarea class=\"text-field\" rows=\"4\" ng-model=\"$parent.peer_review_content\" ng-required=\"true\"></textarea>\n" +
     "            </div>\n" +
     "            <button class=\"btn-blue\" ng-disabled=\"peer_review_{{$parent.quiz.id}}.$invalid\" ng-click=\"send_peer_review()\"><i class=\"fa fa-send\"></i> Send</button>\n" +
@@ -90,24 +93,22 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "    <i class=\"fa fa-question-circle text-muted\"></i> {{quiz.title}}\n" +
     "    <span class=\"text-muted\" ng-show=\"quiz.answered\">answered</span>\n" +
     "    \n" +
-    "    <span class=\"pull-right\">{{ quiz.can_answer }}</span>\n" +
     "    \n" +
     "    <button class=\"pull-right toggle-quiz\">\n" +
     "        <i class=\"fa fa-minus\" ng-show=\"$parent.quiz.is_open\"></i>\n" +
     "        <i class=\"fa fa-plus\" ng-hide=\"$parent.quiz.is_open\"></i>\n" +
     "    </button>\n" +
+    "    <span class=\"pull-right quiz-dl\">Deadline: <br /> {{ quiz.deadline }}</span>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"quiz-panel-body\" ng-show=\"$parent.quiz.is_open\">\n" +
     "\n" +
     "    <div class=\"alert alert-info\" ng-show=\"quiz.answering_expired\">\n" +
     "        The deadline for answering this quiz has passed\n" +
-    "        <div ng-show=\"quiz.can_answer\">\n" +
-    "            but you can improve your answer until {{ quiz.improve_deadline }}\n" +
-    "        </div>\n" +
+    "        <span ng-show=\"quiz.can_answer\"> but you can improve your answer until {{ quiz.improve_deadline }}</span>\n" +
     "    </div>\n" +
     "\n" +
-    "    <form name=\"quiz_form_{{$parent.quiz.id}}\" ng-hide=\"!quiz.can_answe\">\n" +
+    "    <form name=\"quiz_form_{{$parent.quiz.id}}\" ng-show=\"quiz.can_answer\">\n" +
     "        <div class=\"form-item\" ng-repeat=\"item in quiz.items\" ng-include=\"widget_view(item.item_type)\"></div>\n" +
     "        <button class=\"btn-blue\" ng-click=\"send_answer()\" ng-disabled=\"quiz_form_{{$parent.quiz.id}}.$invalid\"><i class=\"fa fa-send\"></i> Send</button>\n" +
     "        <button style=\"margin-left: 10px;\" class=\"btn-grey\" ng-click=\"clear_answer()\"><i class=\" fa fa-eraser\"></i> Clear answers</button>\n" +

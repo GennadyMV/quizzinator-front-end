@@ -19,14 +19,14 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 				username: $scope.username,
 				success: function(quiz){
 
-
 					$scope.quiz = quiz;
 					$scope.view = get_path('quiz_form.html');
 					$scope.$parent.quiz_info[quiz.id.toString()] = {
                                                     title: quiz.title,
                                                     answered: quiz.answered,
                                                     answering_expired: quiz.answering_expired,
-                                                    reviewing_expired: quiz.reviewing_expired
+                                                    reviewing_expired: quiz.reviewing_expired,
+                                                    review_deadline: quiz.review_deadline
                                         };
 
 					if(quiz.my_latest_answer){
@@ -50,19 +50,7 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 			});
 		}
 	};
-
-	$scope.register_click = function($event){
-		var username = Authentication.get_user();
-
-		_click_buffer.push({
-			username: username,
-			quiz_id: $scope.quiz_id,
-			timestamp: new Date(),
-			x: $event.clientX,
-			y: $event.clientY
-		});
-	};
-
+        
 	$scope.widget_view = function(type){
 		return get_path('widgets/' + type + '.html');
 	};
@@ -89,11 +77,11 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 
 	$scope.clear_answer = function(){
 		if(confirm('Are you sure you want to clear your answer?')){
-				var copied = [];
-				_original_quiz_items.forEach(function(item) {
-						copied.push($.extend({}, item));
-				});
-$scope.quiz.items = copied;
+                        var copied = [];
+                        _original_quiz_items.forEach(function(item) {
+                            copied.push($.extend({}, item));
+                        });
+                        $scope.quiz.items = copied;
 		}
 	};
 
@@ -106,11 +94,8 @@ $scope.quiz.items = copied;
 			user: Authentication.get_user(),
 			success: function(answer_response){
 				$scope.userhash = answer_response.userhash;
-
 				$scope.quiz.answered = true;
-
 				$scope.$parent.quiz_info[$scope.quiz.id.toString()].answered = true;
-
 				$scope.view = get_path('answered.html');
 			},
 			error: function(){
@@ -157,7 +142,7 @@ $scope.quiz.items = copied;
                 events: _click_buffer,
                 success: function () {
                     console.log('events successfully sent');
-                    //no need to create new array, just empty
+                    //no need to create new array, just empty the buffer
                     _click_buffer.length = 0;
                 },
                 error: function () {
@@ -204,5 +189,4 @@ $scope.quiz.items = copied;
 	function get_path(template){
 		return $scope.$parent.templates_path + '/' + template;
 	}
-
 }]);

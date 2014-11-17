@@ -186,6 +186,8 @@ QuizApp.service('AnswerFormatter', ['$sce', '$rootScope', function($sce, $rootSc
 			reviewing_expired: quiz.reviewingExpired,
                         improving_possible: quiz.answerImprovingPossible,
                         can_answer: !quiz.answeringExpired || quiz.answered && quiz.answerImprovingPossible,
+                        deadline: quiz.answerDeadline,
+                        review_deadline: quiz.reviewDeadline,
                         improve_deadline: quiz.answerImproveDeadline,
 			my_latest_answer: quiz.myLatestAnswer ? angular.fromJson(angular.fromJson(quiz.myLatestAnswer).answer) : null,
 			items: [],
