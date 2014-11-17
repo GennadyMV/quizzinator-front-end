@@ -15,16 +15,25 @@ describe('PeerReviewController', function(){
         options.done()
       },
       get_quiz: function(options) {
+          var basic_response = {
+            id: options.id,
+            title: "hurr durr?",
+            items: angular.toJson([{question:"derpderpderp",item_type:"open_question"}]),
+            quizAnswers: [],
+            reviewable: true,
+            answered: false,
+            answeringExpired: false,
+            reviewingExpired: false
+          }
+
           if(options.id == 2) {
             options.error();
-          } else {
-            options.success(AnswerFormatter.input({id: options.id,
-            title:"hurr durr?",
-            items:angular.toJson([{question:"derpderpderp",item_type:"open_question"}]),
-            quizAnswers:[],
-            reviewable:true
-          }));
-        }
+          }else if(options.id == 1){
+            options.success(AnswerFormatter.input(basic_response));
+          }else if(options.id == 3){
+            basic_response.answered = true;
+            options.success(AnswerFormatter.input(basic_response));
+          }
       },
       answer_quiz: function(options) {
         if(options.quiz.id == 3){
@@ -42,7 +51,11 @@ describe('PeerReviewController', function(){
             });
         } else {
           options.success([]);
-      }}
+        }
+      },
+      get_peer_reviews: function(options){
+        options.success([{}]);
+      }
     }
   })();
 
@@ -59,15 +72,47 @@ describe('PeerReviewController', function(){
     scope.username = 'kalle';
   }));
 
-  it('should keep peer review form hidden if there are no peer reviews', function(){
+  it('should keep peer review form hidden if user has not answered quiz', function(){
     scope.id = 1;
-
-    scope.$parent.new_peer_review = { title: 'Lorem ipsum', id: 1, peer_reviews: [], userhash: 'abc' };
 
     expect(scope.hidden).toBe(true);
   });
 
-  it('should show peer review form when there are peer reviews', function(){
+  it('should show peer review form when user has answered quiz', function(){
+    scope.id = 3;
+
+    scope.$parent.quiz_info = {};
+
+    scope.$parent.quiz_info['3'] = {
+      title: 'Kallen kyssäri',
+      answered: true,
+      answering_expired: false,
+      reviewing_expired: false
+    };
+
+    scope.$apply();
+
+    expect(scope.hidden).toBe(false);
+  });
+
+  it('should not see peer review form after reviewing deadline has passed', function(){
+    scope.id = 3;
+
+    scope.$parent.quiz_info = {};
+
+    scope.$parent.quiz_info['3'] = {
+      title: 'Kallen kyssäri',
+      answered: true,
+      answering_expired: false,
+      reviewing_expired: true
+    };
+
+    scope.$apply();
+
+    expect(scope.hidden).toBe(true);
+  });
+
+  /*it('should show peer review form when there are peer reviews', function(){
     scope.id = 1;
 
     scope.$parent.new_peer_review = { title: 'Lorem ipsum', id: 1, peer_reviews: [{ user: 'kalle', answer: '' }], userhash: 'abc' };
@@ -86,6 +131,6 @@ describe('PeerReviewController', function(){
     expect(scope.rounds).toBe(2);
     expect(scope.current_round).toBe(1);
     expect(scope.current_peer_reviews.length).toBe(2);
-  });
+  });*/
 
 });
