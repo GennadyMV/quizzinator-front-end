@@ -87,6 +87,8 @@ jQuery.browser = browser;
 
     var _paper_mode = 'stroke';
 
+    var _timings = [];
+
     var _dragger_attrs = {
       ox: null,
       oy: null,
@@ -124,6 +126,18 @@ jQuery.browser = browser;
 
         _dragger_attrs.ow = this.attr('width');
         _dragger_attrs.oh = this.attr('height');
+
+        var bounds = this.getBBox();
+        var type = this.data('type');
+        var data = {};
+
+        if(type == 'text'){
+          data = { x: bounds.x, y: bounds.y, text: this.attrs['text'] };
+        }else if(type == 'rectangle'){
+          data = { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height }
+        }
+
+        _timings.push({ time: new Date(), action: 'move', type: type, data: data });
 
         _paper_mode = 'stroke';
       }
@@ -181,7 +195,7 @@ jQuery.browser = browser;
         }
       });
 
-      return elements;
+      return { paper: elements, history: _timings };
     }
 
 		// Convert an SVG path into a string, so that it's smaller when JSONified.
@@ -236,6 +250,10 @@ jQuery.browser = browser;
 
       var t = self.paper().text(50, 50, text);
 
+      t.data('type', 'text');
+
+      _timings.push({ time: new Date(), action: 'add', type: 'text', data: { x: 50, y: 50, text: text } });
+
       t.attr({ 'font-size': font_size, 'font-family': 'Arial, Helvetica, sans-serif', 'fill': self.pen().color() });
 
       t.mouseover(function(){
@@ -248,6 +266,10 @@ jQuery.browser = browser;
 
       t.dblclick(function(){
         if(confirm('Are you sure you want to remove this text?')){
+          var bounds = t.getBBox();
+
+          _timings.push({ time: new Date(), action: 'remove', type: 'text', data: { x: bounds.x, y: bounds.y, text: text } });
+
           this.remove();
 
           _fire_change();
@@ -257,10 +279,16 @@ jQuery.browser = browser;
       _fire_change();
 
       t.drag(_dragger_functions.drag_move, _dragger_functions.drag_start, _dragger_functions.drag_up);
+
+      return t;
     }
 
     self.add_rectangle = function(stroke_width){
       var r = self.paper().rect(50,50, 150, 75);
+
+      _timings.push({ time: new Date(), action: 'add', type: 'rectangle', data: { x: 50, y: 50, width: 150, height: 75 } });
+
+      r.data('type', 'rectangle');
 
       r.mousemove(function(event){
         var bnds = event.target.getBoundingClientRect();
@@ -286,6 +314,10 @@ jQuery.browser = browser;
 
       r.dblclick(function(){
         if(confirm('Are you sure you want to remove this rectangle?')){
+          var bounds = r.getBBox();
+
+          _timings.push({ time: new Date(), action: 'remove', type: 'rectangle', data: { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height } });
+
           this.remove();
 
           _fire_change();
@@ -295,6 +327,8 @@ jQuery.browser = browser;
       _fire_change();
 
       r.drag(_dragger_functions.drag_move, _dragger_functions.drag_start, _dragger_functions.drag_up);
+
+      return r;
     }
 
 		self.strokes = function(value) {
@@ -554,7 +588,10 @@ jQuery.browser = browser;
 				path.click(_pathclick);
 
 				// Save the stroke.
+        _timings.push({ time: new Date(), action: 'stroke', type: 'stroke', data: { path: path.attr('path'), color: self.pen().color() } });
+
 				var stroke = path.attr();
+
 				stroke.type = path.type;
 
 				_strokes.push(stroke);

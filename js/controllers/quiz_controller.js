@@ -33,7 +33,13 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 						quiz.my_latest_answer.forEach(function(answer){
 							$scope.quiz.items[answer.index] = answer;
 						});
-					}
+					} else {
+                                                var copied = [];
+                                                $scope.quiz.items.forEach(function (item) {
+                                                    copied.push($.extend({}, item));
+                                                });
+						_original_quiz_items = copied;
+                                        }
 				},
 				error: function(){
 					$scope.view = get_path('error.html');
@@ -79,8 +85,11 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 	};
 
 	$scope.clear_answer = function(){
-		$scope.quiz.items = $.extend([], _original_quiz_items);
-		console.log($scope.quiz.items);
+                var copied = [];
+                _original_quiz_items.forEach(function(item) {
+                    copied.push($.extend({}, item));
+                });
+		$scope.quiz.items = copied;
 	};
 
 
