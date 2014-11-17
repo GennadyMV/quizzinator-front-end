@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     },
     watch: {
       files: ['js/views/*.html', 'js/views/*/*.html', 'js/app.js', 'js/services/*.js', 'js/filters/*.js', 'js/directives/*.js', 'js/controllers/*.js', 'css/quiz.less'],
-      tasks: ['uglify', 'less', 'cssmin']
+      tasks: ['uglify', 'less', 'cssmin', 'karma']
     },
     cssmin: {
       combine: {
@@ -40,6 +40,11 @@ module.exports = function(grunt) {
         src: ['js/views/*.html', 'js/views/*/*.html'],
         dest: 'js/views/templates.js'
       }
+    },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js'
+      }
     }
   });
 
@@ -48,10 +53,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-karma');
 
   // Default task(s).
   grunt.registerTask('template-cache', ['html2js']);
-  grunt.registerTask('default', ['html2js', 'uglify', 'less', 'cssmin', 'watch']);
+  grunt.registerTask('default', ['html2js', 'uglify', 'less', 'cssmin', 'karma', 'watch']);
   grunt.registerTask('build', ['html2js', 'uglify', 'less', 'cssmin']);
 
 };

@@ -23,7 +23,10 @@ describe('QuizController', function(){
   				    title:"hurr durr?",
   					  items:angular.toJson([{question:"derpderpderp",item_type:"open_question"}]),
   					  quizAnswers:[],
-  					  reviewable:true
+  					  reviewable:true,
+              answered: true,
+              answering_expired: false,
+              reviewing_expired: false
   					}));
           }
   			},
@@ -55,7 +58,11 @@ describe('QuizController', function(){
   	})();
 
   	beforeEach(inject(function($controller, $rootScope) {
-    	scope = $rootScope.$new();
+    	$controller('MainController', {
+        $scope: $rootScope
+      });
+
+      scope = $rootScope.$new();
     	ctrl = $controller('QuizController', {
       		$scope: scope,
       		Authentication: AuthenticationMock,
@@ -65,7 +72,7 @@ describe('QuizController', function(){
     }));
 
     it('should be initialized correctly with username', function() {
-    	scope.init({ 'id': 1 });
+    	scope.init(angular.toJson({'id':1}));
     	expect(scope.quiz.title).toBe('hurr durr?');
     	expect(scope.quiz.items[0].question).toContain("derpderpderp");
   		expect(scope.quiz.items.length).toBe(1);
@@ -73,17 +80,17 @@ describe('QuizController', function(){
 
     it('should be initialized correctly without username', function() {
       scope.username = null;
-      scope.init({ 'id': 1 });
+      scope.init(angular.toJson({'id':1}));
       expect(scope.view).toContain('login.html');
     });
 
     it('should present the view correctly when given user name', function() {
-      scope.init({ 'id': 1 });
+      scope.init(angular.toJson({'id':1}));
       expect(scope.view).toContain('quiz_form.html');
     });
 
     it('should be able to change users', function() {
-      scope.init({ 'id': 1 });
+      scope.init(angular.toJson({'id':1}));
       expect(scope.username).toBe('kalle');
       scope.new_username = 'Hattumies';
       scope.change_username();
@@ -91,20 +98,24 @@ describe('QuizController', function(){
     });
 
     it('should render error message when id is not found', function() {
-      scope.init({ 'id': 2 });
+      scope.init(angular.toJson({'id':2}));
       expect(scope.view).toContain('error.html');
     });
 
     it('shloud be open if it has not been set to be closed', function() {
-      scope.init({'id': 1});
+      scope.init(angular.toJson({'id':1}));
       scope.toggle_quiz();
       expect(scope.quiz.is_open).toBe(true);
     })
 
     it('should show correctly when quiz is set to be closed', function() {
-      scope.init({'id': 1});
+      scope.init(angular.toJson({'id':1}));
       scope.toggle_quiz();
       scope.toggle_quiz();
       expect(scope.quiz.is_open).toBe(false);
+    })
+
+    it('should show last answer when quiz loads', function() {
+
     })
 });

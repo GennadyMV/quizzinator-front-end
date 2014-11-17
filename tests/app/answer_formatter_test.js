@@ -8,7 +8,7 @@ describe('AnswerFormatter', function(){
 			AnswerFormatter = _AnswerFormatter_;
 		});
 	});
-
+/*
 	it('should manipulate open question correctly', function(){
 		var ouput = AnswerFormatter.output(
 			
@@ -47,4 +47,5 @@ describe('AnswerFormatter', function(){
 
 		expect(output[0].value).toBe('My nigga!');
 	})
+*/
 });

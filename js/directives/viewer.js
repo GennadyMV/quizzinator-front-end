@@ -22,9 +22,7 @@ QuizApp.directive('viewer', function(){
         }
       };
 
-      var elements = angular.fromJson(angular.fromJson(scope.sketch));
-
-      //console.log(elements)
+      var elements = angular.fromJson(scope.sketch).paper;
 
       elements.forEach(function(el){
         if(typeof creators[el.type] === 'function'){
