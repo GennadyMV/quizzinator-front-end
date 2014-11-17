@@ -2,8 +2,6 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
   $scope.peer_reviews = [];
   $scope.current_peer_reviews = [];
 
-  $scope.hidden = true;
-
   $scope.rounds = 0;
   $scope.current_round = 0;
 
@@ -14,7 +12,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
   }
 
   $scope.send_peer_review = function(){
-    if($scope.$parent.quiz_info[$scope.id.toString()].reviewing_expired){ return; }
+    if($scope.reviewing_expired || !$scope.has_answered_quiz){ return; }
 
     var selected_peer = $.grep($scope.current_peer_reviews, function(peer){
       return peer.selected;
@@ -46,25 +44,27 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
 
   $scope.$parent.$watch('quiz_info', function(new_val, old_val){
     var quiz = new_val[$scope.id.toString()];
+    var user_can_give_peer_reviews = quiz && !quiz.reviewing_expired && ( quiz.answered || ( quiz.answered && quiz.answering_expired ) );
 
-    if(quiz && !quiz.reviewing_expired && ( quiz.answered || ( quiz.answered && quiz.answering_expired ) )){
-      if($scope.hidden && $scope.peer_reviews.length == 0){
-        $scope.hidden = false;
+    $scope.view = get_path('peer_review_form.html');
 
-        API.get_peer_reviews({
-          quiz: $scope.id,
-          username: Authentication.get_user(),
-          success: function(peer_reviews){
-            init_peer_reviews(peer_reviews, quiz.title);
-          },
-          error: function(){}
-        });
+    $scope.has_answered_quiz = quiz.answered;
+    $scope.answering_expired = quiz.reviewing_expired;
+    $scope.title = quiz.title;
 
-        console.log($scope.hidden)
-      }
+    if(user_can_give_peer_reviews && $scope.peer_reviews.length == 0){
+      API.get_peer_reviews({
+        quiz: $scope.id,
+        username: Authentication.get_user(),
+        success: function(peer_reviews){
+          init_peer_reviews(peer_reviews);
+        },
+        error: function(){}
+      });
     }else{
       $scope.peer_reviews = [];
-      $scope.hidden = true;
+      $scope.has_answered_quiz = false;
+      $scope.answering_not_over = false;
     }
   }, true);
 
@@ -84,17 +84,13 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
     return $scope.$parent.templates_path + '/' + template;
   }
 
-  function init_peer_reviews(peer_reviews, title){
+  function init_peer_reviews(peer_reviews){
     $scope.peer_reviews = peer_reviews;
 
     if($scope.peer_reviews.length == 0){
       $scope.hidden = true;
     }else{
-      $scope.title = title;
-
       $scope.peer_reviews[0].selected = true;
-
-      $scope.view = get_path('peer_review_form.html');
 
       $scope.peer_review_content = '';
 
@@ -102,7 +98,6 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
       $scope.current_round = 1;
 
       $scope.current_peer_reviews = $scope.peer_reviews.slice(0,2);
-      console.log($scope.current_peer_reviews);
     }
   }
 }]);

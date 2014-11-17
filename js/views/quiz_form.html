@@ -10,7 +10,7 @@
 	<form name="quiz_form_{{$parent.quiz.id}}" ng-hide="quiz.answering_expired">
 		<div class="form-item" ng-repeat="item in quiz.items" ng-include="widget_view(item.item_type)"></div>
 		<button class="btn-blue" ng-click="send_answer()" ng-disabled="quiz_form_{{$parent.quiz.id}}.$invalid"><i class="fa fa-send"></i> Send</button>
-		<button class="btn-blue pull-right" ng-click="clear_answer()"><i class=" fa fa-eraser"></i> Clean answers</button>
+		<button style="margin-left: 10px;" class="btn-grey" ng-click="clear_answer()"><i class=" fa fa-eraser"></i> Clear answers</button>
 		<p class="text-muted" style="margin-bottom: 0px;" ng-show="quiz_form_{{$parent.quiz.id}}.$invalid">Please, fill in all the fields before sending the quiz</p>
 	</form>
 

@@ -28,7 +28,7 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
                                                     answering_expired: quiz.answering_expired,
                                                     reviewing_expired: quiz.reviewing_expired
                                         };
-                                        
+
 					if(quiz.my_latest_answer){
 						_original_quiz_items = $.extend([], $scope.quiz.items);
 						quiz.my_latest_answer.forEach(function(answer){
@@ -86,11 +86,13 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 	};
 
 	$scope.clear_answer = function(){
-                var copied = [];
-                _original_quiz_items.forEach(function(item) {
-                    copied.push($.extend({}, item));
-                });
-		$scope.quiz.items = copied;
+		if(confirm('Are you sure you want to clear your answer?')){
+				var copied = [];
+				_original_quiz_items.forEach(function(item) {
+						copied.push($.extend({}, item));
+				});
+$scope.quiz.items = copied;
+		}
 	};
 
 
