@@ -155,13 +155,12 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
                 events: _click_buffer,
                 success: function () {
                     console.log('events successfully sent');
-                    _click_buffer = [];                    
-                    $rootScope._click_buffer = _click_buffer;
+                    //no need to create new array, just empty
+                    _click_buffer.length = 0;
                 },
                 error: function () {
                     console.log('event sending error');
-                    _click_buffer = [];
-                    $rootScope._click_buffer = _click_buffer;
+                    _click_buffer.length = 0;
                 }
             });
         }
@@ -172,10 +171,10 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 		}
 	}, 6000);
 
-	$(window).unload(function(){
+	$(window).bind('beforeunload', function(){ 
 		// Send rest of the buffer before leaving
                 var obj = {action: 'close', element: 'window', clickTime: $.now()};
-                $rootScope._click_buffer.push(obj);
+                _click_buffer.push(obj);
                 flush_click_buffer();
 	});
 

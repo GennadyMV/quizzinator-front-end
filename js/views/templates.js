@@ -85,15 +85,18 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "</div>\n" +
     "\n" +
     "<div class=\"quiz-panel-body\" ng-show=\"$parent.quiz.is_open\">\n" +
+    "    <div class=\"alert alert-info\" ng-show=\"quiz.answering_expired\">\n" +
+    "        The deadline for answering this quiz has passed\n" +
+    "    <div ng-show=\"quiz.can_answer\">but you can improve your answer until {{ quiz.improve_deadline }}</div>\n" +
+    "    </div>\n" +
+    "    \n" +
+    "    \n" +
     "    <form name=\"quiz_form_{{$parent.quiz.id}}\" ng-hide=\"!quiz.can_answer\">\n" +
     "        <div class=\"form-item\" ng-repeat=\"item in quiz.items\" ng-include=\"widget_view(item.item_type)\"></div>\n" +
     "        <button class=\"btn-blue\" ng-click=\"send_answer()\" ng-disabled=\"quiz_form_{{$parent.quiz.id}}.$invalid\"><i class=\"fa fa-send\"></i> Send</button>\n" +
     "        <button class=\"btn-blue pull-right\" ng-click=\"clear_answer()\"><i class=\" fa fa-eraser\"></i> Clean answers</button>\n" +
     "        <p class=\"text-muted\" style=\"margin-bottom: 0px;\" ng-show=\"quiz_form_{{$parent.quiz.id}}.$invalid\">Please, fill in all the fields before sending the quiz</p>\n" +
     "    </form>\n" +
-    "\n" +
-    "    <div class=\"alert alert-info\" ng-show=\"!quiz.answered && quiz.answering_expired\">The deadline for answering this quiz has passed</div>\n" +
-    "    <div class=\"alert alert-info\" ng-show=\"quiz.answering_expired && quiz.improving_possible\">You can improve your answer until {{ quiz.improve_deadline }}</div>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"quiz-panel-user-info\" ng-show=\"$parent.quiz.is_open\">\n" +
