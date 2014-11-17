@@ -26,7 +26,8 @@ describe('QuizController', function(){
   					  reviewable:true,
               answered: true,
               answering_expired: false,
-              reviewing_expired: false
+              reviewing_expired: false,
+              myLatestAnswer: angular.toJson({id:4,answer:[{question:"derpderpderp",value:"kokookok",item_type:"open_question",max_length:50,index:0}]})
   					}));
           }
   			},
@@ -116,6 +117,7 @@ describe('QuizController', function(){
     })
 
     it('should show last answer when quiz loads', function() {
-
+      scope.init(angular.toJson({'id':1}));
+      expect(scope.quiz.my_latest_answer[0].value).toBe("kokookok");
     })
 });
