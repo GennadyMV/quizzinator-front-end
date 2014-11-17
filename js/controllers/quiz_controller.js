@@ -7,8 +7,8 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 	$scope.username = $scope.$parent.username;
 
 	$scope.init = function(options){
-		options = angular.fromJson(options);
 
+		options = angular.fromJson(options);
 		$scope.quiz_id = options.id;
 
 		if(!$scope.username){
@@ -18,9 +18,10 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 				id: $scope.quiz_id,
 				username: $scope.username,
 				success: function(quiz){
+
+
 					$scope.quiz = quiz;
 					$scope.view = get_path('quiz_form.html');
-
 					$scope.$parent.quiz_info[quiz.id.toString()] = {
                                                     title: quiz.title,
                                                     answered: quiz.answered,

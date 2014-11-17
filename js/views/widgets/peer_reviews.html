@@ -3,8 +3,6 @@
 	<div>
 		<div class="peer-review-widget">
 			<div class="peer-review-widget-review" ng-repeat="peer_review in peer_reviews | limitTo: count">
-				<!--<div class="form-item" ng-repeat="review in peer_review.review" ng-include="answer_view(answer.item_type)">
-				</div> !-->
 				<div style="margin-bottom: 10px; font-weight: bold">
 					<span ng-class="{ 'green': peer_review.totalRating > 0, 'red': peer_review.totalRating < 0, 'text-muted': peer_review.totalRating == 0 }"><span ng-show="peer_review.totalRating > 0">+</span><span ng-show="peer_review.totalRating < 0">-</span>{{peer_review.totalRating}}</span> {{peer_review.reviewer}}
 				</div>
@@ -14,7 +12,6 @@
 					<button class="btn btn-grey" ng-click="item.event_handler('click', $index, -1);rate(peer_review, -1)" style="cursor: pointer; margin-left: 5px;"><i  class="fa fa-thumbs-down"></i></button>
 				</div>
 			</div>
-			<!--<button class="btn-blue" ng-click="get_peer_reviews()"><i class="fa fa-send"></i> More peer reviews</button>-->
 		</div>
 	</div>
 </div>
