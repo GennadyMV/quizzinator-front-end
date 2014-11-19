@@ -44,6 +44,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
 
   $scope.$parent.$watch('quiz_info', function(new_val, old_val){
     var quiz = new_val[$scope.id.toString()];
+    if (!quiz) return;
     
     var user_can_give_peer_reviews = quiz && !quiz.reviewing_expired && ( quiz.answered || ( quiz.answered && quiz.answering_expired ) );
 

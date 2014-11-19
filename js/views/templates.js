@@ -50,7 +50,7 @@ angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", f
   $templateCache.put("../js/views/peer_review_form.html",
     "<div class=\"quiz-panel-heading\">\n" +
     "    \"{{title}}\" peer reviews\n" +
-    "    <span class=\"pull-right quiz-dl\">Deadline: <br />{{ review_deadline }}</span>\n" +
+    "    <span class=\"pull-right quiz-dl\" ng-show=\"review_deadline\">Deadline: <br />{{ review_deadline }}</span>\n" +
     "</div>\n" +
     "<div class=\"quiz-panel-body\">\n" +
     "    <div ng-show=\"has_answered_quiz && !answering_expired\">\n" +
@@ -98,7 +98,7 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "        <i class=\"fa fa-minus\" ng-show=\"$parent.quiz.is_open\"></i>\n" +
     "        <i class=\"fa fa-plus\" ng-hide=\"$parent.quiz.is_open\"></i>\n" +
     "    </button>\n" +
-    "    <span class=\"pull-right quiz-dl\">Deadline: <br /> {{ quiz.deadline }}</span>\n" +
+    "    <span class=\"pull-right quiz-dl\" ng-show=\"quiz.deadline\">Deadline: <br /> {{ quiz.deadline }}</span>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"quiz-panel-body\" ng-show=\"$parent.quiz.is_open\">\n" +

@@ -7,7 +7,7 @@
         <i class="fa fa-minus" ng-show="$parent.quiz.is_open"></i>
         <i class="fa fa-plus" ng-hide="$parent.quiz.is_open"></i>
     </button>
-    <span class="pull-right quiz-dl">Deadline: <br /> {{ quiz.deadline }}</span>
+    <span class="pull-right quiz-dl" ng-show="quiz.deadline">Deadline: <br /> {{ quiz.deadline }}</span>
 </div>
 
 <div class="quiz-panel-body" ng-show="$parent.quiz.is_open">
