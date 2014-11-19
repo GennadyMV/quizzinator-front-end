@@ -91,7 +91,7 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 			headers: {
 		       "Content-Type": "application/json"
 		  },
-		  data: angular.toJson({ reviewer: options.reviewer, review: options.review.content })
+		  data: { reviewer: options.reviewer, review: options.review.content }
 		}).success(function(){
 			options.success();
 		}).error(function(){
