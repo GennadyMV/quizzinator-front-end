@@ -1,9 +1,9 @@
 QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval', 'Authentication', 'API', function($rootScope, $scope, $sce, $interval, Authentication, API){
 
-	var _click_buffer = [];
+	var _event_buffer = [];
 	var _original_quiz_items = [];
 
-        $rootScope._click_buffer = _click_buffer;
+        $rootScope._event_buffer = _event_buffer;
 	$scope.username = $scope.$parent.username;
 
 	$scope.init = function(options){
@@ -135,34 +135,34 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 		$scope.quiz.is_open = !$scope.quiz.is_open;
 	};
         
-        function flush_click_buffer() {
-            API.send_clicks({
+        function flush_event_buffer() {
+            API.send_events({
                 quiz_id: $scope.quiz.id,
                 username: $scope.username,
-                events: _click_buffer,
+                events: _event_buffer,
                 success: function () {
                     console.log('events successfully sent');
                     //no need to create new array, just empty the buffer
-                    _click_buffer.length = 0;
+                    _event_buffer.length = 0;
                 },
                 error: function () {
                     console.log('event sending error');
-                    _click_buffer.length = 0;
+                    _event_buffer.length = 0;
                 }
             });
         }
 
 	$interval(function(){
-		if(_click_buffer.length > 0){
-                    flush_click_buffer();
+		if(_event_buffer.length > 0){
+                    flush_event_buffer();
 		}
 	}, 6000);
 
 	$(window).bind('beforeunload', function(){ 
 		// Send rest of the buffer before leaving
-                var obj = {action: 'close', element: 'window', clickTime: $.now()};
-                _click_buffer.push(obj);
-                flush_click_buffer();
+                var obj = {action: 'close', element: 'window', actionTime: $.now()};
+                _event_buffer.push(obj);
+                flush_event_buffer();
 	});
 
 	$scope.$parent.$watch('username', function(new_val, old_val){
