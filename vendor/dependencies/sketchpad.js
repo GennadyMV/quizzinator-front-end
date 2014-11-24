@@ -393,6 +393,8 @@ jQuery.browser = browser;
 				type: "clear"
 			});
 
+      self.paper().clear();
+
 			_strokes = [];
 			_redraw_strokes();
 			_fire_change();

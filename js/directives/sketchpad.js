@@ -59,8 +59,8 @@ QuizApp.directive('sketchpad', function(){
       sketchpad.add_rectangle(stroke_width);
     });
 
-    $(toolbar).find('.sketchpad-undo-stroke').on('click', function(){
-      sketchpad.undo();
+    $(toolbar).find('.sketchpad-clear').on('click', function(){
+      sketchpad.clear();
     });
 
     $(toolbar).find('.add-text-to-sketchpad button').on('click', function(){

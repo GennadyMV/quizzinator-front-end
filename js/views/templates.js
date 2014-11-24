@@ -48,9 +48,9 @@ angular.module("../js/views/peer_review_done.html", []).run(["$templateCache", f
 
 angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/peer_review_form.html",
-    "<div class=\"quiz-panel-heading\">\"{{title}}\" peer reviews</div>\n" +
+    "<div class=\"quiz-panel-heading\"><i class=\"fa fa-group text-muted\" style=\"margin-right: 10px\"></i>\"{{title}}\" peer reviews</div>\n" +
     "<div class=\"quiz-panel-body\">\n" +
-    "	<div ng-show=\"has_answered_quiz && !answering_expired\">\n" +
+    "	<div ng-show=\"has_answered_quiz && !answering_expired && current_peer_reviews.length > 0\">\n" +
     "		<p class=\"text-muted text-center\">Round {{current_round}}/{{rounds}}</p>\n" +
     "		<form name=\"peer_review_{{$parent.quiz.id}}\">\n" +
     "			<div class=\"form-item\">\n" +
@@ -80,6 +80,10 @@ angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", f
     "	<div class=\"alert alert-info\" ng-show=\"answering_expired\" style=\"margin-top: 10px\">\n" +
     "		The deadline for answering this quiz has passed\n" +
     "	</div>\n" +
+    "\n" +
+    "	<div class=\"alert alert-info\" ng-show=\"current_peer_reviews.length == 0 && has_answered_quiz\">\n" +
+    "		No answers yet\n" +
+    "	</div>\n" +
     "</div>\n" +
     "");
 }]);
@@ -87,7 +91,7 @@ angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", f
 angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/quiz_form.html",
     "<div class=\"quiz-panel-heading\" ng-click=\"toggle_quiz();quiz.event_handler('click', $parent.quiz.is_open)\" style=\"cursor: pointer;\" >\n" +
-    "	<i class=\"fa fa-question-circle text-muted\"></i> {{quiz.title}} <span class=\"text-muted\" ng-show=\"quiz.answered\">answered</span>\n" +
+    "	<i class=\"fa fa-question-circle text-muted\" style=\"margin-right: 10px\"></i>{{quiz.title}} <span class=\"text-muted\" ng-show=\"quiz.answered\">answered</span>\n" +
     "	<button class=\"pull-right toggle-quiz\">\n" +
     "		<i class=\"fa fa-minus\" ng-show=\"$parent.quiz.is_open\"></i>\n" +
     "		<i class=\"fa fa-plus\" ng-hide=\"$parent.quiz.is_open\"></i>\n" +
@@ -284,10 +288,10 @@ angular.module("../js/views/widgets/sketchpad.html", []).run(["$templateCache", 
     "<label>{{item.title}}</label>\n" +
     "<div class=\"sketchpad-container\">\n" +
     "  <div class=\"sketchpad-toolbar\">\n" +
-    "    <div class=\"sketchpad-tool sketchpad-undo-stroke\">\n" +
-    "      <button class=\"btn btn-grey\"><i class=\"fa fa-undo\"></i> Undo stroke</button>\n" +
+    "    <div class=\"sketchpad-tool sketchpad-clear\">\n" +
+    "      <button class=\"btn btn-grey\"><i class=\"fa fa-eraser\"></i> Clear</button>\n" +
     "    </div>\n" +
-    "    \n" +
+    "\n" +
     "    <div class=\"sketchpad-tool choose-stroke-color-to-sketchpad\">\n" +
     "      <label class=\"label-block\">Choose color</label>\n" +
     "      <div class=\"palette-container\">\n" +

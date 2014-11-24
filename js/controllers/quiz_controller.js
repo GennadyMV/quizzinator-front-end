@@ -3,7 +3,7 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 	var _click_buffer = [];
 	var _original_quiz_items = [];
 
-        $rootScope._click_buffer = _click_buffer;
+  $rootScope._click_buffer = _click_buffer;
 	$scope.username = $scope.$parent.username;
 
 	$scope.init = function(options){
