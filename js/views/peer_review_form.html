@@ -1,37 +1,37 @@
-<div class="quiz-panel-heading"><i class="fa fa-group text-muted" style="margin-right: 10px"></i>"{{title}}" peer reviews</div>
+<div class="quiz-panel-heading">
+    "{{title}}" peer reviews
+    <span class="pull-right quiz-dl" ng-show="review_deadline">Deadline: <br />{{ review_deadline }}</span>
+</div>
 <div class="quiz-panel-body">
-	<div ng-show="has_answered_quiz && !answering_expired && current_peer_reviews.length > 0">
-		<p class="text-muted text-center">Round {{current_round}}/{{rounds}}</p>
-		<form name="peer_review_{{$parent.quiz.id}}">
-			<div class="form-item">
-				<label>You review</label>
-				<textarea class="text-field" rows="4" ng-model="$parent.peer_review_content" ng-required="true"></textarea>
-			</div>
-			<button class="btn-blue" ng-disabled="peer_review_{{$parent.quiz.id}}.$invalid" ng-click="send_peer_review()"><i class="fa fa-send"></i> Send</button>
+    <div ng-show="has_answered_quiz && !reviewing_expired">
+        <p class="text-muted text-center">Round {{current_round}}/{{rounds}}</p>
+        <form name="peer_review_{{$parent.quiz.id}}">
+            <div class="form-item">
+                <label>Your review</label>
+                <textarea class="text-field" rows="4" ng-model="$parent.peer_review_content" ng-required="true"></textarea>
+            </div>
+            <button class="btn-blue" ng-disabled="peer_review_{{$parent.quiz.id}}.$invalid" ng-click="send_peer_review()"><i class="fa fa-send"></i> Send</button>
 
-			<p class="text-muted" style="margin-bottom: 0px" ng-show="peer_review_{{$parent.quiz.id}}.$invalid">
-				Please, write your review before sending
-			</p>
-		</form>
-		<div class="peer-review-container">
-			<div class="peer-review-answer" ng-repeat="review in current_peer_reviews">
-				<div class="peer-review-answer-body" ng-click="choose_review(review)" ng-class="{ 'selected': review.selected }">
-					<h2 class="peer-review-user"><i class="fa fa-user"></i> {{review.user || 'Anonymous'}}</h2>
-					<div class="form-item" ng-repeat="answer in review.answer" ng-include="answer_view(answer.item_type)"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+            <p class="text-muted" style="margin-bottom: 0px" ng-show="peer_review_{{$parent.quiz.id}}.$invalid">
+                Please, write your review before sending
+            </p>
+        </form>
+        <div class="peer-review-container">
+            <div class="peer-review-answer" ng-repeat="review in current_peer_reviews">
+                <div class="peer-review-answer-body" ng-click="choose_review(review)" ng-class="{ 'selected': review.selected }">
+                    <h2 class="peer-review-user"><i class="fa fa-user"></i> {{review.user|| 'Anonymous'}}</h2>
+                    <div class="form-item" ng-repeat="answer in review.answer" ng-include="answer_view(answer.item_type)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="alert alert-info" ng-hide="has_answered_quiz">
-		Answer the quiz before giving peer reviews
-	</div>
+    <div class="alert alert-info" ng-hide="has_answered_quiz">
+        Answer the quiz before giving peer reviews
+    </div>
 
-	<div class="alert alert-info" ng-show="answering_expired" style="margin-top: 10px">
-		The deadline for answering this quiz has passed
-	</div>
+    <div class="alert alert-info" ng-show="reviewing_expired" style="margin-top: 10px">
+        The deadline for peer reviews has passed
+    </div>
 
-	<div class="alert alert-info" ng-show="current_peer_reviews.length == 0 && has_answered_quiz">
-		No answers yet
-	</div>
 </div>

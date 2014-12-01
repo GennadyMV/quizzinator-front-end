@@ -10,9 +10,9 @@ QuizApp.service('AnswerFormatter', ['$sce', '$rootScope', function($sce, $rootSc
 			value: '',
 			item_type: item.item_type,
                         event_handler: function(action, child, value){
-                            var obj = {action: action, element: item.item_type + '_' + item.index, child: child, value: value, clickTime: $.now()};
+                            var obj = {action: action, element: item.item_type + '_' + item.index, child: child, value: value, actionTime: $.now()};
                             //console.log('action: ' + obj.action + ', element: ' + obj.element + ', child: ' + obj.child + ', val: ' + obj.value );
-                            $rootScope._click_buffer.push(obj);
+                            $rootScope._event_buffer.push(obj);
                         }
 		};
 	};
@@ -184,11 +184,16 @@ QuizApp.service('AnswerFormatter', ['$sce', '$rootScope', function($sce, $rootSc
 			is_open: quiz.isOpen,
 			answering_expired: quiz.answeringExpired,
 			reviewing_expired: quiz.reviewingExpired,
+                        improving_possible: quiz.answerImprovingPossible,
+                        can_answer: !quiz.answeringExpired || quiz.answered && quiz.answerImprovingPossible,
+                        deadline: quiz.answerDeadline,
+                        review_deadline: quiz.reviewDeadline,
+                        improve_deadline: quiz.answerImproveDeadline,
 			my_latest_answer: quiz.myLatestAnswer ? angular.fromJson(angular.fromJson(quiz.myLatestAnswer).answer) : null,
 			items: [],
                         event_handler: function (action, state){
-                            var obj = {action: 'click', element: 'quiz', value: state ? 'expanded' : 'collapsed', clickTime: $.now()};
-                            $rootScope._click_buffer.push(obj);
+                            var obj = {action: 'click', element: 'quiz', value: state ? 'expanded' : 'collapsed', actionTime: $.now()};
+                            $rootScope._event_buffer.push(obj);
                         }
 		};
 
@@ -219,13 +224,7 @@ QuizApp.service('AnswerFormatter', ['$sce', '$rootScope', function($sce, $rootSc
 				answers.push(item);
 			}
 		}
-
-		/*quiz.items.forEach(function(item){
-			if(typeof output_formatters[item.item_type] === 'function'){
-				answers.push(output_formatters[item.item_type](item));
-			}
-		});*/
-		console.log(answers);
+                
 		return answers;
 	};
 

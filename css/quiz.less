@@ -1,3 +1,45 @@
+// THEME VARIABLES
+
+// Colors
+@blue: #0096DD;
+@green: #81BC2E;
+@red: #C1423D;
+@dark_grey: #646464;
+
+// Quiz font family
+@font_family: 'Roboto';
+// Quiz font size
+@font_size: 0.9em;
+// Quiz font color
+@font_color: @dark_grey;
+
+// Quiz link color
+@link_color: @blue;
+// Quiz link color when hovering
+@link_color_hover: @blue;
+
+// Max width of the quiz
+@quiz_max_width: 100%;
+// Border color of the quiz
+@quiz_border_color: darken(white, 15%);
+// Background color of the quiz
+@quiz_background_color: white;
+// Background color of the quiz title
+@quiz_title_background_color: white;
+// Font color of the quiz title
+@quiz_title_font_color: @dark_grey;
+
+// Default button background color
+@default_button_background_color: white;
+// Default button font color
+@default_button_font_color: @dark_grey;
+// Primary button background-color
+@primary_button_background_color: @blue;
+// Primary button font color
+@primary_button_font_color: white;
+
+// THEME STYLES
+
 @font-face {
     font-family: 'Roboto';
     src: url('roboto/Roboto-Regular-webfont.eot');
@@ -8,12 +50,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
-@blue: #0096DD;
-@green: #81BC2E;
-@red: #C1423D;
-
-
 
 .background-gradient(@start, @stop) {
 	background: mix(@start, @stop, 50%);
@@ -55,12 +91,23 @@
 }
 
 .quiz-container{
-	font-family: 'Roboto', sans-serif;
-	font-size: 0.9em;
+  max-width: @quiz_max_width;
+	font-family: @font_family, sans-serif;
+	font-size: @font_size;
 
-  a, a:visited{
-    color: @blue;
-    text-decoration: underline;
+  a{
+    color: @link_color;
+    text-decoration: none;
+
+    &:visited{
+      color: @link_color;
+      text-decoration: none;
+    }
+
+    &:hover{
+      color: @link_color_hover;
+      text-decoration: underline;
+    }
   }
 
   .green{
@@ -69,11 +116,6 @@
 
   .red{
     color: @red;
-  }
-
-  a:hover{
-    color: @blue;
-    text-decoration: none;
   }
 
 	.list-unstyled{
@@ -265,23 +307,25 @@
 
 	&.quiz-panel{
 		box-shadow: 0px 0px 2px darken(white, 10%);
-		color: rgb(100,100,100);
-		border: 1px solid darken(white, 15%);
+		color: @font_color;
+		border: 1px solid @quiz_border_color;
 		border-radius: 3px;
+    background-color: @quiz_background_color;
 
 		.quiz-panel-heading{
-			.background-gradient(white, darken(white, 5%));
+			.background-gradient(@quiz_title_background_color, darken(@quiz_title_background_color, 5%));
 			padding: 12px 15px;
 			font-weight: bold;
 			font-size: 1.2em;
-			border-bottom: 1px solid darken(white, 15%);
+      color: @quiz_title_font_color;
+			border-bottom: 1px solid darken(@quiz_title_background_color, 15%);
 
 			&:hover{
-				.background-gradient(lighten(white, 5%), darken(white, 3%));
+				.background-gradient(lighten(@quiz_title_background_color, 5%), darken(@quiz_title_background_color, 3%));
 			}
 
 			&:active{
-				.background-gradient(darken(white, 5%), darken(white, 13%));
+				.background-gradient(darken(@quiz_title_background_color, 5%), darken(@quiz_title_background_color, 13%));
 			}
 
 			.toggle-quiz{
@@ -291,6 +335,11 @@
 				font-size: 1.2em;
 				color: rgb(160,160,160);
 			}
+
+            .quiz-dl{
+				font-size: 0.7em;
+                margin-top: -3px;
+            }
 		}
 
 		.quiz-panel-user-info{
@@ -377,15 +426,15 @@
 
 		.text-field{
 			-webkit-box-sizing: border-box;
-    	 	-moz-box-sizing: border-box;
-     		box-sizing: border-box;
+    	-moz-box-sizing: border-box;
+     	box-sizing: border-box;
 			border-radius: 3px;
 			padding: 8px 10px;
 			box-shadow: inset 0px 2px 2px darken(white, 10%);
 			border: 1px solid darken(white, 20%);
 			font-family: 'Roboto', sans-serif;
-			font-size: 0.9em;
-			color: rgb(100,100,100);
+			font-size: @font_size;
+			color: @font_color;
 			width: 100%;
 
 			&:focus{
@@ -429,7 +478,7 @@
 				cursor: pointer;
 				padding: 20px;
 				box-shadow: 0px 0px 2px darken(white, 10%);
-				color: rgb(100,100,100);
+				color: @font_color;
 				border: 1px solid darken(white, 15%);
 				border-radius: 3px;
 				margin: 15px 15px 2px 15px;
@@ -448,13 +497,14 @@
 	}
 
 	.btn-grey{
-		.btn(white);
+		.btn(@default_button_background_color);
 		text-shadow: none;
-		color: rgb(100,100,100);
+		color: @default_button_font_color;
 	}
 
 	.btn-blue{
-		.btn(@blue);
+		.btn(@primary_button_background_color);
+		color: @primary_button_font_color;
 	}
 
 	.btn-sm{

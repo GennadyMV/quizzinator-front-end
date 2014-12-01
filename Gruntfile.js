@@ -45,6 +45,15 @@ module.exports = function(grunt) {
       unit: {
         configFile: 'karma.conf.js'
       }
+    },
+    concat: {
+        options: {
+            separator: ';'
+        },
+        dist: {
+            src: ['vendor/dependencies/angular.min.js', 'vendor/dependencies/jquery.min.js', 'vendor/dependencies/*.js', 'js/views/templates.js', 'js/app.js', 'js/services/*.js', 'js/filters/*.js', 'js/directives/*.js', 'js/controllers/*.js'],
+            dest: 'build/quiz.min.js'
+        }
     }
   });
 

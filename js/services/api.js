@@ -91,7 +91,7 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 			headers: {
 		       "Content-Type": "application/json"
 		  },
-		  data: angular.toJson({ reviewer: options.reviewer, review: options.review.content })
+		  data: { reviewer: options.reviewer, review: options.review.content }
 		}).success(function(){
 			options.success();
 		}).error(function(){
@@ -99,16 +99,16 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		});
 	};
         
-        _public.send_clicks = function(options){
+        _public.send_events = function(options){
                 $http({
                     method: 'POST',
-                    url: API_URL + '/clicks',
+                    url: API_URL + '/events',
                     dataType: 'json',
                     headers: { 'Content-Type':'application/json' },
                     data: {
                             user: options.username,
                             quizId: options.quiz_id,
-                            clicks: options.events
+                            events: options.events
                     }
                 })
                 .success(options.success)
