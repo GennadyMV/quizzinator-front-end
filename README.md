@@ -30,9 +30,10 @@ init-funktion parametrit:
 
 * *id*: upotettavan kyselyn id.
 
-###Lisenssi
+##Lisenssi
 Varmaan MIT
-##Kolmannen osapuolen komponentit ja niiden lisenssit
+
+###Kolmannen osapuolen komponentit ja niiden lisenssit
 | komponentti | lisenssi |
 | ----------- | -------- |
 | AngularJS   | MIT      |
