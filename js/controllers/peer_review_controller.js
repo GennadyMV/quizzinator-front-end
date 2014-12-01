@@ -5,12 +5,20 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
   $scope.rounds = 0;
   $scope.current_round = 0;
 
+  /**
+  * Initializes the peer reviews
+  *
+  * @param options wich contains the id of the quiz
+  */
   $scope.init = function(options){
     options = angular.fromJson(options);
 
     $scope.id = options.id;
   };
 
+  /**
+  * Sends the peer review
+  */
   $scope.send_peer_review = function(){
     if($scope.reviewing_expired || !$scope.has_answered_quiz){ return; }
 
@@ -45,13 +53,13 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
   $scope.$parent.$watch('quiz_info', function(new_val, old_val){
     var quiz = new_val[$scope.id.toString()];
     if (!quiz) return;
-    
+
     var user_can_give_peer_reviews = quiz && !quiz.reviewing_expired && ( quiz.answered || ( quiz.answered && quiz.answering_expired ) );
 
     $scope.view = get_path('peer_review_form.html');
 
     $scope.has_answered_quiz = quiz.answered;
-    $scope.answering_expired = quiz.reviewing_expired;
+    $scope.reviewing_expired = quiz.reviewing_expired;
     $scope.review_deadline = quiz.review_deadline;
     $scope.title = quiz.title;
 
@@ -60,7 +68,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
         quiz: $scope.id,
         username: Authentication.get_user(),
         success: function(peer_reviews){
-          init_peer_reviews(peer_reviews);
+          initialize_peer_reviews(peer_reviews);
         },
         error: function(){}
       });
@@ -71,6 +79,11 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
     }
   }, true);
 
+  /**
+  * Chooses an answer to review
+  *
+  * @param review to choose
+  */
   $scope.choose_review = function(review){
     $scope.current_peer_reviews.forEach(function(r){
       r.selected = false;
@@ -79,6 +92,11 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
     review.selected = true;
   };
 
+  /**
+  * Gives a template file path for the given answer type
+  *
+  * @param type of the answer
+  */
   $scope.answer_view = function(type){
     return get_path('answers/' + type + '.html');
   };
@@ -87,7 +105,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
     return $scope.$parent.templates_path + '/' + template;
   }
 
-  function init_peer_reviews(peer_reviews){
+  function initialize_peer_reviews(peer_reviews){
     $scope.peer_reviews = peer_reviews;
 
     if($scope.peer_reviews.length == 0){

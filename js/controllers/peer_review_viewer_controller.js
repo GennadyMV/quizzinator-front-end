@@ -8,6 +8,9 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 		$scope.get_peer_reviews();
 	}
 
+	/**
+	* Fetches the peer reviews from the server
+	*/
 	$scope.get_peer_reviews = function() {
 		API.get_peer_reviews_by_quiz({
 			quiz: $scope.$parent.quiz_id,
@@ -19,6 +22,12 @@ QuizApp.controller('PeerReviewViewerController', ['$scope', 'API', 'Authenticati
 		});
 	}
 
+	/**
+	* Rates a peer review with a given rating
+	*
+	* @param peer review
+	* @param rating (-1, 1)
+	*/
 	$scope.rate = function(review, rating) {
 		API.rate_peer_review({
 			quiz: $scope.$parent.quiz_id,

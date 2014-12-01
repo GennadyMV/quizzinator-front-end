@@ -32,22 +32,8 @@ describe('QuizController', function(){
           }
   			},
   			answer_quiz: function(options) {
-          if(options.quiz.id == 3){
-            options.success(
-              {
-                answers: [
-                  {
-                    id: 1,
-                    user: 'kalle',
-                    ip: '',
-                    url: null,
-                    answer: [{"question":"what's up?","value":"jees!","item_type":"open_question"}]
-                  }
-                ]
-              });
-          } else {
-  				  options.success([]);
-  			}}
+          options.success({});
+        }
   		}
   	})();
 
@@ -69,11 +55,13 @@ describe('QuizController', function(){
       		Authentication: AuthenticationMock,
       		API: QuizAPiMock
     	});
+
       scope.username = 'kalle';
+
+      scope.init(angular.toJson({ 'id' : 1 }));
     }));
 
     it('should be initialized correctly with username', function() {
-    	scope.init(angular.toJson({'id':1}));
     	expect(scope.quiz.title).toBe('hurr durr?');
     	expect(scope.quiz.items[0].question).toContain("derpderpderp");
   		expect(scope.quiz.items.length).toBe(1);
@@ -81,17 +69,19 @@ describe('QuizController', function(){
 
     it('should be initialized correctly without username', function() {
       scope.username = null;
-      scope.init(angular.toJson({'id':1}));
+
+      scope.init(angular.toJson({ 'id' : 1 }));
+
       expect(scope.view).toContain('login.html');
     });
 
     it('should present the view correctly when given user name', function() {
-      scope.init(angular.toJson({'id':1}));
       expect(scope.view).toContain('quiz_form.html');
     });
 
     it('should be able to change users', function() {
       scope.init(angular.toJson({'id':1}));
+
       expect(scope.username).toBe('kalle');
       scope.new_username = 'Hattumies';
       scope.change_username();
@@ -99,25 +89,50 @@ describe('QuizController', function(){
     });
 
     it('should render error message when id is not found', function() {
-      scope.init(angular.toJson({'id':2}));
+      scope.init(angular.toJson({ 'id' : 2 }));
+
       expect(scope.view).toContain('error.html');
     });
 
     it('shloud be open if it has not been set to be closed', function() {
-      scope.init(angular.toJson({'id':1}));
       scope.toggle_quiz();
       expect(scope.quiz.is_open).toBe(true);
-    })
+    });
 
     it('should show correctly when quiz is set to be closed', function() {
-      scope.init(angular.toJson({'id':1}));
       scope.toggle_quiz();
       scope.toggle_quiz();
       expect(scope.quiz.is_open).toBe(false);
-    })
+    });
+
+    it('should be able to answer the quiz', function(){
+      scope.send_answer();
+
+      expect(scope.quiz.answered).toBe(true);
+    });
 
     it('should show last answer when quiz loads', function() {
-      scope.init(angular.toJson({'id':1}));
       expect(scope.quiz.my_latest_answer[0].value).toBe("kokookok");
-    })
+    });
+
+    it('should be able to logout user by using authentication module', function(){
+      scope.$apply();
+
+      Auth.logout({ scope: scope });
+
+      scope.$apply();
+
+      expect(scope.username).toBe(null);
+    });
+
+    it('should be able to login user by using authentication module', function(){
+      scope.$apply();
+
+      Auth.login('Kalle', { scope: scope });
+
+      scope.$apply();
+
+      expect(scope.username).toBe('Kalle');
+    });
+
 });

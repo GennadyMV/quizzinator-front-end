@@ -1,8 +1,8 @@
 <div class="quiz-panel-heading" ng-click="toggle_quiz(); quiz.event_handler('click', $parent.quiz.is_open)" style="cursor: pointer;" >
     <i class="fa fa-question-circle text-muted"></i> {{quiz.title}}
     <span class="text-muted" ng-show="quiz.answered">answered</span>
-    
-    
+
+
     <button class="pull-right toggle-quiz">
         <i class="fa fa-minus" ng-show="$parent.quiz.is_open"></i>
         <i class="fa fa-plus" ng-hide="$parent.quiz.is_open"></i>

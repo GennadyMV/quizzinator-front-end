@@ -11,50 +11,24 @@ describe('PeerReviewController', function(){
 
   var QuizAPiMock = (function(){
     return {
-      create_quiz: function(options){
-        options.done()
-      },
-      get_quiz: function(options) {
-          var basic_response = {
-            id: options.id,
-            title: "hurr durr?",
-            items: angular.toJson([{question:"derpderpderp",item_type:"open_question"}]),
-            quizAnswers: [],
-            reviewable: true,
-            answered: false,
-            answeringExpired: false,
-            reviewingExpired: false
-          }
-
-          if(options.id == 2) {
-            options.error();
-          }else if(options.id == 1){
-            options.success(AnswerFormatter.input(basic_response));
-          }else if(options.id == 3){
-            basic_response.answered = true;
-            options.success(AnswerFormatter.input(basic_response));
-          }
-      },
-      answer_quiz: function(options) {
-        if(options.quiz.id == 3){
-          options.success(
-            {
-              answers: [
-                {
-                  id: 1,
-                  user: 'kalle',
-                  ip: '',
-                  url: null,
-                  answer: [{"question":"what's up?","value":"jees!","item_type":"open_question"}]
-                }
-              ]
-            });
-        } else {
-          options.success([]);
-        }
-      },
       get_peer_reviews: function(options){
-        options.success([{}]);
+        options.success([
+          {
+            answerer: 'Kalle',
+            answer: 'Kallen vastaus',
+            selected: false
+          },
+          {
+            answerer: 'Toni',
+            answer: 'Vastaukseni',
+            selected: false
+          },
+          {
+            answerer: 'Kalle',
+            answer: 'Vastaukseni',
+            selected: false
+          }
+        ]);
       }
     }
   })();
@@ -75,7 +49,18 @@ describe('PeerReviewController', function(){
   it('should keep peer review form hidden if user has not answered quiz', function(){
     scope.id = 1;
 
-    expect(scope.hidden).toBe(true);
+    scope.$parent.quiz_info = {};
+
+    scope.$parent.quiz_info['1'] = {
+      title: 'Arton kyssäri',
+      answered: false,
+      answering_expired: false,
+      reviewing_expired: false
+    };
+
+    scope.$apply();
+
+    expect(scope.has_answered_quiz).toBe(false);
   });
 
   it('should show peer review form when user has answered quiz', function(){
@@ -92,7 +77,7 @@ describe('PeerReviewController', function(){
 
     scope.$apply();
 
-    expect(scope.hidden).toBe(false);
+    expect(scope.has_answered_quiz).toBe(true);
   });
 
   it('should not see peer review form after reviewing deadline has passed', function(){
@@ -101,7 +86,7 @@ describe('PeerReviewController', function(){
     scope.$parent.quiz_info = {};
 
     scope.$parent.quiz_info['3'] = {
-      title: 'Kallen kyssäri',
+      title: 'Tonin kyssäri',
       answered: true,
       answering_expired: false,
       reviewing_expired: true
@@ -109,28 +94,38 @@ describe('PeerReviewController', function(){
 
     scope.$apply();
 
-    expect(scope.hidden).toBe(true);
+    expect(scope.reviewing_expired).toBe(true);
   });
 
-  /*it('should show peer review form when there are peer reviews', function(){
-    scope.id = 1;
+  it('should show peer review form when there are peer reviews', function(){
+    scope.id = 3;
 
-    scope.$parent.new_peer_review = { title: 'Lorem ipsum', id: 1, peer_reviews: [{ user: 'kalle', answer: '' }], userhash: 'abc' };
+    scope.$parent.quiz_info['3'] = {
+      title: 'Ilmarin kyssäri',
+      answered: true,
+      answering_expired: false,
+      reviewing_expired: false
+    };
+
     scope.$apply();
 
-    expect(scope.hidden).toBe(false);
-    expect(scope.current_peer_reviews.length).toBe(1);
+    expect(scope.current_peer_reviews.length).toBe(2);
   });
 
   it('should have correct amount of peer review rounds', function(){
-    scope.id = 1;
+    scope.id = 3;
 
-    scope.$parent.new_peer_review = { title: 'Lorem ipsum', id: 1, peer_reviews: [{ user: 'kalle', answer: '' }, { user: 'henri', answer: '' }, { user: 'toni', answer: '' }], userhash: 'abc' };
+    scope.$parent.quiz_info['3'] = {
+      title: 'Ilmarin kyssäri',
+      answered: true,
+      answering_expired: false,
+      reviewing_expired: false
+    };
+
     scope.$apply();
 
     expect(scope.rounds).toBe(2);
     expect(scope.current_round).toBe(1);
-    expect(scope.current_peer_reviews.length).toBe(2);
-  });*/
+  });
 
 });

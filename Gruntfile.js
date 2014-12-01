@@ -63,11 +63,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-contrib-concat');
 
   // Default task(s).
   grunt.registerTask('template-cache', ['html2js']);
   grunt.registerTask('default', ['html2js', 'uglify', 'less', 'cssmin', 'watch']);
   grunt.registerTask('build', ['html2js', 'uglify', 'less', 'cssmin']);
-  
+
 };

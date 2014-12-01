@@ -3,7 +3,7 @@
     <span class="pull-right quiz-dl" ng-show="review_deadline">Deadline: <br />{{ review_deadline }}</span>
 </div>
 <div class="quiz-panel-body">
-    <div ng-show="has_answered_quiz && !answering_expired">
+    <div ng-show="has_answered_quiz && !reviewing_expired">
         <p class="text-muted text-center">Round {{current_round}}/{{rounds}}</p>
         <form name="peer_review_{{$parent.quiz.id}}">
             <div class="form-item">
@@ -30,7 +30,8 @@
         Answer the quiz before giving peer reviews
     </div>
 
-    <div class="alert alert-info" ng-show="answering_expired" style="margin-top: 10px">
-        The deadline for answering this quiz has passed
+    <div class="alert alert-info" ng-show="reviewing_expired" style="margin-top: 10px">
+        The deadline for peer reviews has passed
     </div>
+
 </div>
