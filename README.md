@@ -29,3 +29,20 @@
 init-funktion parametrit:
 
 * *id*: upotettavan kyselyn id.
+
+##Lisenssi
+Varmaan MIT
+
+###Kolmannen osapuolen komponentit ja niiden lisenssit
+| komponentti | lisenssi |
+| ----------- | -------- |
+| AngularJS   | MIT      |
+| Bootstrap   | MIT      |
+| Font Awesome | SIL OFL 1.1 |
+| Font Awesome code | MIT |
+| highlight.js | BSD |
+| jQuery | MIT |
+| jStorage | Unlicense |
+| lz-string | WTFPL |
+| Raphaël | MIT |
+| Raphael SketchPad | MIT |
