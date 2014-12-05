@@ -1,6 +1,10 @@
 <div ng-controller="PeerReviewViewerController" ng-init="init(item)" ng-show="peer_reviews && peer_reviews.length > 0">
 <label style="font-weight: bold">Rate peer reviews</label>
 	<div>
+		<p class="text-muted" ng-show="peer_reviews.length == 0">
+			No peer reviews yet.
+		</p>
+
 		<div class="peer-review-widget">
 			<div class="peer-review-widget-review" ng-repeat="peer_review in peer_reviews | limitTo: count">
 				<div style="margin-bottom: 10px; font-weight: bold">

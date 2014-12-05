@@ -2,6 +2,9 @@
 	<label style="font-weight: bold">My peer reviews</label>
 	<div>
 		<div class="peer-review-widget">
+		<p class="text-muted" ng-show="reviews.length == 0">
+			No peer reviews yet.
+		</p>
 		<div class="peer-review-widget-review" ng-repeat="peer_review in reviews">
 			<div style="margin-bottom: 10px; font-weight: bold">
 					<span ng-class="{ 'green': peer_review.totalRating > 0, 'red': peer_review.totalRating < 0, 'text-muted': peer_review.totalRating == 0 }"><span ng-show="peer_review.totalRating > 0">+</span><span ng-show="peer_review.totalRating < 0">-</span>{{peer_review.totalRating}}</span> {{peer_review.reviewer}}

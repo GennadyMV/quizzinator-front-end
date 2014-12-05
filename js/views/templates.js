@@ -5,7 +5,6 @@ angular.module("../js/views/answered.html", []).run(["$templateCache", function(
     "<div class=\"quiz-panel-heading\">Done!</div>\n" +
     "<div class=\"quiz-panel-body\">\n" +
     "        Thanks for answering this quiz!\n" +
-    "        You can check your review later with this hash: {{userhash}}\n" +
     "	<p style=\"margin: 15px 0px 0px 0px\">\n" +
     "		<button class=\"btn-blue\" ng-click=\"logout()\">\n" +
     "			<i class=\"fa fa-sign-out\"></i> Log out\n" +
@@ -53,7 +52,7 @@ angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", f
     "    <span class=\"pull-right quiz-dl\" ng-show=\"review_deadline\">Deadline: <br />{{ review_deadline }}</span>\n" +
     "</div>\n" +
     "<div class=\"quiz-panel-body\">\n" +
-    "    <div ng-show=\"has_answered_quiz && !answering_expired\">\n" +
+    "    <div ng-show=\"has_answered_quiz && !reviewing_expired && current_peer_reviews.length > 0\">\n" +
     "        <p class=\"text-muted text-center\">Round {{current_round}}/{{rounds}}</p>\n" +
     "        <form name=\"peer_review_{{$parent.quiz.id}}\">\n" +
     "            <div class=\"form-item\">\n" +
@@ -80,8 +79,12 @@ angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", f
     "        Answer the quiz before giving peer reviews\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"alert alert-info\" ng-show=\"answering_expired\" style=\"margin-top: 10px\">\n" +
-    "        The deadline for answering this quiz has passed\n" +
+    "    <div class=\"alert alert-info\" ng-show=\"reviewing_expired\" style=\"margin-top: 10px\">\n" +
+    "        The deadline for peer reviews has passed\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"alert alert-info\" ng-show=\"has_answered_quiz && current_peer_reviews.length == 0\" style=\"margin-top: 10px\">\n" +
+    "      No peers to review yet\n" +
     "    </div>\n" +
     "\n" +
     "</div>\n" +
@@ -217,6 +220,9 @@ angular.module("../js/views/widgets/my_peer_reviews.html", []).run(["$templateCa
     "	<label style=\"font-weight: bold\">My peer reviews</label>\n" +
     "	<div>\n" +
     "		<div class=\"peer-review-widget\">\n" +
+    "		<p class=\"text-muted\" ng-show=\"reviews.length == 0\">\n" +
+    "			No peer reviews yet.\n" +
+    "		</p>\n" +
     "		<div class=\"peer-review-widget-review\" ng-repeat=\"peer_review in reviews\">\n" +
     "			<div style=\"margin-bottom: 10px; font-weight: bold\">\n" +
     "					<span ng-class=\"{ 'green': peer_review.totalRating > 0, 'red': peer_review.totalRating < 0, 'text-muted': peer_review.totalRating == 0 }\"><span ng-show=\"peer_review.totalRating > 0\">+</span><span ng-show=\"peer_review.totalRating < 0\">-</span>{{peer_review.totalRating}}</span> {{peer_review.reviewer}}\n" +
@@ -229,7 +235,8 @@ angular.module("../js/views/widgets/my_peer_reviews.html", []).run(["$templateCa
     "		</div>\n" +
     "	</div>\n" +
     "	</div>\n" +
-    "</div>");
+    "</div>\n" +
+    "");
 }]);
 
 angular.module("../js/views/widgets/open_question.html", []).run(["$templateCache", function($templateCache) {
@@ -245,6 +252,10 @@ angular.module("../js/views/widgets/peer_reviews.html", []).run(["$templateCache
     "<div ng-controller=\"PeerReviewViewerController\" ng-init=\"init(item)\" ng-show=\"peer_reviews && peer_reviews.length > 0\">\n" +
     "<label style=\"font-weight: bold\">Rate peer reviews</label>\n" +
     "	<div>\n" +
+    "		<p class=\"text-muted\" ng-show=\"peer_reviews.length == 0\">\n" +
+    "			No peer reviews yet.\n" +
+    "		</p>\n" +
+    "\n" +
     "		<div class=\"peer-review-widget\">\n" +
     "			<div class=\"peer-review-widget-review\" ng-repeat=\"peer_review in peer_reviews | limitTo: count\">\n" +
     "				<div style=\"margin-bottom: 10px; font-weight: bold\">\n" +
