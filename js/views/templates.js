@@ -121,13 +121,13 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "</div>\n" +
     "\n" +
     "<div class=\"quiz-panel-user-info\" ng-show=\"$parent.quiz.is_open\">\n" +
-    "    <button class=\"btn-grey btn-sm\" style=\"margin-right: 10px;\" ng-click=\"toggle_username_form()\"><i class=\"fa fa-pencil\"></i> Change</button>Logged in as {{username}}\n" +
+    "    <button class=\"btn-grey btn-sm\" type=\"button\" style=\"margin-right: 10px;\" ng-click=\"toggle_username_form()\"><i class=\"fa fa-pencil\"></i> Change</button>Logged in as {{username}}\n" +
     "    <div style=\"margin-top: 15px;\" ng-show=\"show_username_form\">\n" +
     "        <form name=\"change_username_{{$parent.quiz_id}}\">\n" +
     "            <div class=\"form-item\">\n" +
     "                <input type=\"text\" placeholder=\"Username\" ng-required=\"true\" class=\"text-field\" ng-model=\"$parent.new_username\">\n" +
     "            </div>\n" +
-    "            <button class=\"btn-blue\" ng-click=\"change_username()\" ng-disabled=\"change_username_{{$parent.quiz_id}}.$invalid\">Save</button>\n" +
+    "            <button class=\"btn-blue\" type=\"button\" ng-click=\"change_username()\" ng-disabled=\"change_username_{{$parent.quiz_id}}.$invalid\">Change</button>\n" +
     "        </form>\n" +
     "    </div>\n" +
     "</div>\n" +
@@ -137,7 +137,7 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
 angular.module("../js/views/answers/checkbox_question.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answers/checkbox_question.html",
     "<label>{{answer.question}}</label>\n" +
-    "<span ng-repeat=\"checkbox in answer.checkboxes | filter: value\">\n" +
+    "<span ng-repeat=\"checkbox in answer.checkboxes | filter:{ value: true }\">\n" +
     "	{{checkbox.title}}<span ng-show=\"$index != answer.checkboxes.length - 1\">, </span>\n" +
     "</span>\n" +
     "");
@@ -233,11 +233,11 @@ angular.module("../js/views/widgets/my_peer_reviews.html", []).run(["$templateCa
     "                \n" +
     "                {{peer_review.review}}\n" +
     "                <div class=\"peer-review-widget-votes\" ng-hide=\"peer_review.rated\">\n" +
-    "                    <button class=\"btn btn-grey\" ng-click=\"item.event_handler('click', $index, 1);rate(peer_review, 1)\" style=\"cursor: pointer\">\n" +
-    "                        <i  class=\"fa fa-thumbs-up\"></i>\n" +
+    "                    <button class=\"btn btn-grey\" type=\"button\" ng-click=\"item.event_handler('click', $index, 1);rate(peer_review, 1)\" style=\"cursor: pointer\">\n" +
+    "                        <i class=\"fa fa-thumbs-up\"></i>\n" +
     "                    </button>\n" +
-    "                    <button class=\"btn btn-grey\" ng-click=\"item.event_handler('click', $index, - 1);rate(peer_review, -1)\" style=\"cursor: pointer; margin-left: 5px;\">\n" +
-    "                        <i  class=\"fa fa-thumbs-down\"></i>\n" +
+    "                    <button class=\"btn btn-grey\" type=\"button\" ng-click=\"item.event_handler('click', $index, - 1);rate(peer_review, -1)\" style=\"cursor: pointer; margin-left: 5px;\">\n" +
+    "                        <i class=\"fa fa-thumbs-down\"></i>\n" +
     "                    </button>\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -276,10 +276,10 @@ angular.module("../js/views/widgets/peer_reviews.html", []).run(["$templateCache
     "                {{peer_review.review}}\n" +
     "                \n" +
     "                <div class=\"peer-review-widget-votes\" ng-hide=\"peer_review.rated\">\n" +
-    "                    <button class=\"btn btn-grey\" ng-click=\"item.event_handler('click', $index, 1);rate(peer_review, 1)\" style=\"cursor: pointer;\">\n" +
+    "                    <button class=\"btn btn-grey\" type=\"button\" ng-click=\"item.event_handler('click', $index, 1);rate(peer_review, 1)\" style=\"cursor: pointer;\">\n" +
     "                        <i  class=\"fa fa-thumbs-up\"></i>\n" +
     "                    </button>\n" +
-    "                    <button class=\"btn btn-grey\" ng-click=\"item.event_handler('click', $index, - 1);rate(peer_review, - 1)\" style=\"cursor: pointer; margin-left: 5px;\">\n" +
+    "                    <button class=\"btn btn-grey\" type=\"button\" ng-click=\"item.event_handler('click', $index, - 1);rate(peer_review, - 1)\" style=\"cursor: pointer; margin-left: 5px;\">\n" +
     "                        <i  class=\"fa fa-thumbs-down\"></i>\n" +
     "                    </button>\n" +
     "                </div>\n" +
@@ -325,7 +325,7 @@ angular.module("../js/views/widgets/sketchpad.html", []).run(["$templateCache", 
     "<div class=\"sketchpad-container\">\n" +
     "  <div class=\"sketchpad-toolbar\">\n" +
     "    <div class=\"sketchpad-tool sketchpad-clear\">\n" +
-    "      <button class=\"btn btn-grey\"><i class=\"fa fa-eraser\"></i> Clear</button>\n" +
+    "      <button class=\"btn btn-grey\" type=\"button\"><i class=\"fa fa-eraser\"></i> Clear</button>\n" +
     "    </div>\n" +
     "\n" +
     "    <div class=\"sketchpad-tool choose-stroke-color-to-sketchpad\">\n" +
@@ -356,7 +356,7 @@ angular.module("../js/views/widgets/sketchpad.html", []).run(["$templateCache", 
     "    <div class=\"sketchpad-tool add-text-to-sketchpad\">\n" +
     "      <label class=\"label-block\">Add text</label>\n" +
     "      <textarea class=\"text-field\" placeholder=\"My text\"></textarea>\n" +
-    "      <button class=\"btn btn-grey\" style=\"margin-top: 5px\"><i class=\"fa fa-pencil\"></i> Add</button>\n" +
+    "      <button class=\"btn btn-grey\" style=\"margin-top: 5px\" type=\"button\"><i class=\"fa fa-pencil\"></i> Add</button>\n" +
     "      <div class=\"text-muted\" style=\"margin-top: 10px\">\n" +
     "        Move the text by dragging and remove it by double clicking the left mouse button.\n" +
     "      </div>\n" +
@@ -364,7 +364,7 @@ angular.module("../js/views/widgets/sketchpad.html", []).run(["$templateCache", 
     "\n" +
     "    <div class=\"sketchpad-tool add-rectangle-to-sketchpad\">\n" +
     "      <label class=\"label-block\">Add rectangle</label>\n" +
-    "      <button class=\"btn btn-grey\"><i class=\"fa fa-square-o\"></i> Add</button>\n" +
+    "      <button class=\"btn btn-grey\"><i class=\"fa fa-square-o\" type=\"button\"></i> Add</button>\n" +
     "      <div class=\"text-muted\" style=\"margin-top: 10px\">\n" +
     "        Move the rectangle by dragging the middle, resize by dragging bottom-right corner and remove it by double clicking the left mouse button.\n" +
     "      </div>\n" +

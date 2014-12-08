@@ -208,9 +208,21 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 		if($scope.view === get_path('login.html') && $scope.username){
 			API.get_quiz({
 				id: $scope.quiz_id,
+				username: $scope.username,
 				success: function(quiz){
 					$scope.quiz = quiz;
 					$scope.view = get_path('quiz_form.html');
+				},
+				error: function(){
+					$scope.view = get_path('error.html');
+				}
+			});
+		}else if(new_val != null && (new_val != old_val)){
+			API.get_quiz({
+				id: $scope.quiz_id,
+				username: $scope.username,
+				success: function(quiz){
+					initialize_quiz(quiz);
 				},
 				error: function(){
 					$scope.view = get_path('error.html');

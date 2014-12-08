@@ -17,10 +17,10 @@
                 {{peer_review.review}}
                 
                 <div class="peer-review-widget-votes" ng-hide="peer_review.rated">
-                    <button class="btn btn-grey" ng-click="item.event_handler('click', $index, 1);rate(peer_review, 1)" style="cursor: pointer;">
+                    <button class="btn btn-grey" type="button" ng-click="item.event_handler('click', $index, 1);rate(peer_review, 1)" style="cursor: pointer;">
                         <i  class="fa fa-thumbs-up"></i>
                     </button>
-                    <button class="btn btn-grey" ng-click="item.event_handler('click', $index, - 1);rate(peer_review, - 1)" style="cursor: pointer; margin-left: 5px;">
+                    <button class="btn btn-grey" type="button" ng-click="item.event_handler('click', $index, - 1);rate(peer_review, - 1)" style="cursor: pointer; margin-left: 5px;">
                         <i  class="fa fa-thumbs-down"></i>
                     </button>
                 </div>
