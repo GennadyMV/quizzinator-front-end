@@ -1,20 +1,28 @@
 <div ng-controller="ReviewsController" ng-init="init()">
-	<label style="font-weight: bold">My peer reviews</label>
-	<div>
-		<div class="peer-review-widget">
-		<p class="text-muted" ng-show="reviews.length == 0">
-			No peer reviews yet.
-		</p>
-		<div class="peer-review-widget-review" ng-repeat="peer_review in reviews">
-			<div style="margin-bottom: 10px; font-weight: bold">
-					<span ng-class="{ 'green': peer_review.totalRating > 0, 'red': peer_review.totalRating < 0, 'text-muted': peer_review.totalRating == 0 }"><span ng-show="peer_review.totalRating > 0">+</span><span ng-show="peer_review.totalRating < 0">-</span>{{peer_review.totalRating}}</span> {{peer_review.reviewer}}
-			</div>
-			{{peer_review.review}}
-			<div class="peer-review-widget-votes" ng-hide="peer_review.rated">
-					<button class="btn btn-grey" ng-click="item.event_handler('click', $index, 1);rate(peer_review, 1)" style="cursor: pointer"><i  class="fa fa-thumbs-up"></i></button>
-					<button class="btn btn-grey" ng-click="item.event_handler('click', $index, -1);rate(peer_review, -1)" style="cursor: pointer; margin-left: 5px;"><i  class="fa fa-thumbs-down"></i></button>
-			</div>
-		</div>
-	</div>
-	</div>
+    <label style="font-weight: bold">My peer reviews</label>
+    <div>
+        <div class="peer-review-widget">
+            <p class="text-muted" ng-show="reviews.length == 0">
+                No peer reviews yet.
+            </p>
+            <div class="peer-review-widget-review" ng-repeat="peer_review in reviews">
+                <div style="margin-bottom: 10px; font-weight: bold">
+                    <span ng-class="{ 'green': peer_review.totalRating > 0, 'red': peer_review.totalRating < 0, 'text-muted': peer_review.totalRating == 0 }">
+                        <span ng-show="peer_review.totalRating > 0">+</span>{{peer_review.totalRating}}
+                    </span>
+                    {{peer_review.reviewer}}
+                </div>
+                
+                {{peer_review.review}}
+                <div class="peer-review-widget-votes" ng-hide="peer_review.rated">
+                    <button class="btn btn-grey" ng-click="item.event_handler('click', $index, 1);rate(peer_review, 1)" style="cursor: pointer">
+                        <i  class="fa fa-thumbs-up"></i>
+                    </button>
+                    <button class="btn btn-grey" ng-click="item.event_handler('click', $index, - 1);rate(peer_review, -1)" style="cursor: pointer; margin-left: 5px;">
+                        <i  class="fa fa-thumbs-down"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

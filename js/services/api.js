@@ -68,16 +68,20 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		}).success(function(peer_reviews){
 			console.log(peer_reviews);
 			options.success(peer_reviews);
-		})
-	}
+		});
+	};
 
 	_public.rate_peer_review = function(options){
 		$http({
 			method: 'POST',
 			url: API_URL + '/quiz/' + options.quiz + '/answer/' + options.answer + '/review/' + options.review + '/rate',
-			params: {userhash: options.user, rating: options.rating}
-		}).success(function(){
-			options.success();
+			data: $.param({
+                            username: options.user, 
+                            rating: options.rating
+                        }),
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+		}).success(function(review){
+			options.success(review);
 		}).error(function(){
 			options.error();
 		});
@@ -89,9 +93,12 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 			url: API_URL + '/quiz/' + options.quiz + '/answer/' + options.review.id + '/review',
 			dataType: 'json',
 			headers: {
-		       "Content-Type": "application/json"
-		  },
-		  data: { reviewer: options.reviewer, review: options.review.content }
+                            "Content-Type": "application/json"
+                        },
+                        data: {
+                            reviewer: options.reviewer,
+                            review: options.review.content
+                        }
 		}).success(function(){
 			options.success();
 		}).error(function(){
@@ -106,9 +113,9 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
                     dataType: 'json',
                     headers: { 'Content-Type':'application/json' },
                     data: {
-                            user: options.username,
-                            quizId: options.quiz_id,
-                            events: options.events
+                        user: options.username,
+                        quizId: options.quiz_id,
+                        events: options.events
                     }
                 })
                 .success(options.success)
