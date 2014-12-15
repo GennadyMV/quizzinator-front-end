@@ -11,7 +11,7 @@ var Auth = (function(){
 
     var scope = null;
 
-    if(options.scope){
+    if(options && options.scope){
       scope = options.scope
     }else{
       scope = angular.element($('body')).scope();
@@ -28,7 +28,7 @@ var Auth = (function(){
 
     var scope = null;
 
-    if(options.scope){
+    if(options && options.scope){
       scope = options.scope
     }else{
       scope = angular.element($('body')).scope();

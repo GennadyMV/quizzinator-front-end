@@ -26,15 +26,15 @@
         </div>
     </div>
 
-    <div class="alert alert-info" ng-hide="has_answered_quiz">
+    <div class="alert alert-info" ng-hide="has_answered || reviewing_expired">
         Answer the quiz before giving peer reviews
     </div>
 
-    <div class="alert alert-info" ng-show="reviewing_expired" style="margin-top: 10px">
+    <div class="alert alert-info" ng-show="reviewing_expired">
         The deadline for peer reviews has passed
     </div>
 
-    <div class="alert alert-info" ng-show="has_answered_quiz && current_peer_reviews.length == 0" style="margin-top: 10px">
+    <div class="alert alert-info" ng-show="has_answered && current_peer_reviews.length == 0">
       No peers to review yet
     </div>
 

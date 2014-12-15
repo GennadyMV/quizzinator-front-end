@@ -158,17 +158,6 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 		$scope.$parent.username = $scope.username;
 
 		Authentication.log_user($scope.username);
-
-		API.get_quiz({
-			id: $scope.quiz_id,
-			success: function(quiz){
-				initialize_quiz(quiz)
-				$scope.$parent.quiz_info[$scope.quiz.id.toString()].answered = false;
-			},
-			error: function(){
-				$scope.view = get_path('error.html');
-			}
-		});
 	};
 
 	/**
@@ -213,7 +202,7 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 				id: $scope.quiz_id,
 				username: $scope.username,
 				success: function(quiz){
-					$scope.quiz = quiz;
+					initialize_quiz(quiz);
 					$scope.view = get_path('quiz_form.html');
 				},
 				error: function(){
@@ -241,4 +230,5 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 	function get_path(template){
 		return $scope.$parent.templates_path + '/' + template;
 	}
+
 }]);

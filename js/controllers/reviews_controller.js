@@ -14,25 +14,29 @@ QuizApp.controller('ReviewsController', ['$scope', '$location', 'Authentication'
 			},
 			error: function(){}
 		});
-	}
+	};
 
 	/**
 	* Rates a peer review with a given rating
 	*
-	* @param peer review
-	* @param rating (-1 or 1)
+	* @param review peer review to rate
+	* @param rating (-1, 1)
 	*/
 	$scope.rate = function(review, rating) {
 		API.rate_peer_review({
 			quiz: $scope.$parent.quiz_id,
 			answer: review.answerId,
 			review: review.id,
-			user: review.reviewer,
+			user: $scope.user,
 			rating: rating,
-			success: function(reviews) {
+			success: function(new_review) {
 				review.rated = true;
-				review.totalRating += rating;
+				review.totalRating = new_review.totalRating;
+			},
+			error: function() {
+				throw "error rating";
 			}
 		});
-	}
+	};
+
 }]);

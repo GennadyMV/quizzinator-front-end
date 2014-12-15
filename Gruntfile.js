@@ -54,6 +54,9 @@ module.exports = function(grunt) {
             src: ['vendor/dependencies/angular.min.js', 'vendor/dependencies/jquery.min.js', 'vendor/dependencies/*.js', 'js/views/templates.js', 'js/app.js', 'js/services/*.js', 'js/filters/*.js', 'js/directives/*.js', 'js/controllers/*.js'],
             dest: 'build/quiz.min.js'
         }
+    },
+    jshint: {
+      all: ['js/**/*.js']
     }
   });
 
@@ -63,6 +66,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Default task(s).
   grunt.registerTask('template-cache', ['html2js']);

@@ -1,4 +1,5 @@
 QuizApp.service('Authentication', function(){
+
 	var _public = {};
 
 	function add_to_storage(key, value){
@@ -24,4 +25,5 @@ QuizApp.service('Authentication', function(){
 	}
 
 	return _public;
+
 });
