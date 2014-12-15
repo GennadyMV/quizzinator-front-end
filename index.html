@@ -14,7 +14,7 @@
         <script src="build/quiz.min.js"></script>
     </head>
     <body style="padding: 40px;" ng-app="QuizApp" ng-controller="MainController" ng-init="init({ 'api': 'http:/localhost:8080/' })">
-        <div ng-controller="QuizController" ng-init="init({ 'id': 1 })" ng-hide="hidden" quiz><div ng-include="view"></div></div>
+        <div ng-controller="QuizController" ng-init="init({ 'id': 1 })" quiz><div ng-include="view"></div></div>
 
         <div ng-controller="PeerReviewController" ng-init="init({ 'id': 1 })" quiz><div ng-include="view"></div></div>
     </body>

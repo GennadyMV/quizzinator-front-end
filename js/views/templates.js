@@ -115,7 +115,7 @@ angular.module("../js/views/quiz_form.html", []).run(["$templateCache", function
     "    <form name=\"quiz_form_{{$parent.quiz.id}}\" ng-show=\"quiz.can_answer\">\n" +
     "        <div class=\"form-item\" ng-repeat=\"item in quiz.items\" ng-include=\"widget_view(item.item_type)\"></div>\n" +
     "        <button class=\"btn-blue\" ng-click=\"send_answer()\" ng-disabled=\"quiz_form_{{$parent.quiz.id}}.$invalid\"><i class=\"fa fa-send\"></i> Send</button>\n" +
-    "        <button style=\"margin-left: 10px;\" class=\"btn-grey\" ng-click=\"clear_answer()\"><i class=\" fa fa-eraser\"></i> Clear answers</button>\n" +
+    "        <button style=\"margin-left: 10px;\" class=\"btn-grey\" type=\"button\" ng-click=\"clear_answer()\"><i class=\" fa fa-eraser\"></i> Clear answers</button>\n" +
     "        <p class=\"text-muted\" style=\"margin-bottom: 0px;\" ng-show=\"quiz_form_{{$parent.quiz.id}}.$invalid\">Please, fill in all the fields before sending the quiz</p>\n" +
     "    </form>\n" +
     "</div>\n" +
@@ -167,7 +167,7 @@ angular.module("../js/views/answers/scale_question.html", []).run(["$templateCac
 
 angular.module("../js/views/answers/sketchpad.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answers/sketchpad.html",
-    "<label>{{answer.question}}</label>\n" +
+    "<label>{{answer.title}}</label>\n" +
     "<div ng-model=\"answer.value\" viewer></div>\n" +
     "");
 }]);
@@ -218,11 +218,11 @@ angular.module("../js/views/widgets/my_peer_reviews.html", []).run(["$templateCa
   $templateCache.put("../js/views/widgets/my_peer_reviews.html",
     "<div ng-controller=\"ReviewsController\" ng-init=\"init()\">\n" +
     "	<label style=\"font-weight: bold\">My peer reviews</label>\n" +
+    "	<p class=\"text-muted\" ng-hide=\"reviews && reviews.length > 0\">\n" +
+    "		No peer reviews yet.\n" +
+    "	</p>\n" +
     "	<div>\n" +
     "		<div class=\"peer-review-widget\">\n" +
-    "		<p class=\"text-muted\" ng-show=\"reviews.length == 0\">\n" +
-    "			No peer reviews yet.\n" +
-    "		</p>\n" +
     "		<div class=\"peer-review-widget-review\" ng-repeat=\"peer_review in reviews\">\n" +
     "			<div style=\"margin-bottom: 10px; font-weight: bold\">\n" +
     "					<span ng-class=\"{ 'green': peer_review.totalRating > 0, 'red': peer_review.totalRating < 0, 'text-muted': peer_review.totalRating == 0 }\"><span ng-show=\"peer_review.totalRating > 0\">+</span><span ng-show=\"peer_review.totalRating < 0\">-</span>{{peer_review.totalRating}}</span> {{peer_review.reviewer}}\n" +
@@ -347,7 +347,7 @@ angular.module("../js/views/widgets/sketchpad.html", []).run(["$templateCache", 
     "\n" +
     "    <div class=\"sketchpad-tool add-rectangle-to-sketchpad\">\n" +
     "      <label class=\"label-block\">Add rectangle</label>\n" +
-    "      <button class=\"btn btn-grey\"><i class=\"fa fa-square-o\" type=\"button\"></i> Add</button>\n" +
+    "      <button class=\"btn btn-grey\" type=\"button\"><i class=\"fa fa-square-o\" type=\"button\"></i> Add</button>\n" +
     "      <div class=\"text-muted\" style=\"margin-top: 10px\">\n" +
     "        Move the rectangle by dragging the middle, resize by dragging bottom-right corner and remove it by double clicking the left mouse button.\n" +
     "      </div>\n" +

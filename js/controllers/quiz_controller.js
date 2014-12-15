@@ -20,6 +20,9 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 		});
 	}
 
+	/**
+	*	Initializes the quiz
+	*/
 	function initialize_quiz(quiz){
 		$scope.quiz = quiz;
 		$scope.view = get_path('quiz_form.html');
@@ -159,8 +162,8 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 		API.get_quiz({
 			id: $scope.quiz_id,
 			success: function(quiz){
-				$scope.quiz = quiz;
-				$scope.view = get_path('quiz_form.html');
+				initialize_quiz(quiz)
+				$scope.$parent.quiz_info[$scope.quiz.id.toString()].answered = false;
 			},
 			error: function(){
 				$scope.view = get_path('error.html');

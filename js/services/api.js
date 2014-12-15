@@ -3,6 +3,10 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 
 	var API_URL = $rootScope.api;
 
+	/**
+	* Fetches a quiz
+	* @param options object which contain id (id of the quiz), username (optional, name of the logged user), success (function to be called after fetching the quiz)
+	*/
 	_public.get_quiz = function(options){
 		$http({
 			method: 'GET',
@@ -15,6 +19,10 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 		});
 	};
 
+	/**
+	*	Sends an answer to a quiz
+	* @param options object which contains
+	*/
 	_public.answer_quiz = function(options){
 		$http({
 			method: 'POST',
@@ -98,23 +106,22 @@ QuizApp.service('API', ['$rootScope', '$http', 'AnswerFormatter', function($root
 			options.error();
 		});
 	};
-        
-        _public.send_events = function(options){
-                $http({
-                    method: 'POST',
-                    url: API_URL + '/events',
-                    dataType: 'json',
-                    headers: { 'Content-Type':'application/json' },
-                    data: {
-                            user: options.username,
-                            quizId: options.quiz_id,
-                            events: options.events
-                    }
-                })
-                .success(options.success)
-                .error(options.error);
-            
-        };
+
+  _public.send_events = function(options){
+    $http({
+      method: 'POST',
+      url: API_URL + '/events',
+      dataType: 'json',
+      headers: { 'Content-Type':'application/json' },
+      data: {
+              user: options.username,
+              quizId: options.quiz_id,
+              events: options.events
+      }
+    })
+    .success(options.success)
+    .error(options.error);
+  };
 
 	return _public;
 }]);
