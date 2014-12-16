@@ -60,7 +60,7 @@ describe('PeerReviewController', function(){
 
     scope.$apply();
 
-    expect(scope.has_answered_quiz).toBe(false);
+    expect(scope.has_answered).toBe(false);
   });
 
   it('should show peer review form when user has answered quiz', function(){
@@ -77,7 +77,7 @@ describe('PeerReviewController', function(){
 
     scope.$apply();
 
-    expect(scope.has_answered_quiz).toBe(true);
+    expect(scope.has_answered).toBe(true);
   });
 
   it('should not see peer review form after reviewing deadline has passed', function(){

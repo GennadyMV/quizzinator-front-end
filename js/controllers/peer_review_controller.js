@@ -21,7 +21,7 @@ QuizApp.controller('PeerReviewController', ['$scope', 'API', 'Authentication', f
   * Sends the peer review
   */
   $scope.send_peer_review = function(){
-    if($scope.reviewing_expired || !$scope.has_answered_quiz){ return; }
+    if($scope.reviewing_expired || !$scope.has_answered){ return; }
 
     var selected_peer = $.grep($scope.current_peer_reviews, function(peer){
       return peer.selected;

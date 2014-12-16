@@ -27,11 +27,11 @@ QuizApp.controller('ReviewsController', ['$scope', '$location', 'Authentication'
 			quiz: $scope.$parent.quiz_id,
 			answer: review.answerId,
 			review: review.id,
-			user: $scope.user,
+			user: $scope.$parent.username,
 			rating: rating,
-			success: function(new_review) {
+			success: function() {
 				review.rated = true;
-				review.totalRating = new_review.totalRating;
+				review.totalRating = review.totalRating + rating;
 			},
 			error: function() {
 				throw "error rating";

@@ -8,11 +8,14 @@ describe('PeerReviewViewerController', function(){
   	var QuizAPiMock = (function(){
   		return {
   			get_peer_reviews_by_quiz: function(options){
-  				options.success([{"id":1,"reviewer":"Masa","review":"Aika vÃ¤lkkyÃ¤.","rateCount":5,"totalRating":5,"answerId":1},{"id":2,"reviewer":"Epinator","review":"MASA PERKELE","rateCount":5,"totalRating":1,"answerId":2},{"id":3,"reviewer":"Ilmu","review":"Olet _huono","rateCount":4,"totalRating":-2,"answerId":3}]);
-			},
-			rate_peer_review: function(options){
-				options.success();
-			}
+	  				options.success([
+						{"id":1,"reviewer":"Masa","review":"Aika välkkyä.","rateCount":5,"totalRating":5,"answerId":1},
+						{"id":2,"reviewer":"Epinator","review":"MASA PERKELE","rateCount":5,"totalRating":1,"answerId":2},
+						{"id":3,"reviewer":"Ilmu","review":"Olet _huono","rateCount":4,"totalRating":-2,"answerId":3}]);
+				},
+				rate_peer_review: function(options){
+					options.success();
+				}
   		}
   	})();
 
@@ -34,9 +37,5 @@ describe('PeerReviewViewerController', function(){
     	expect(scope.peer_reviews[0].rated).toBe(undefined);
     	scope.rate(scope.peer_reviews[0], 1);
     	expect(scope.peer_reviews[0].rated).toBe(true);
-
-    	expect(scope.peer_reviews[1].rated).toBe(undefined);
-    	scope.rate(scope.peer_reviews[1], -1);
-    	expect(scope.peer_reviews[1].rated).toBe(true);
     })
 })

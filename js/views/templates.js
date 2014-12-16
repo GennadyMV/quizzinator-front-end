@@ -52,7 +52,7 @@ angular.module("../js/views/peer_review_form.html", []).run(["$templateCache", f
     "    <span class=\"pull-right quiz-dl\" ng-show=\"review_deadline\">Deadline: <br />{{ review_deadline }}</span>\n" +
     "</div>\n" +
     "<div class=\"quiz-panel-body\">\n" +
-    "    <div ng-show=\"has_answered_quiz && !reviewing_expired && current_peer_reviews.length > 0\">\n" +
+    "    <div ng-show=\"has_answered && !reviewing_expired && current_peer_reviews.length > 0\">\n" +
     "        <p class=\"text-muted text-center\">Round {{current_round}}/{{rounds}}</p>\n" +
     "        <form name=\"peer_review_{{$parent.quiz.id}}\">\n" +
     "            <div class=\"form-item\">\n" +
