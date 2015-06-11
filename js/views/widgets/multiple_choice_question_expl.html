@@ -1,0 +1,7 @@
+<label class="multiple-choice-question-question">{{item.question}}</label>
+<div class="radio" ng-repeat="option in item.options">
+    <label>
+        <input type="radio" ng-model="item.value" value="{{option.title}}" ng-required="true" ng-change="item.event_handler('change', 0, item.value)">
+            {{option.title}} <span ng-show="item.value == option.title" class="explanation {{option.correct}}">{{option.explanation}}</span>
+        </label>
+</div>
