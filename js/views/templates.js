@@ -1,4 +1,4 @@
-angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/multiple_choice_question_expl.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/sketchpad.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/image.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/multiple_choice_question_expl.html', '../js/views/widgets/my_peer_reviews.html', '../js/views/widgets/open_question.html', '../js/views/widgets/peer_reviews.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/sketchpad.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
+angular.module('templates', ['../js/views/answered.html', '../js/views/error.html', '../js/views/login.html', '../js/views/peer_review_done.html', '../js/views/peer_review_form.html', '../js/views/quiz_form.html', '../js/views/answers/checkbox_question.html', '../js/views/answers/multiple_choice_question.html', '../js/views/answers/multiple_choice_question_expl.html', '../js/views/answers/open_question.html', '../js/views/answers/scale_question.html', '../js/views/answers/sketchpad.html', '../js/views/answers/slider_question.html', '../js/views/widgets/checkbox_question.html', '../js/views/widgets/code_sample.html', '../js/views/widgets/code_typing.html', '../js/views/widgets/image.html', '../js/views/widgets/multiple_choice_question.html', '../js/views/widgets/multiple_choice_question_expl.html', '../js/views/widgets/my_peer_reviews.html', '../js/views/widgets/open_question.html', '../js/views/widgets/peer_reviews.html', '../js/views/widgets/scale_question.html', '../js/views/widgets/sketchpad.html', '../js/views/widgets/slider_question.html', '../js/views/widgets/text_container.html']);
 
 angular.module("../js/views/answered.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/answered.html",
@@ -200,6 +200,14 @@ angular.module("../js/views/widgets/checkbox_question.html", []).run(["$template
 angular.module("../js/views/widgets/code_sample.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/code_sample.html",
     "<div highlight ng-model=\"item.code\"></div>");
+}]);
+
+angular.module("../js/views/widgets/code_typing.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../js/views/widgets/code_typing.html",
+    "<div highlight ng-model=\"item.code\"></div>\n" +
+    "<p class=\"text-muted\" ng-show=\"item.code.length && item.value.length > 0\">{{item.code.length - item.value.length}} characters remaining</p>\n" +
+    "<textarea rows=\"5\" class=\"text-field open-question-value\" ng-model=\"item.value\" maxlength=\"item.code.length\" ng-required=\"true\" ng-click=\"item.event_handler('click', 0, item.value)\" ng-focus=\"item.event_handler('focus', 0, item.value)\" ng-blur=\"item.event_handler('blur', 0, item.value)\"></textarea>\n" +
+    "");
 }]);
 
 angular.module("../js/views/widgets/image.html", []).run(["$templateCache", function($templateCache) {
