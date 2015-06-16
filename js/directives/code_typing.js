@@ -15,7 +15,7 @@ QuizApp.directive('codetyping', function(){
             		if (scope.item.code.charAt(i) !== newVal.charAt(i)) break;
             		i++;
             	}
-            	scope.right = scope.item.code.substring(0, i);
+            	scope.correct = scope.item.code.substring(0, i);
             	scope.wrong = scope.item.code.substring(i, newVal.length);
             });
 		},
