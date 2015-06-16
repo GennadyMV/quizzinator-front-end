@@ -204,15 +204,14 @@ angular.module("../js/views/widgets/code_sample.html", []).run(["$templateCache"
 
 angular.module("../js/views/widgets/code_typing.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/code_typing.html",
-    "<div codetyping></div>");
+    "<div codetyping ng-model=\"item\"></div>");
 }]);
 
 angular.module("../js/views/widgets/code_typing_template.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../js/views/widgets/code_typing_template.html",
-    "<div highlight ng-model=\"item.code\"></div>\n" +
-    "<p class=\"text-muted\" ng-show=\"item.code.length && item.value.length > 0\">{{item.code.length - item.value.length}} characters remaining</p>\n" +
-    "<textarea rows=\"5\" class=\"text-field open-question-value\" ng-model=\"item.value\" maxlength=\"{{item.code.length}}\" ng-required=\"true\" ng-click=\"item.event_handler('cliaack', 0, item.value)\" ng-focus=\"item.event_handler('focus', 0, item.value)\" ng-blur=\"item.event_handler('blur', 0, item.value)\" ng-change=\"compareStrings()\"></textarea>\n" +
-    "");
+    "<pre><span class=\"green\">{{right}}</span><span class=\"red\">{{wrong}}</span><span class=\"untyped\">{{untyped}}</span></pre>\n" +
+    "<textarea rows=\"5\" class=\"text-field open-question-value\" ng-model=\"item.value\" maxlength=\"item.code.length\" ng-required=\"true\" ng-click=\"item.event_handler('cliaack', 0, item.value)\" ng-focus=\"item.event_handler('focus', 0, item.value)\" ng-blur=\"item.event_handler('blur', 0, item.value)\" ng-change=\"compareStrings()\"></textarea>\n" +
+    "{{right}}");
 }]);
 
 angular.module("../js/views/widgets/image.html", []).run(["$templateCache", function($templateCache) {

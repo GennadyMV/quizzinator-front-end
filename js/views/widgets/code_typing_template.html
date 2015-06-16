@@ -1,3 +1,3 @@
-<div highlight ng-model="item.code"></div>
-<p class="text-muted" ng-show="item.code.length && item.value.length > 0">{{item.code.length - item.value.length}} characters remaining</p>
-<textarea rows="5" class="text-field open-question-value" ng-model="item.value" maxlength="{{item.code.length}}" ng-required="true" ng-click="item.event_handler('cliaack', 0, item.value)" ng-focus="item.event_handler('focus', 0, item.value)" ng-blur="item.event_handler('blur', 0, item.value)" ng-change="compareStrings()"></textarea>
+<pre><span class="green">{{right}}</span><span class="red">{{wrong}}</span><span class="untyped">{{untyped}}</span></pre>
+<textarea rows="5" class="text-field open-question-value" ng-model="item.value" maxlength="item.code.length" ng-required="true" ng-click="item.event_handler('cliaack', 0, item.value)" ng-focus="item.event_handler('focus', 0, item.value)" ng-blur="item.event_handler('blur', 0, item.value)" ng-change="compareStrings()"></textarea>
+{{right}}
