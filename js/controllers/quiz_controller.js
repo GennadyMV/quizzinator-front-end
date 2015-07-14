@@ -134,8 +134,8 @@ QuizApp.controller('QuizController', ['$rootScope', '$scope', '$sce', '$interval
 	* Sends user's current asnwer to the server
 	*/
 	$scope.send_answer = function(){
+		window.open($scope.quiz.answer_forward);
 		if(!$scope.quiz.can_answer){ return; }
-
 		API.answer_quiz({
 			quiz: $scope.quiz,
 			user: Authentication.get_user(),
